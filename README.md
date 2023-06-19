@@ -1,4 +1,4 @@
-# Velocity x Serverless 🛸
+# Velocity7 The Boogie Collective 🛸
 Velocity written in Astro for Serverless Function capability and a 0.4 second LCP average load time.
 
 

@@ -23,6 +23,32 @@ import { Icon } from "astro-icon";
 
 
 const pricing = [
+{
+    name: "Velocity7 SPA",
+    popular: false,
+    features: [
+      "1x 15-min video-call brand sessions",
+      "1x design revisions",
+      "Domain & DNS setup",
+      "Initial website branding and content setup",
+      "1x web page w/ 0.2 sec load time avg.",
+      "50+ components",
+      "30+ integrations",
+      "1x lead gen funnels",
+      "A+ SEO performance",
+      "Integrated conversion tracking",
+      "Cookie-less social user tracking",
+      "Email handling + forwarding",
+      "Infitely extendable with any NPM package",
+      "Lifetime license of your site",
+    ],
+    
+    price: "$1445",
+    button: {
+      text: "Purchase",
+      link: "https://buy.stripe.com/4gwaGdg1JeJL0MM6oF",
+    },
+  },
   {
     name: "Velocity7 - Small",
     price: "$2445",
@@ -30,18 +56,18 @@ const pricing = [
     features: [
       "2x 15-min video-call brand sessions",
       "2x design revisions",
+      "Domain & DNS setup",
+      "Initial website branding and content setup",
       "3x web pages w/ 0.2 sec load time avg.",
-      "High conversion landing pages with purposeful marketing",
-      "Simple social conversion tracking",
-      "Social brand pack w/ 2x design releases",
-      "50+ Velocity7 components",
-      "Out-of-the-box SEO performance",
-      "Cookie-less social user tracking",
-      "Domain & DNS optimisation",
-      "Email forwarding setup",
+      "50+ components",
+      "30+ integrations",
       "2x lead gen funnels",
+      "A+ SEO performance",
+      "Integrated conversion tracking",
+      "Cookie-less social user tracking",
+      "Email handling + forwarding",
       "Stripe payment processing",
-      "Infitely extendable, ultra-light codebase",
+      "Infitely extendable with any NPM package",
       "Lifetime license of your site",
     ],
     button: {
@@ -56,19 +82,20 @@ const pricing = [
     popular: true,
     features: [
       "3x 15-min video-call brand sessions",
-      "4x design revisions",
+      "3x design revisions",
+      "Domain & DNS setup",
+      "Initial website branding and content setup",
       "6x web pages w/ 0.2 sec load time avg.",
-      "High conversion landing pages with purposeful marketing",
-      "Custom social conversion tracking",
-      "Social brand pack w/ 4x design releases",
-      "50+ Velocity7 components",
-      "Out-of-the-box SEO performance",
+      "50+ components",
+      "30+ integrations",
+      "3x lead gen funnels",
+      "A+ SEO performance",
+      "Integrated conversion tracking",
       "Cookie-less social user tracking",
-      "Domain & DNS optimisation",
-      "Email forwarding setup",
-      "4x lead gen funnels",
+      "Email handling + forwarding",
       "Stripe payment processing",
-      "Infitely extendable, ultra-light codebase",
+      "Data CMS integration",
+      "Infitely extendable with any NPM package",
       "Lifetime license of your site",
     ],
     button: {
@@ -81,42 +108,43 @@ const pricing = [
     price: "$6445",
     popular: false,
     features: [
-      "4x 15-min video-call brand sessions",
-      "6x design revisions",
-      "12x web pages w/ 0.2 sec load time avg.",
-      "2x in-person strategy sessions",
-      "E-Commerce store extension on sub-domain",
-      "Custom social conversion tracking",
-      "Social brand pack w/ 8x design releases",
-      "50+ Velocity7 components",
-      "Out-of-the-box SEO performance",
-      "Cookie-less social user tracking",
-      "Domain & DNS optimisation",
-      "Email forwarding setup",
+      "8x 15-min video-call brand sessions",
+      "8x design revisions",
+      "Domain & DNS setup",
+      "Initial website branding and content setup",
+      "32x web page and products.",
+      "50+ components",
+      "30+ integrations",
       "2x lead gen funnels",
+      "A+ SEO performance",
+      "Integrated conversion tracking",
+      "Cookie-less social user tracking",
+      "Email handling + forwarding",
       "Stripe payment processing",
-      "Infitely extendable, ultra-light codebase",
+      "Data CMS integration",
+      "Custom website storefront",
+      "Infitely extendable with any NPM package",
       "Lifetime license of your site",
     ],
     button: {
       text: "Purchase",
-      link: "https://buy.stripe.com/cN2eWtdTBdFH1QQ14d",
+      link: "https://buy.stripe.com/3cs7u102L0SV5328wA",
     },
   },
 ];
 ---
 
-<Layout title="Award-Winning Web Design with Velocity7">
+<Layout title="Award-Winning Web Design and Development for Wordpress">
 
 
 
   <ContainerFW>
     <SectionEmail>
       <Fragment slot="title">
-        Award-winning Gold Coast web design.
+        Award-winning web design and development for Wordpress, on the Gold Coast.
       </Fragment>
       <Fragment slot="desc">
-        Highly awarded web designer on the Gold Coast. From Wordpress to Shopify to Web3 JS languages, we have you covered. Specialising in building blazing-fast, custom web experiences that drive sales through unique creative marketing. 
+        Wordpress, Shopify + custom 3D web experiences, we have you covered. Specialising in building blazing-fast websites that drive sales with perfect SEO and common user experience. 
       </Fragment>
       <Fragment slot="cover">
         <Picture
@@ -124,7 +152,6 @@ const pricing = [
                   sizes="(max-width: 2000px) 2000px, 1000px"
                   widths={[1000, 1500, 2000]}
                   aspectRatio="3:2"
-                  background="#f2f2f2"
                   fit="cover"
                   position="center"
                   class="w-full rounded duration-200 hover:shadow-sm"
@@ -133,14 +160,7 @@ const pricing = [
     </SectionEmail>
   </ContainerFW>
 
-  <ContainerXL>
-    <GallerySlider />
-  </ContainerXL>
-
-  <Container>
-    <Integrations />
-  </Container>
-
+  
   <ContainerXL>
     <SectionHeadImg>
       <Fragment slot="title">
@@ -193,30 +213,19 @@ const pricing = [
     </SectionHeadSecImg>
   </ContainerXL>
 
-  <Container>
-    <Sectionhead>
-      <Fragment slot="title">Introducing Velocity7.</Fragment>
-      <Fragment slot="desc">
-        Helping businesses stay on the edge of competition in the most competitive industries. 
-        The fastest website framework developed specifically for Australian businesses, and the 
-        web performance issues we individually face. Out-performing some of the biggest names in 
-        tech in our <a href="#">pageload comparisons</a>. Works with any framework, infinitely extendable.
-      </Fragment>
-    </Sectionhead>
-  </Container>
-
   <ContainerFW>
-    <FeaturesGrid />
+    <GallerySlider />
   </ContainerFW>
+  
 
   <ContainerXL>
     <SectionTextarea>
-      <Fragment slot="title">Velocity7 web design.</Fragment>
+      <Fragment slot="title">Introducing Velocity7.</Fragment>
       <Fragment slot="desc">
-        Our favourite thing to hear is a brand that wants to go truly "Banksy" on their online prescence. 
-        Trust us when we say we've seen creative e-commerce design pay off time and time again. 
-        We've worked with a number of international market, global brands to create true digital art, 
-        that truly drives sales. Using game theory and 3D interation to hook your customer with ease.
+        Velocity 7 is a low-code framework that allows us to build websites faster than ever before. 
+        While maintaining high-performance and high-conversion rate through faster design iterations. 
+        Addressing the problems of website builders, while still feeling natural to use if you're experienced
+        with them. Pay once, own forever.
       </Fragment>
       <Fragment slot="cover">
         <Picture
@@ -280,22 +289,24 @@ const pricing = [
     </SectionTextarea>
   </ContainerXL>
 
-  
+  <Container>
+    <Integrations />
+  </Container>
 
-  <ContainerXL>
+  <ContainerFW>
     <Sectionhead>
       <Fragment slot="title">Ready for launch?</Fragment>
       <Fragment slot="desc" class="max-w-4xl">
         Move to Velocity7 and start crushing competition with ease in even the most competitive industries. Leave the world of churn web design. Turn around in a blazing 21 days, perfect for your next brand launch.
       </Fragment>
     </Sectionhead>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 mx-auto mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mx-auto mt-12">
       {pricing.map((item) => <Pricing plan={item} />)}
     </div>
-  </ContainerXL>
+  </ContainerFW>
 
   <Container>
     <Cta />
   </Container>
-  
+
 </Layout>

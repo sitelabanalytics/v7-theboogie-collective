@@ -1,33 +1,131 @@
 ---
-import Container from "@components/container.astro";
 import ContainerFW from "@components/container-fullwidth.astro";
 import ContainerXL from "@components/container-xl.astro";
+import Container from "@components/container.astro";
+import { Picture } from "@astrojs/image/components";
+
 import Hero from "@components/hero.astro";
-import HeroSecondary from "@components/hero-secondary-slider.astro";
-import Hero3D from "@components/hero-secondary-3D.astro";
-import Clients from "@components/grid-4x3-clients.astro";
+import Grid from "@components/hero-grid-services.astro";
+import Clients from "@components/sectionmid-grid-clients.astro";
+
+import WorksSliderBall from "@components/slider-med-works-ball.astro";
+import WorksSliderRay from "@components/slider-med-works-rw.astro";
+import WorksSliderTsd from "@components/slider-med-works-tsd.astro";
+import WorksSliderSnacks from "@components/slider-med-works-snacks.astro";
+import WorksSliderEstem from "@components/slider-med-works-estem.astro";
+
+import HeroSecondary from "@components/sectionmid-slider-cases.astro";
+import SectionHeadImg from "@components/sectionhead-img.astro";
+import MoonshotSectionmid from "@components/sectionmid-singleproduct-moonshot.astro";
+import VelocitySectionmid from "@components/sectionmid-singleproduct-velocity.astro";
+import Integrations from "@components/logos-integrations.astro";
+import VelocityFeatures from "@components/grid-4x4-features.astro";
+import MoonshotCover from '../assets/previous-works/moonshot-asana.webp';
+import VelocityCover from '../assets/previous-works/velocity-tsd.webp';
 import Cta from "@components/cta.astro";
-import Grid from "@components/grid-4x1-services.astro";
+import CtaMoon from "@components/cta-moonshot.astro";
 import ProductSlider from "@components/slider-lrg-services-main.astro";
 import BlogSlider from "@components/slider-content.astro";
 import Logos from "@components/logos.astro";
 import Layout from "@layouts/Layout.astro";
 ---
 
-<Layout title="Code & Design">
+<Layout title="Award-Winning Web Design for Gold Coast businesses">
   <ContainerFW>
     <Hero />
-    <Grid /> 
-  </ContainerFW>
-  <Container>
+    <Grid />
     <Clients />
+
+    <WorksSliderBall />
+    <WorksSliderRay />
+    <WorksSliderSnacks />
+    <WorksSliderEstem />
+    <WorksSliderTsd />
+  </ContainerFW>
+
+  <ContainerXL>
+  
+    <SectionHeadImg>
+      <Fragment slot="smltitle">
+        Improved web performance
+      </Fragment>
+      <Fragment slot="title">
+        Velocity, our high-performance, conversion-focused website theme.
+      </Fragment>
+      <Fragment slot="desc">
+        Reducing costs businesses face in the digital space such as marketing, website frameworks and hosting.
+        Velocity is an all inclusive, out-of-the-box framework to help businesses achieve more for less online. 
+        50+ components for faster development and 30+ integrations to generate more leads and sales, sooner.
+      </Fragment>
+      <Fragment slot="cover">
+        <Picture  id="glass-card-dark"
+                  src={VelocityCover}
+                  sizes="(max-width: 2000px) 2000px, 1000px"
+                  widths={[1000, 1500, 2000]}
+                  aspectRatio="1:1"
+                  background="#f2f2f2"
+                  fit="cover"
+                  position="center"
+                  class="w-full rounded duration-200 hover:shadow-sm"
+                />
+      </Fragment>
+    </SectionHeadImg>
+
+    <Integrations />
+    <VelocityFeatures />
+
+    <VelocitySectionmid />    
+    
+  </ContainerXL>
+
+  <Container>
     <Cta />
-    <HeroSecondary />
-    <Logos />
-    <Hero3D />
   </Container>
+
+  <ContainerXL>
+
+    <SectionHeadImg>
+    <Fragment slot="smltitle">
+      Management redefined
+    </Fragment>
+    <Fragment slot="title">
+      Gold Coast based website + marketing management.
+    </Fragment>
+    <Fragment slot="desc">
+      Complete website, brand and marketing management without the lock in contracts. With the pressure to improve monthly, we generate serious results.
+      Serving a maximum of 10 clients at any time, the Moonshot Plan is designed to be outgrown when you break global markets and hire a full internal team.
+    </Fragment>
+    <Fragment slot="cover">
+      <Picture  id="glass-card-dark"
+                src={MoonshotCover}
+                sizes="(max-width: 2000px) 2000px, 1000px"
+                widths={[1000, 1500, 2000]}
+                aspectRatio="1:1"
+                background="#f2f2f2"
+                fit="cover"
+                position="center"
+                class="w-full rounded duration-200 hover:shadow-sm"
+              />
+    </Fragment>
+    </SectionHeadImg>    
+
+    <HeroSecondary />
+    
+    <MoonshotSectionmid />
+    <Logos />
+
+  </ContainerXl>
+
+  <Container>
+    <CtaMoon />
+  </Container>
+  
   <ContainerFW>
-    <ProductSlider />
     <BlogSlider />
   </ContainerFW>
+
+  <ContainerFW>
+    <ProductSlider />
+  </ContainerFW>
+  
 </Layout>

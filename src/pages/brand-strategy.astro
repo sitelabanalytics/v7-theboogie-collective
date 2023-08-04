@@ -9,14 +9,11 @@ import Cta from "@components/cta-moonshot.astro";
 import SectionHeadImg from "@components/sectionhead-img.astro";
 import SectionHeadSecImg from "@components/sectionhead-img-rev.astro";
 import SectionTextarea from "@components/sectionmid-textarea.astro";
-import FeaturesGrid from "@components/grid-4x4-features.astro";
-import Pricing from "@components/pricing.astro";
-import Logos from "@components/logos.astro";
+import MoonshotHero from "@components/sectionmid-singleproduct-moonshot.astro";
 import Integrations from "@components/logos-integrations.astro";
 import GallerySlider from "@components/slider-lrg-services-brand.astro";
-import BlogSlider from "@components/slider-content.astro";
 import { Picture } from "@astrojs/image/components";
-import PagecoverHero from '../assets/products-sqr/brand-refresh.webp';
+import PagecoverHero from '../assets/products-sqr/complete-brand-packages.webp';
 import Pagecover from '../assets/backgrounds/balance.webp';
 import PagecoverSecondary from '../assets/backgrounds/funnel.webp';
 import CoverTextarea from '../assets/backgrounds/cubed.webp';
@@ -29,82 +26,74 @@ const pricing = [
   // starter 
   {  
     name: "Brand Direction",
-    price: "$1445",
+    price: "$245",
     popular: false,
     features: [
       "Competitive research",
       "Best working strategies within industry",
-      "Understand your market and audience",
-      "High conversion landing pages with purposeful marketing",
+      "Understand your market and audience from previous ad data",
     ],
     button: {
       text: "Purchase",
-      link: "https://buy.stripe.com/4gwaGdg1JeJL0MM6oF",
+      link: "#",
     },
   },
   // medium
   {
     name: "Brand Starter",
-    price: "$2445",
+    price: "$245",
     popular: false,
     features: [
       "2x 15-min video-call brand sessions",
       "2x design revisions",
-      "3x web pages w/ 0.2 sec load time avg.",
-      "High conversion landing pages with purposeful marketing",
+      "8x unique design releases (and complete licensing)",
     ],
     button: {
       text: "Purchase",
-      link: "https://buy.stripe.com/7sIcOleXFgRTbrq4gg",
+      link: "#",
     },
   },
   // large
   {
     name: "Brand Expansion",
-    price: "$3445",
+    price: "$445",
     popular: true,
     features: [
       "2x 15-min video-call brand sessions",
       "2x design revisions",
-      "3x web pages w/ 0.2 sec load time avg.",
-      "High conversion landing pages with purposeful marketing",
-      "Simple social conversion tracking",
-      "Social brand pack w/ 2x design releases",
+      "16x unique design releases (must have idea to expand upon)",
     ],
     button: {
       text: "Purchase",
-      link: "https://buy.stripe.com/28o15Dg1JfNPcvufZ6",
+      link: "#",
     },
   },
   // e-commerce
   {
     name: "Complete Brand Pack",
-    price: "$6445",
+    price: "$945",
     popular: false,
     features: [
       "2x 15-min video-call brand sessions",
       "2x design revisions",
-      "3x web pages w/ 0.2 sec load time avg.",
-      "High conversion landing pages with purposeful marketing",
-      "Simple social conversion tracking",
-      "Social brand pack w/ 2x design releases",
+      "24x unique design releases",
     ],
     button: {
       text: "Purchase",
-      link: "https://buy.stripe.com/cN2eWtdTBdFH1QQ14d",
+      link: "#",
     },
   },
 ];
 ---
 
-<Layout title="Brand Design + Strategy">
+<Layout title="Complete Brand Design Packs + Industry Specific Strategies">
 
 
 
   <ContainerFW>
     <SectionEmail>
       <Fragment slot="title">
-        Brand design + strategy by global marketing managers.
+        Complete brand design packs + industry specific strategies.
       </Fragment>
       <Fragment slot="desc">
         Effective marketing is simply no accident, not even close. We design brands that seemlessly 
@@ -123,10 +112,6 @@ const pricing = [
                 />
       </Fragment>
     </SectionEmail>
-  </ContainerFW>
-
-  <ContainerFW>
-    <GallerySlider />
   </ContainerFW>
 
   <ContainerXL>
@@ -158,7 +143,7 @@ const pricing = [
   <ContainerXL>
     <SectionHeadSecImg>
       <Fragment slot="title">
-        Cloud-based mock-up revision.
+        Cloud-based revisions.
       </Fragment>
       <Fragment slot="desc">
         We know how important it is to create and revise hundreds of ideas quickly to find the best. Using cloud-based 
@@ -186,7 +171,7 @@ const pricing = [
 
   <ContainerXL>
     <SectionTextarea>
-      <Fragment slot="title">SEO-friendly brand strategies.</Fragment>
+      <Fragment slot="title">Organic brand strategies.</Fragment>
       <Fragment slot="desc">
         Ignite your brand's online presence with Aidxn Design's SEO-friendly strategies. 
         Experts in SEO designing brand strategies that not only captivate your audience 
@@ -274,11 +259,16 @@ const pricing = [
       </Fragment>
     </Sectionhead>
 
+    <MoonshotHero />
+
   </Container>
 
   <Container>
     <Cta />
   </Container>
 
-  
+  <ContainerFW>
+    <GallerySlider />
+  </ContainerFW>
+
 </Layout>

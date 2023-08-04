@@ -20,8 +20,8 @@ const resolvedImageWithDomain = new URL(
 const { title } = Astro.props;
 
 const makeTitle = title
-  ? title + " | " + "Web Design & Marketing Automation"
-  : "Aidxn Web Design & Ad Management - Reliable Marketing Management";
+  ? title + " | " + "Design by Aiden"
+  : "Award-winning web design and marketing management based on the Gold Coast, over 10 years experience. Monthly marketing management and optisation all at a fixed price, pause anytime.";
 ---
 
 
@@ -32,21 +32,13 @@ const makeTitle = title
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="sitemap" href="/sitemap-index.xml">
+    <link rel="sitemap" href="/sitemap.xml">
     
-    <!-- preload custom font -->
-    <link
-    rel="preload"
-    href="/fonts/wotfard-semibold.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-    />
 
     <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
     <SEO
       title={makeTitle}
-      description="Cutting Edge Web Design & Marketing Automation on the Gold Coast. Refresh your brand and get a faster, more competitive website for less with Velocity7, our in-house website framework."
+      description="Award-winning web design and marketing management based on the Gold Coast, over 10 years experience. Monthly marketing management and optisation all at a fixed price, pause anytime."
       canonical={canonicalURL}
       twitter={{
         creator: "@aidenwood",
@@ -57,15 +49,15 @@ const makeTitle = title
         basic: {
           url: canonicalURL,
           type: "website",
-          title: `Aidxn Code & Design - Build your Website with Velocity7`,
+          title: `Aidxn Design | Web Design + Marketing Management`,
           image: resolvedImageWithDomain,
         },
         image: {
-          alt: "Cutting Edge Web Design & Marketing Automation on the Gold Coast. Refresh your brand and get a faster, more competitive website for less with Velocity7, our in-house website framework.",
+          alt: "Award-winning web design and marketing management based on the Gold Coast, over 10 years experience. Monthly marketing management and optisation all at a fixed price, pause anytime.",
         },
       }}
     />
-    
+
   <!-- aidxn.com property linked to search console for better SEO - Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MN4T5PXYLD"></script>
     <script>
@@ -75,25 +67,11 @@ const makeTitle = title
 
       gtag('config', 'G-MN4T5PXYLD');
     </script>
-    
-    <!-- Meta Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1456501161773389');
-      fbq('track', 'PageView');
-      </script>
-      <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1456501161773389&ev=PageView&noscript=1"
-      /></noscript>
-    <!-- End Meta Pixel Code -->
   </head>
+
+  <style>
+    html { max-width: 100vw; overflow-x: hidden; }
+  </style>
   
   <body class="bg-white">
     <Navbar />

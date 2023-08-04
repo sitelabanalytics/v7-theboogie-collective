@@ -5,6 +5,8 @@ import ContainerXL from "@components/container-xl.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionmid.astro";
 import SectionEmail from "@components/sectionhead-email.astro";
+import Integrations from "@components/logos-integrations.astro";
+import MoonshotHero from "@components/sectionmid-singleproduct-moonshot.astro";
 import Cta from "@components/cta.astro";
 import SectionHeadImg from "@components/sectionhead-img.astro";
 import SectionHeadSecImg from "@components/sectionhead-img-rev.astro";
@@ -16,15 +18,14 @@ import Pagecover from '../assets/backgrounds/balance.webp';
 import PagecoverSecondary from '../assets/backgrounds/funnel.webp';
 import CoverTextarea from '../assets/backgrounds/cubed.webp';
 import { Icon } from "astro-icon";
-
 ---
 
-<Layout title="Complete Marketing Management">
+<Layout title="Marketing Strategy Optimisation + Automation for Lead Generation">
 
   <ContainerFW>
     <SectionEmail>
       <Fragment slot="title">
-        Global scale Gold Coast digital marketing.
+        Marketing Strategy Optimisation + Automation for Lead Generation.
       </Fragment>
       <Fragment slot="desc">      
         The seemless solution for web design, development, and marketing all-in-one with Aidxn Design. 
@@ -44,10 +45,6 @@ import { Icon } from "astro-icon";
                 />
       </Fragment>
     </SectionEmail>
-  </ContainerFW>
-
-  <ContainerFW>
-    <GallerySlider />
   </ContainerFW>
 
   <ContainerXL>
@@ -100,6 +97,9 @@ import { Icon } from "astro-icon";
                 />
       </Fragment>
     </SectionHeadSecImg>
+
+    <Integrations />
+
   </ContainerXL>
 
   <ContainerXL>
@@ -182,21 +182,27 @@ import { Icon } from "astro-icon";
   </ContainerXL>
 
   <Container>
-
     <Sectionhead>
-      <Fragment slot="title">Month on Month Marketing Optimisation with Moonshot.</Fragment>
+      <Fragment slot="title">Monthly marketing optimisation that comes to you.</Fragment>
       <Fragment slot="desc"
-        >Get the best of everything with offer at a fixed monthly price. Allowing us to get to know your brand 
-        and customer deeply. We aim to constantly improve your brand's performance, month on month. But we are also 
-        completely honest and transparent, if a month isn't looking like it's going on track, we double down to find 
-        the reason and fix it fast. As people who have run our own businesses, we understand how quickly money can burn.
+        >Our Moonshot Plan is a month to month complete website and marketing management service. With only 10 spaces available, we aim to 
+        give businesses a real option for outsourcing marketing without losing control. We are serious about marketing data analysis and optimisation. 
+        Designed to take the least amount of your time as possible, while still easily recieving your input. $4445/month, Pause anytime.
       </Fragment>
     </Sectionhead>
-
   </Container>
+
+  <ContainerXL>
+    <MoonshotHero />
+  </ContainerXL>
+
 
   <Container>
     <Cta />
   </Container>
+
+  <ContainerFW>
+    <GallerySlider />
+  </ContainerFW>
   
 </Layout>

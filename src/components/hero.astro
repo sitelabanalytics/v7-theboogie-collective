@@ -1,10 +1,13 @@
 ---
 import Link from "@components/ui/link.astro";
 import { Icon } from "astro-icon";
+import { Picture } from "@astrojs/image/components";
+import hero1 from "../assets/tbc/hero-hh2-stage-night-med.jpg";
+
 ---
 
 <main class="my-8 md:my-16">
-  <div id="heroSection" class="flex flex-col-reverse md:flex-row items-center mb-8">
+  <div id="heroSection" class="flex flex-col-reverse items-center mb-8">
     
     <div class="w-full">
 
@@ -12,7 +15,7 @@ import { Icon } from "astro-icon";
         <h1 style="heroTagline" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl w-full max-w-6xl pt-4 md:pt-8 md:pr-8 lg:pr-24 font-bold tracking-tight">
           The Boogie Collective
         </h1>
-        <p class="text-sm lg:text-lg mt-4 text-slate-700 w-full max-w-3xl">
+        <p class="text-sm lg:text-lg mt-4 text-slate-700 w-full max-w-6xl">
           Australian music label for a wide range of progressive electronic artists. From disco to bush techno, jazz-influenced breaks to dark dub-bass. 
           We aim to support artists that consistently show electronic music is full of soul. Helping you stop dancing inside since 2016.   
           <wbr>
@@ -38,8 +41,18 @@ import { Icon } from "astro-icon";
       </div>
     </div>
     <div class="w-full">
-      <div id="imageContainer">
-        
+      <div id="imageContainer" class="w-full">
+          <Picture
+                src={hero1}
+                sizes="(max-width: 2400px) 2400px, 1200px"
+                widths={[1200, 2400]}
+                loading="eager"
+                aspectRatio="3:2"
+                background="#f2f2f2"
+                fit="cover"
+                position="center"
+                class=""
+              />
       </div>
     </div>
   </div>

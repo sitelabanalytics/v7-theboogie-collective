@@ -6,6 +6,10 @@ import { Picture } from "@astrojs/image/components";
 
 import Hero from "@components/hero.astro";
 import Grid from "@components/hero-grid-artists.astro";
+import GridSec from "@components/hero-grid-artists-sec.astro";
+
+import ImmersiveSec from "@components/hero-grid-stage-sec.astro";
+import Immersive from "@components/hero-grid-stage.astro";
 
 import WorksSliderHH1 from "@components/slider-med-hh1.astro";
 import WorksSliderHH2 from "@components/slider-med-hh2.astro";
@@ -30,8 +34,11 @@ import Layout from "@layouts/Layout.astro";
 <Layout title="Home">
   <ContainerFW>
     <Hero />
-    <Grid />
+  </ContainerFW>
 
+  <ContainerFW>
+    <Grid />
+    <GridSec />
   </ContainerFW>
 
   <ContainerXL>
@@ -87,37 +94,13 @@ import Layout from "@layouts/Layout.astro";
       </Fragment>
     </SectionHeadImgRev> 
     
-  
-
-    <SectionHeadImg>
-    <Fragment slot="smltitle">
-      Lighting + Installations
-    </Fragment>
-    <Fragment slot="title">
-      Immersive Structures
-    </Fragment>
-    <Fragment slot="desc">
-      We love the oppurtunuity to work on events outside of our own, we do so under Immersive Structures and have worked on over 50 events over the years. 
-      These days we specialise and hold all necessary equipment for creative bamboo chill spaces and shade areas, as well as a range of other equipment.
-    </Fragment>
-    <Fragment slot="cover">
-      <Picture  id="glass-card-dark"
-                src={ImmersiveCover}
-                sizes="(max-width: 2000px) 2000px, 1000px"
-                widths={[1000, 1500, 2000]}
-                aspectRatio="1:1"
-                background="#f2f2f2"
-                fit="cover"
-                position="center"
-                class="w-full rounded duration-200 hover:shadow-sm"
-              />
-    </Fragment>
-    </SectionHeadImg>    
-    
   </ContainerXL>
 
   <ContainerFW>
-    
+  
+    <Immersive />
+    <ImmersiveSec />
+  
     <WorksSliderHH1 />
     <WorksSliderHH2 />
     <WorksSliderDD />
@@ -125,10 +108,5 @@ import Layout from "@layouts/Layout.astro";
     <WorksSliderRabbits />
 
   </ContainerFW>
-
-
-  <Container>
-    <Cta />
-  </Container>
   
 </Layout>

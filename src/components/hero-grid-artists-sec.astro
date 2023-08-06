@@ -1,0 +1,155 @@
+---
+// @ts-ignore
+import { Icon } from "astro-icon";
+import Link from "@components/ui/link.astro";
+
+import GraphicDesign from '../assets/aidxn/trig.svg';
+import WebDesign from '../assets/aidxn/sqr.svg';
+import Marketing from '../assets/aidxn/poly.svg';
+import VideoProd from '../assets/aidxn/hex.svg';
+
+
+const features = [
+  {
+    title: "Mood:Blend",
+    description:
+      "Cairns born, disco and soul insprired bush techno and progressive tech.",
+    imgsrc: GraphicDesign,
+    imgalt: "The Boogie Collective artist Moodblend",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/moodblend",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Scrub Rat",
+    description:
+      "Tasmania based breaks and dub artist with some of the best mixing you'll find.",
+    imgsrc: WebDesign,
+    imgalt: "The Boogie Collective artist scrub rat",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/scrubrataus",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Lucid Gecko",
+    description:
+      "Sunshine Coast hinterland inspired morning psytrance, breaks and DnB sounds.",
+    imgsrc: Marketing,
+    imgalt: "The Boogie Collective artist Lucid Gecko",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/lucid-gecko",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Green Euro",
+    description:
+      "Warehouse inspired progressive full-on out of the Mid Australian Coast.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Green Euro",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/greeneuro",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Jiver",
+    description:
+      "Brisbane based warehouse techno and tech. One of Brisbanes's upcoming artists.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Jiver",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/jiver-2",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Sassafras",
+    description:
+      "Brisbane dark techno and deep progressive tech, spinning ruckus always.",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/sassafrasaus",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Nemophilist",
+    description:
+      "One of the best upcoming deep psytrance artists out of the central coast.",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/joshua-hyde",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "D-Lysergic",
+    description:
+      "Central coast psytrance artist creating great events and sets for over 15 years.",
+    imgalt: "The Boogie Collective artist Sassafras",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "https://soundcloud.com/d-lysergic",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+];
+---
+<style>
+  #heroSection {
+    background-image: url('../assets/tbc/hh2-3-med.jpg');
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+
+<main id="heroSection" class="my-8 md:my-16 pb-36 pt-36 rounded-3xl">
+
+  <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8 m-4">
+    {
+      features.map((item) => (
+        <div class="flex items-start">
+          <div id="glass-card" class="card-padding w-full flex flex-col items-start justify-center">
+            <div id="textContainer" class="w-full">
+              <h2 class="font-semibold text-xl md:text-2xl lg:text-3xl">{item.title}</h2>{" "}
+              <p class="text-xs md:text-md mt-4 leading-relaxed">{item.description}</p>
+            </div>
+            <div id="links" class="pt-6">
+              <Link 
+                class="mr-2"
+                href={item.artistlink || "#"}
+                block
+                style={item.artiststyle ? "primary" : "outline"}>
+                {item.artistbtntxt || "Get Started"}
+              </Link>
+              <Link 
+                class="mr-2 bg-opacity-0"
+                href={item.link || "#"}
+                block
+                style="outline">
+                {item.btntxt || "Get Started"}
+              </Link>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</main>

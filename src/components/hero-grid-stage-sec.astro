@@ -1,0 +1,144 @@
+---
+// @ts-ignore
+import { Icon } from "astro-icon";
+import Link from "@components/ui/link.astro";
+
+import GraphicDesign from '../assets/aidxn/trig.svg';
+import WebDesign from '../assets/aidxn/sqr.svg';
+import Marketing from '../assets/aidxn/poly.svg';
+import VideoProd from '../assets/aidxn/hex.svg';
+
+
+const features = [
+  {
+    title: "Stage Design + Construction",
+    description:
+      "Specialising in bamboo construction of immersive 3D shapes and designs.",
+    imgsrc: GraphicDesign,
+    imgalt: "The Boogie Collective artist Moodblend",
+    link: "/contact",
+    style: "primary",
+    btntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Shade Installations",
+    description:
+      "Tasmania based breaks and dub artist with some of the best mixing you'll find.",
+    imgsrc: WebDesign,
+    imgalt: "The Boogie Collective artist scrub rat",
+    link: "/artists",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Lighting",
+    description:
+      "Expertly crafted lighting installations with minimal power usage.",
+    imgsrc: Marketing,
+    imgalt: "The Boogie Collective artist Lucid Gecko",
+    link: "/artists",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Art Installations",
+    description:
+      "Our own unique art installations for outdoor events, coloured to your event.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Green Euro",
+    link: "/artists",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Event Management",
+    description:
+      "Our own unique art installations for outdoor events, coloured to your event.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Green Euro",
+    link: "/artists",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Stage Management",
+    description:
+      "Our own unique art installations for outdoor events, coloured to your event.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Green Euro",
+    link: "/artists",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Web Design",
+    description:
+      "We have experience designing and developing over 20 events and ticketing websites.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Green Euro",
+    link: "/artists",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+  {
+    title: "Digital Marketing",
+    description:
+      "Helping over 10 events outside of our own with maximising their marketing budget.",
+    imgsrc: VideoProd,
+    imgalt: "The Boogie Collective artist Green Euro",
+    link: "/immersive-structures#digital-marketing",
+    style: "primary",
+    btntxt: "Artists",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
+  },
+];
+---
+<style>
+  #heroSection {
+    background-image: url('../assets/tbc/gal-dd-2.webp');
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+
+<main id="heroSection" class="my-8 md:my-16 pb-36 pt-36 rounded-3xl">
+
+  <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8 m-4">
+    {
+      features.map((item) => (
+        <div class="flex items-start">
+          <div id="glass-card" class="card-padding w-full flex flex-col items-start justify-center">
+            <div id="textContainer" class="w-full">
+              <h2 class="font-semibold text-xl md:text-2xl lg:text-3xl">{item.title}</h2>{" "}
+              <p class="text-xs md:text-md mt-4 leading-relaxed">{item.description}</p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</main>

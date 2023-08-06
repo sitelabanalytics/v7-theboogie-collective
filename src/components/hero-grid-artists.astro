@@ -65,7 +65,7 @@ const features = [
   {
     title: "Jiver",
     description:
-      "Brisbane based warehouse techno and tech. One of the city's best upcoming artists.",
+      "Brisbane based warehouse techno and tech. One of Brisbanes's upcoming artists.",
     imgsrc: VideoProd,
     imgalt: "The Boogie Collective artist Jiver",
     link: "/artists",
@@ -78,7 +78,7 @@ const features = [
   {
     title: "Sassafras",
     description:
-      "Brisbane dark techno and deep progressive tech, spinning ruckus at a range of events.",
+      "Brisbane dark techno and deep progressive tech, spinning ruckus always.",
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
@@ -111,38 +111,42 @@ const features = [
   },
 ];
 ---
+<style>
+  #heroSection {
+    background-image: url('../assets/tbc/uv-banners.jpg');
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+  }
+</style>
 
-<main class="my-16 md:my-32">
-  <div id="introContainer" class="mb-4 md:mb-8">
-    <h5 class="text-sm lg:text-md text-slate-700 mb-2">
-      Artists
-    </h5>
-    <h3 class="text-2xl md:text-3xl lg:text-5xl mb-4 font-bold lg:tracking-tight">
-      Helping you stop dancing inside.
-    </h3>
-    <div class="flex flex-col sm:flex-row">
-    <p class="w-full sm:w-1/2 text-sm lg:text-lg pr-4 mb-6 lg:max-w-6xl text-slate-700"> 
-       
-      Local and nationally touring artists from across the Eastern Australian Coast. We have always focused on electronic music production made for outdoor systems that lets the ear and mind begin to wander.
-    
-    </p>
-    <p class="w-full sm:w-1/2 text-sm lg:text-lg pr-4 mb-6 lg:max-w-6xl text-slate-700"> 
- 
-      We have never aimed for a particular genre, supporting Australian electronic artists with sets that full of fun and soul. Providing artist showcases for festivals and clubs that scale genres.
-    
-    </p>
-    
+<main id="heroSection" class="my-16 md:my-32 md:py-48 rounded-3xl">
+  <div class="mb-4 md:mb-8 m-4">
+    <div id="glass-card" class="max-w-2xl">
+      <h5 class="text-sm lg:text-md text-slate-700 mb-2">
+        Artists
+      </h5>
+      <h3 class="text-2xl md:text-3xl lg:text-5xl mb-4 font-bold lg:tracking-tight">
+        Helping you stop dancing inside.
+      </h3>
+      <div class="">
+      <p class="text-md lg:text-lg pr-4 mb-6"> 
+        
+        Local and nationally touring artists from across the Eastern Australian Coast. We have always focused on electronic music production made for outdoor systems that lets the ear and mind begin to wander.
+        We have never aimed for a particular genre, supporting Australian electronic artists with sets that full of fun and soul. Providing artist showcases for festivals and clubs that scale genres.
+      </p>
+    </div>
     </div>
   </div>
 
-  <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8">
+  <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8 m-4">
     {
       features.map((item) => (
         <div class="flex items-start">
           <div id="glass-card" class="card-padding w-full flex flex-col items-start justify-center">
             <div id="textContainer" class="w-full">
               <h2 class="font-semibold text-xl md:text-2xl lg:text-3xl">{item.title}</h2>{" "}
-              <p class="text-slate-700 text-xs md:text-md mt-4 leading-relaxed">{item.description}</p>
+              <p class="text-xs md:text-md mt-4 leading-relaxed">{item.description}</p>
             </div>
           </div>
         </div>

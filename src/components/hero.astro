@@ -5,19 +5,27 @@ import { Picture } from "@astrojs/image/components";
 import hero1 from "../assets/tbc/hero-hh2-stage-night-med.jpg";
 
 ---
+<style>
+  #heroSection {
+    background-image: url('../assets/tbc/hero-hh2-stage-night-med.jpg');
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+  }
+</style>
 
-<main class="my-8 md:my-16">
-  <div id="heroSection" class="flex flex-col-reverse items-center mb-8">
+<main class="my-4 md:my-8">
+  <div id="heroSection" class="flex flex-col lg:flex-row items-end rounded-3xl h-screen">
     
-    <div class="w-full">
+    <div>
 
-      <div id="glassCard">
-        <h1 style="heroTagline" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl w-full max-w-6xl pt-4 md:pt-8 md:pr-8 lg:pr-24 font-bold tracking-tight">
-          The Boogie Collective
+      <div id="glass-card" class="max-w-2xl m-4">
+        <h1 style="heroTagline" class="text-4xl sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl w-full max-w-6xl font-bold tracking-tight">
+          Welcome to the Collective.
         </h1>
-        <p class="text-sm lg:text-lg mt-4 text-slate-700 w-full max-w-6xl">
-          Australian music label for a wide range of progressive electronic artists. From disco to bush techno, jazz-influenced breaks to dark dub-bass. 
-          We aim to support artists that consistently show electronic music is full of soul. Helping you stop dancing inside since 2016.   
+        <p class="text-lg lg:text-xl mt-4">
+          Australian music label for progressive electronic artists. Sets with soul, not held within bounds. 
+          From disco to bush techno, breaks to dark dub-bass, dark prog to full on. Helping you stop dancing inside since 2016.   
           <wbr>
         </p>
         <div class="mt-6 flex flex-col sm:flex-row justify-start gap-3">
@@ -40,20 +48,6 @@ import hero1 from "../assets/tbc/hero-hh2-stage-night-med.jpg";
         </div>
       </div>
     </div>
-    <div class="w-full">
-      <div id="imageContainer" class="w-full">
-          <Picture
-                src={hero1}
-                sizes="(max-width: 2400px) 2400px, 1200px"
-                widths={[1200, 2400]}
-                loading="eager"
-                aspectRatio="3:2"
-                background="#f2f2f2"
-                fit="cover"
-                position="center"
-                class=""
-              />
-      </div>
-    </div>
+    
   </div>
 </main>

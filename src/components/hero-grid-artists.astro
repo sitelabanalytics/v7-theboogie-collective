@@ -16,12 +16,12 @@ const features = [
       "Cairns born, disco and soul insprired bush techno and progressive tech.",
     imgsrc: GraphicDesign,
     imgalt: "The Boogie Collective artist Moodblend",
-    link: "/artists",
+    link: "/contact",
     style: "primary",
-    btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    btntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "Scrub Rat",
@@ -32,9 +32,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "Lucid Gecko",
@@ -45,9 +45,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "Green Euro",
@@ -58,9 +58,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "Jiver",
@@ -71,9 +71,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "Sassafras",
@@ -82,9 +82,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "Nemophilist",
@@ -93,9 +93,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
   {
     title: "D-Lysergic",
@@ -105,9 +105,9 @@ const features = [
     link: "/artists",
     style: "primary",
     btntxt: "Artists",
-    resultslink: "/contact",
-    resultsstyle: "outline",
-    resultsbtntxt: "Book",
+    artistlink: "/contact",
+    artiststyle: "outline",
+    artistbtntxt: "Music",
   },
 ];
 ---
@@ -120,20 +120,18 @@ const features = [
   }
 </style>
 
-<main id="heroSection" class="my-16 md:my-32 md:py-48 rounded-3xl">
+<main id="heroSection" class="my-24 md:my-32 pt-96 pb-8 rounded-3xl">
   <div class="mb-4 md:mb-8 m-4">
     <div id="glass-card" class="max-w-2xl">
-      <h5 class="text-sm lg:text-md text-slate-700 mb-2">
+      <h5 class="text-sm lg:text-md text-slate-900 mb-2">
         Artists
       </h5>
       <h3 class="text-2xl md:text-3xl lg:text-5xl mb-4 font-bold lg:tracking-tight">
         Helping you stop dancing inside.
       </h3>
       <div class="">
-      <p class="text-md lg:text-lg pr-4 mb-6"> 
-        
-        Local and nationally touring artists from across the Eastern Australian Coast. We have always focused on electronic music production made for outdoor systems that lets the ear and mind begin to wander.
-        We have never aimed for a particular genre, supporting Australian electronic artists with sets that full of fun and soul. Providing artist showcases for festivals and clubs that scale genres.
+      <p class="text-md lg:text-lg"> 
+        Local and nationally touring artists from across the Eastern Australian Coast. We have always focused on electronic music production made for outdoor systems that lets the ear and mind wander.
       </p>
     </div>
     </div>
@@ -147,6 +145,22 @@ const features = [
             <div id="textContainer" class="w-full">
               <h2 class="font-semibold text-xl md:text-2xl lg:text-3xl">{item.title}</h2>{" "}
               <p class="text-xs md:text-md mt-4 leading-relaxed">{item.description}</p>
+            </div>
+            <div id="links" class="pt-6">
+              <Link 
+                class="mr-2"
+                href={item.artistlink || "#"}
+                block
+                style={item.artiststyle ? "primary" : "outline"}>
+                {item.artistbtntxt || "Get Started"}
+              </Link>
+              <Link 
+                class="mr-2 bg-opacity-0"
+                href={item.link || "#"}
+                block
+                style="outline">
+                {item.btntxt || "Get Started"}
+              </Link>
             </div>
           </div>
         </div>

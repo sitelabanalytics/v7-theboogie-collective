@@ -7,14 +7,16 @@ import { Picture } from "@astrojs/image/components";
 import Hero from "@components/hero.astro";
 import Grid from "@components/hero-grid-artists.astro";
 
-import WorksSliderBall from "@components/slider-med-hh1.astro";
-import WorksSliderRay from "@components/slider-med-hh2.astro";
-import WorksSliderSnacks from "@components/slider-med-boho.astro";
+import WorksSliderHH1 from "@components/slider-med-hh1.astro";
+import WorksSliderHH2 from "@components/slider-med-hh2.astro";
+import WorksSliderBoho from "@components/slider-med-boho.astro";
+import WorksSliderDD from "@components/slider-med-dd.astro";
+import WorksSliderRabbits from "@components/slider-med-rabbits.astro";
 
 import SectionHeadImg from "@components/sectionhead-img.astro";
 import SectionHeadImgRev from "@components/sectionhead-img-rev.astro";
 
-import ImmersiveCover from '../assets/tbc/immersive-3.jpg';
+import ImmersiveCover from '../assets/tbc/gal-boho-1.jpg';
 import EventsCover from '../assets/tbc/hh2-2-med.jpg';
 import EventsCover2 from '../assets/tbc/DSC01565.jpg';
 import Cta from "@components/cta.astro";
@@ -36,19 +38,19 @@ import Layout from "@layouts/Layout.astro";
   
     <SectionHeadImg>
       <Fragment slot="smltitle">
-        Events
+        Artists
       </Fragment>
       <Fragment slot="title">
-        SEQLD outdoor electronic events.
+        Outdoor electronic artists.
       </Fragment>
       <Fragment slot="desc">
-        We run events with detail and love, just like your grandma's apple pie reciepe, we have our own and it's heavily guarded. 
-        We aim to create spaces that everyone feels safe and included, and allowed to express themselves how they feel. 
-        Please do you part when attending our events to offer help and hugs where needed.
+        The Boogie Collective started as a platform to help promote and book the right artists for the right sets and events in the 
+        less organised days of Australian Outdoor Events. Luckily the whole industry has evolved over the years and so have we, turning into 
+        a full blown music label and promotion team.
       </Fragment>
       <Fragment slot="cover">
         <Picture  id="glass-card-dark"
-                  src={EventsCover}
+                  src={EventsCover2}
                   sizes="(max-width: 2000px) 2000px, 1000px"
                   widths={[1000, 1500, 2000]}
                   aspectRatio="1:1"
@@ -73,7 +75,7 @@ import Layout from "@layouts/Layout.astro";
       </Fragment>
       <Fragment slot="cover">
         <Picture  id="glass-card-dark"
-                  src={EventsCover2}
+                  src={EventsCover}
                   sizes="(max-width: 2000px) 2000px, 1000px"
                   widths={[1000, 1500, 2000]}
                   aspectRatio="1:1"
@@ -85,9 +87,7 @@ import Layout from "@layouts/Layout.astro";
       </Fragment>
     </SectionHeadImgRev> 
     
-  </ContainerXL>
-
-  <ContainerXL>
+  
 
     <SectionHeadImg>
     <Fragment slot="smltitle">
@@ -114,13 +114,15 @@ import Layout from "@layouts/Layout.astro";
     </Fragment>
     </SectionHeadImg>    
     
-  </ContainerXl>
+  </ContainerXL>
 
   <ContainerFW>
     
-    <WorksSliderBall />
-    <WorksSliderRay />
-    <WorksSliderSnacks />
+    <WorksSliderHH1 />
+    <WorksSliderHH2 />
+    <WorksSliderBoho />
+    <WorksSliderRabbits />
+    <WorksSliderDD />
 
   </ContainerFW>
 

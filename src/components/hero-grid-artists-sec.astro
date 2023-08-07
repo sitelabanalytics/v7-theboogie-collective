@@ -111,18 +111,11 @@ const features = [
   },
 ];
 ---
-<style>
-  #heroSection {
-    background-image: url('../assets/tbc/DSC01565.jpg');
-    background-repeat: no-repeat; 
-    background-size: cover;
-    background-position: center;
-  }
-</style>
 
-<main id="heroSection" class="my-8 md:my-16 pb-36 pt-36 rounded-3xl">
 
-  <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8 m-4">
+<main id="heroSection" class="my-8 md:my-16 rounded-3xl">
+
+  <div id="gridContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 m-4">
     {
       features.map((item) => (
         <div class="flex items-start">
@@ -131,7 +124,7 @@ const features = [
               <h2 class="font-semibold text-xl md:text-2xl lg:text-3xl">{item.title}</h2>{" "}
               <p class="text-xs md:text-md mt-4 leading-relaxed">{item.description}</p>
             </div>
-            <div id="links" class="pt-6">
+            <div id="links" class="pt-6 hidden md:flex">
               <Link 
                 class="mr-2"
                 href={item.artistlink || "#"}
@@ -140,7 +133,7 @@ const features = [
                 {item.artistbtntxt || "Get Started"}
               </Link>
               <Link 
-                class="mr-2"
+                class="mr-2 "
                 href={item.link || "#"}
                 block
                 style="outline">

@@ -38,15 +38,15 @@
 
 
 h1, h2, h3, h4 { font-family: 'quarto'; color: white; }
-h5, h6 { font-family: 'inconsolata'; text-transform: uppercase; color: #acacac; }
-p, span, html, button, a, b { font-family: 'wotfard'; color: #acacac; }
+h5, h6 { font-family: 'inconsolata'; text-transform: uppercase; color: #d8d8d8; }
+p, span, html, button, a, b { font-family: 'wotfard'; color: #d8d8d8; }
 
 /* Glass-card effect v7 */
 #glass-card {
   border-radius: 12px;
   padding: 45px 20px;
   background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(45px);
   border: 0.5px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 30px 5px rgba(0, 0, 0, 0.1);
   transition-duration: 400ms;

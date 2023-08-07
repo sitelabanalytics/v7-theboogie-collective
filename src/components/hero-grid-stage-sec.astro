@@ -116,18 +116,10 @@ const features = [
   },
 ];
 ---
-<style>
-  #heroSection {
-    background-image: url('../assets/tbc/gal-dd-2.webp');
-    background-repeat: no-repeat; 
-    background-size: cover;
-    background-position: center;
-  }
-</style>
 
-<main id="heroSection" class="my-8 md:my-16 pb-36 pt-36 rounded-3xl">
+<main id="heroSection" class="my-8 md:my-16 rounded-3xl">
 
-  <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8 m-4">
+  <div id="gridContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 m-4">
     {
       features.map((item) => (
         <div class="flex items-start">

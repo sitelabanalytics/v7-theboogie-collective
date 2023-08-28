@@ -31,12 +31,22 @@ import Logos from "@components/logos.astro";
 import Layout from "@layouts/Layout.astro";
 
 import ContactSimple from "@components/contactform-simple.astro";
+import ContactHero from "@components/hero-end.astro";
+
 ---
 
 <Layout title="Home">
   <ContainerFW>
     <Hero />
   </ContainerFW>
+
+  <ContainerFW>
+    <Immersive />
+  </ContainerFW>
+
+  <ContainerXL>
+    <ImmersiveSec />
+  </ContainerXL>
 
   <Container>
     <SectionHeadImg>
@@ -73,15 +83,16 @@ import ContactSimple from "@components/contactform-simple.astro";
     <WorksSliderRabbits />
   </ContainerFW>
 
-  <ContainerXL>
-  
-    <Immersive />
-    <ImmersiveSec />
-  
-  </ContainerXL>
+  <Container>
+    <ContactSimple />
+  </Container>
+
+  <ContainerFW>
+    <Grid />
+  </ContainerFW>
 
   <ContainerXL>
-    <Grid />
+    
     <GridSec />
   </ContainerXL>
 
@@ -114,7 +125,7 @@ import ContactSimple from "@components/contactform-simple.astro";
   </Container>
 
   <ContainerFW>
-    <ContactSimple />
+    <ContactHero />
   </ContainerFW>
   
 </Layout>

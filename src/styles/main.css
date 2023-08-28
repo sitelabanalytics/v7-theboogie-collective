@@ -53,15 +53,12 @@ p, span, html, button, a, b { font-family: 'wotfard'; color: #d8d8d8; }
   transition-timing-function: ease-in-out;
 
   background: rgba(2, 0, 36, 0.7);
-  background: linear-gradient(165deg, rgba(2, 0, 36, 0.51) 0%, rgba(9, 9, 121, 0.51) 65%, rgba(0, 213, 255, 0.51) 100%);
+  background: linear-gradient(165deg, rgba(2, 0, 36, 0.2) 0%, rgba(9, 9, 121, 0.2) 65%, rgba(0, 213, 255, 0.2) 100%);
   
 }
 
 #glass-card:hover {
   box-shadow: 0 30px 45px 2px #00000035;
-  background: linear-gradient(165deg, rgba(2, 0, 36, 0.80) 0%, rgba(9, 9, 121, 0.80) 30%, rgba(0, 213, 255, 0.80) 100%);
-  transition-duration: 0.5s;
-  animation-duration: 0.5s;
   transition-timing-function: ease-in-out;
 
 }

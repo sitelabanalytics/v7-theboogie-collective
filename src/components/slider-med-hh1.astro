@@ -34,34 +34,8 @@ const services = [
 .carousel-cell {
     margin-right: 10px;
     margin-bottom: 20px;
-    height: 460px;
     border-radius: 15px;
   }
-  @media only screen and (max-width: 1680px) {
-  .carousel-cell {
-    height: 360px;
-  }
-}
-@media only screen and (max-width: 1199px) {
-  .carousel-cell {
-    height: 260px;
-  }
-}
-@media only screen and (max-width: 768px) {
-  .carousel-cell {
-    height: 240px;
-  }
-}
-@media only screen and (max-width: 496px) {
-  .carousel-cell {
-    height: 200px;
-  }
-}
-@media only screen and (max-width: 396px) {
-  .carousel-cell {
-    height: 160px;
-  }
-}
 
   /* Start Flickity viewport safeguards V4 */
   main { max-width: 100%; }
@@ -97,7 +71,7 @@ const services = [
 <div id="sliderContainer" class="ball-carousel">
   {
     services.map((item) => (
-      <div class="carousel-cell flex flex-row justify-start items-center w-2/3 sm:w-1/2 md:w-2/5 xl:w-1/3">
+      <div class="carousel-cell flex flex-row justify-start items-center w-full sm:w-3/4 lg:w-3/5 xl:w-1/2">
         <Picture
               src={item.imgsrc}
               sizes="(max-width: 1680px) 1680px, 1260px, 840px"
@@ -121,9 +95,9 @@ const services = [
   var flkty = new Flickity( '.ball-carousel', {
   cellAlign: 'left',
   contain: true,
-  freeScroll: true,
   prevNextButtons: false,
-  pageDots: true
+  pageDots: true,
+  imagesLoaded: true
   // lower attraction and lower friction
   // slower transitions
   // easier to flick past cells

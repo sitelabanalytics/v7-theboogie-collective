@@ -18,19 +18,11 @@ import WorksSliderDD from "@components/slider-med-dd.astro";
 import WorksSliderRabbits from "@components/slider-med-rabbits.astro";
 
 import SectionHeadImg from "@components/sectionhead-img.astro";
-import SectionHeadImgRev from "@components/sectionhead-img-rev.astro";
 
-import ImmersiveCover from '../assets/tbc/gal-boho-1.jpg';
 import EventsCover from '../assets/tbc/hh2-2-med.jpg';
 import EventsCover2 from '../assets/tbc/hh2-3-med.jpg';
-import Cta from "@components/cta.astro";
-import CtaMoon from "@components/cta-moonshot.astro";
-import ProductSlider from "@components/slider-lrg-services-main.astro";
-import BlogSlider from "@components/slider-content.astro";
-import Logos from "@components/logos.astro";
 import Layout from "@layouts/Layout.astro";
 
-import ContactSimple from "@components/contactform-simple.astro";
 import ContactHero from "@components/hero-end.astro";
 
 ---
@@ -38,6 +30,10 @@ import ContactHero from "@components/hero-end.astro";
 <Layout title="Home">
   <ContainerFW>
     <Hero />
+  </ContainerFW>
+  
+  <ContainerFW>
+    <ContactHero />
   </ContainerFW>
 
   <ContainerFW>
@@ -48,54 +44,9 @@ import ContactHero from "@components/hero-end.astro";
     <WorksSliderDD />
   </ContainerFW>
 
-  <Container>
-    <ContactSimple />
-  </Container>
-
   <ContainerFW>
     <Grid />
   </ContainerFW>
-
-  <ContainerXL>
-    <GridSec />
-  </ContainerXL>
-
-  <ContainerFW>
-    <Immersive />
-  </ContainerFW>
-
-  <ContainerXL>
-    <ImmersiveSec />
-  </ContainerXL>
-
-  <Container>
-    <SectionHeadImg>
-      <Fragment slot="smltitle">
-        Events
-      </Fragment>
-      <Fragment slot="title">
-        Come raise some dust with us.
-      </Fragment>
-      <Fragment slot="desc">
-        We run two formats of events these days. Happiness Hill is our full-feature 3-day event, held in Jimna, QLD. 
-        Happiness Valley is our sister single night events. We only run events when they can be fully realised.
-      </Fragment>
-      <Fragment slot="cover">
-        <Picture  id="glass-card-dark"
-                  src={EventsCover}
-                  sizes="(max-width: 2000px) 2000px, 1000px"
-                  widths={[1000, 1500, 2000]}
-                  aspectRatio="1:1"
-                  background="#f2f2f2"
-                  fit="cover"
-                  position="center"
-                  class="w-full rounded duration-200 hover:shadow-sm"
-                />
-      </Fragment>
-    </SectionHeadImg> 
-  </Container>
-
-  
 
   <Container>
     <SectionHeadImg>
@@ -125,8 +76,43 @@ import ContactHero from "@components/hero-end.astro";
     </SectionHeadImg>
   </Container>
 
+  <ContainerXL>
+    <GridSec />
+  </ContainerXL>
+
   <ContainerFW>
-    <ContactHero />
+    <Immersive />
   </ContainerFW>
+
+  <Container>
+    <SectionHeadImg>
+      <Fragment slot="smltitle">
+        Events
+      </Fragment>
+      <Fragment slot="title">
+        Come raise some dust with us.
+      </Fragment>
+      <Fragment slot="desc">
+        We run two formats of events these days. Happiness Hill is our full-feature 3-day event, held in Jimna, QLD. 
+        Happiness Valley is our sister single night events. We only run events when they can be fully realised.
+      </Fragment>
+      <Fragment slot="cover">
+        <Picture  id="glass-card-dark"
+                  src={EventsCover}
+                  sizes="(max-width: 2000px) 2000px, 1000px"
+                  widths={[1000, 1500, 2000]}
+                  aspectRatio="1:1"
+                  background="#f2f2f2"
+                  fit="cover"
+                  position="center"
+                  class="w-full rounded duration-200 hover:shadow-sm"
+                />
+      </Fragment>
+    </SectionHeadImg> 
+  </Container>
+
+  <ContainerXL>
+    <ImmersiveSec />
+  </ContainerXL>
   
 </Layout>

@@ -21,12 +21,12 @@ import { Picture } from "@astrojs/image/components";
   }
   @media only screen and (max-width: 768px) {
     #heroSection {
-      min-height: 120vh;
+      min-height: 115vh;
     }
   }
 </style>
 
-<main class="my-4 md:my-8">
+<main class="my-8 md:my-16">
   <div id="heroSection" class="mx-auto flex flex-row items-end justify-start rounded-3xl">
     
     <div>
@@ -49,14 +49,14 @@ import { Picture } from "@astrojs/image/components";
             <!-- Create your free access key from https://web3forms.com/ -->
             <!-- key for email - aidenthomasgodbywood@gmail.com -->
             <input type="checkbox" class="hidden" style="display:none" name="botcheck" />
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
 
-              <div class="mb-5 w-full">
+              <div class="mb-2 w-full">
                 <input
                   type="text"
                   placeholder="Full Name"
                   required
-                  class="w-full px-4 py-3 border-2 text-white placeholder:text-gray-200 bg-gray-800 focus:bg-gray-600 duration-200 rounded-md outline-none focus:ring-4 border-gray-800 focus:border-gray-600 ring-gray-900"
+                  class="w-full px-4 py-2 border-2 text-white placeholder:text-gray-200 bg-gray-800 focus:bg-gray-600 duration-200 rounded-md outline-none focus:ring-4 border-gray-800 focus:border-gray-600 ring-gray-900"
                   name="name"
                 />
                 <div class="empty-feedback invalid-feedback text-red-400 text-sm mt-1">
@@ -65,7 +65,7 @@ import { Picture } from "@astrojs/image/components";
               </div>
 
   
-                <div class="mb-5 w-full">
+                <div class="mb-2 w-full">
                   
                   <label for="email_address" class="sr-only">Email Address</label><input
                     id="email_address"
@@ -73,7 +73,7 @@ import { Picture } from "@astrojs/image/components";
                     placeholder="Email Address"
                     name="email"
                     required
-                    class="w-full px-4 py-3 border-2  text-white placeholder:text-gray-200 bg-gray-800 focus:bg-gray-600 duration-200 rounded-md outline-none focus:ring-4 border-gray-800 focus:border-gray-600 ring-gray-900"
+                    class="w-full px-4 py-2 border-2  text-white placeholder:text-gray-200 bg-gray-800 focus:bg-gray-600 duration-200 rounded-md outline-none focus:ring-4 border-gray-800 focus:border-gray-600 ring-gray-900"
                   />
                   <div class="empty-feedback text-red-400 text-sm mt-1">
                     Please provide your email address.
@@ -84,7 +84,7 @@ import { Picture } from "@astrojs/image/components";
                 </div>
               </div>
 
-              <div class="mb-5 w-full">
+              <div class="mb-2 w-full">
                 <input type="tel" id="phone" name="phone" placeholder="Mobile Number" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="w-full px-4 py-3 border-2  text-white placeholder:text-gray-200 bg-gray-800 focus:bg-gray-600 duration-200 rounded-md outline-none focus:ring-4 border-gray-800 focus:border-gray-600 ring-gray-900" required>
                 <br><br /><label for="phone">Mobile number required for sharing event addresses only. <br>Will not be shared or sold, and is protected by privacy laws.</label>
                 <div class="empty-feedback text-red-400 text-sm mt-1">
@@ -96,7 +96,7 @@ import { Picture } from "@astrojs/image/components";
                 </div>
 
               </div>
-              <div class="flex flex-col md:flex-row gap-4">
+              <div class="flex flex-col md:flex-row gap-2">
 
               <input type="hidden" class="sourceLogging" id="hiddenKey02" name="Contacted on Page" data-name="formUrl1" value="">
 	            <input type="hidden" class="sourceLogging" id="hiddenKey03" name="Previous Page" data-name="formRef1" value="">

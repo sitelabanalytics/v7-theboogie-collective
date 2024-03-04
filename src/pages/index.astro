@@ -6,6 +6,12 @@ import { Picture } from "@astrojs/image/components";
 
 import Hero from "@components/hero.astro";
 
+import HeroSlider from "@components/Slot-HeroFullscreenSlider.astro";
+let backgroundUrl = 'url(/slider-shirts/tbc-shirt-slider5.webp)' // Define image for Slot-HeroFullscreen and then call BackgroundURL in Section
+let backgroundUrl2 = 'url(/slider-shirts/tbc-shirt-slider1-5.webp)' // Define image for Slot-HeroFullscreen and then call BackgroundURL in Section
+let backgroundUrl3 = 'url(/slider-shirts/tbc-shirt-slider6.webp)' // Define image for Slot-HeroFullscreen and then call BackgroundURL in Section
+
+import ContactHero from "@components/hero-end.astro";
 
 import Grid from "@components/hero-grid-artists.astro";
 import GridSec from "@components/hero-grid-artists-sec.astro";
@@ -25,7 +31,9 @@ import EventsCover from '../assets/tbc/hh2-2-med.jpg';
 import EventsCover2 from '../assets/tbc/hh2-3-med.jpg';
 import Layout from "@layouts/Layout.astro";
 
-import ContactHero from "@components/hero-end.astro";
+
+
+
 
 ---
 
@@ -33,6 +41,38 @@ import ContactHero from "@components/hero-end.astro";
   <ContainerFW>
     <Hero />
   </ContainerFW>
+
+  <HeroSlider backgroundUrl={backgroundUrl} backgroundUrl2={backgroundUrl2} backgroundUrl3={backgroundUrl3}>
+    <Fragment slot="smltitle">
+      The Boogie Collective T-Shirts
+    </Fragment>
+    <Fragment slot="title">
+      Limited Release of TBC Shirts, now available.
+    </Fragment>
+    <Fragment slot="desc">
+      Stripe secure payment with ApplePay / GooglePay. $15 express shipping available, $7 standard shipping standard.
+    </Fragment>
+    
+    <Fragment slot="smltitle2">
+      The Boogie Collective T-Shirts
+    </Fragment>
+    <Fragment slot="title2">
+      High-Quality Print on AS Colour Basics
+    </Fragment>
+    <Fragment slot="desc2">
+      TBC Purple high-quality ink print for maximimum life length. Printed on AS colour basics, 100% cotton.
+    </Fragment>
+  
+    <Fragment slot="smltitle3">
+      The Boogie Collective T-Shirts
+    </Fragment>
+    <Fragment slot="title3">
+      New Designs Coming Soon
+    </Fragment>
+    <Fragment slot="desc3">
+      We've been designing a few rounds of prints over the last two years that we're very excited to finally start releasing.
+    </Fragment>
+  </HeroSlider>
   
   <ContainerFW>
     <ContactHero />

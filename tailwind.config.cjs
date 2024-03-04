@@ -3,16 +3,6 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: { 
-    colors: {
-      current: 'currentColor',
-      transparent: 'transparent',
-      white: '#ffffff',
-      black: colors.black,
-      violet: colors.violet,
-      primary: colors.violet,
-      green: colors.green,
-      cyan: colors.cyan,
-    },
     screens: {
     'sm': '640px',
     // => @media (min-width: 640px) { ... }

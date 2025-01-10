@@ -42,42 +42,6 @@ import Layout from "@layouts/Layout.astro";
     <Hero />
   </ContainerFW>
 
-  <HeroSlider backgroundUrl={backgroundUrl} backgroundUrl2={backgroundUrl2} backgroundUrl3={backgroundUrl3}>
-    <Fragment slot="smltitle">
-      The Boogie Collective T-Shirts
-    </Fragment>
-    <Fragment slot="title">
-      Limited Release of TBC Shirts, now available.
-    </Fragment>
-    <Fragment slot="desc">
-      Stripe secure payment with ApplePay / GooglePay. $15 express shipping available, $7 standard shipping standard.
-    </Fragment>
-    
-    <Fragment slot="smltitle2">
-      The Boogie Collective T-Shirts
-    </Fragment>
-    <Fragment slot="title2">
-      High-Quality Print on AS Colour Basics
-    </Fragment>
-    <Fragment slot="desc2">
-      TBC Purple high-quality ink print for maximimum life length. Printed on AS colour basics, 100% cotton.
-    </Fragment>
-  
-    <Fragment slot="smltitle3">
-      The Boogie Collective T-Shirts
-    </Fragment>
-    <Fragment slot="title3">
-      New Designs Coming Soon
-    </Fragment>
-    <Fragment slot="desc3">
-      We've been designing a few rounds of prints over the last two years that we're very excited to finally start releasing.
-    </Fragment>
-  </HeroSlider>
-  
-  <ContainerFW>
-    <ContactHero />
-  </ContainerFW>
-
   <ContainerFW href="#installations">
     <WorksSliderBoho />
     <WorksSliderHH2 />
@@ -85,16 +49,7 @@ import Layout from "@layouts/Layout.astro";
     <WorksSliderHH1 />
     <WorksSliderDD />
   </ContainerFW>
-
-  <ContainerFW>
-    <Immersive />
-    
-  </ContainerFW>
-
-  <ContainerFW>
-    <Grid />
-  </ContainerFW>
-
+  
   <Container href="#artists">
     <SectionHeadImg>
       <Fragment slot="smltitle">
@@ -159,5 +114,55 @@ import Layout from "@layouts/Layout.astro";
   <ContainerXL>
     <ImmersiveSec />
   </ContainerXL>
+
+  
+  <ContainerFW>
+    <ContactHero />
+  </ContainerFW>
+
+  
+
+  <ContainerFW>
+    <Immersive />
+    
+  </ContainerFW>
+
+  <ContainerFW>
+    <Grid />
+  </ContainerFW>
+
+  
+
+  <HeroSlider backgroundUrl={backgroundUrl} backgroundUrl2={backgroundUrl2} backgroundUrl3={backgroundUrl3}>
+    <Fragment slot="smltitle">
+      The Boogie Collective T-Shirts
+    </Fragment>
+    <Fragment slot="title">
+      Limited Release of TBC Shirts, now available.
+    </Fragment>
+    <Fragment slot="desc">
+      Stripe secure payment with ApplePay / GooglePay. $15 express shipping available, $7 standard shipping standard.
+    </Fragment>
+    
+    <Fragment slot="smltitle2">
+      The Boogie Collective T-Shirts
+    </Fragment>
+    <Fragment slot="title2">
+      High-Quality Print on AS Colour Basics
+    </Fragment>
+    <Fragment slot="desc2">
+      TBC Purple high-quality ink print for maximimum life length. Printed on AS colour basics, 100% cotton.
+    </Fragment>
+  
+    <Fragment slot="smltitle3">
+      The Boogie Collective T-Shirts
+    </Fragment>
+    <Fragment slot="title3">
+      New Designs Coming Soon
+    </Fragment>
+    <Fragment slot="desc3">
+      We've been designing a few rounds of prints over the last two years that we're very excited to finally start releasing.
+    </Fragment>
+  </HeroSlider>
   
 </Layout>

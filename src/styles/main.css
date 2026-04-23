@@ -63,6 +63,11 @@ p, span, html, button, a, b { font-family: 'wotfard'; color: #d8d8d8; }
 
 }
     
+/* Flickity viewport collapse prevention — global safety net */
+.flickity-enabled .flickity-viewport {
+  min-height: 1px;
+}
+
 /* Velocity brand slider dots are lines */
 .flickity-page-dots .dot {
   height: 2px !important;

@@ -1,0 +1,371 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { allProducts, STRIPE_PK } from "../../data/products.js";
+
+export function getStaticPaths() {
+  return allProducts.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+// Find related products (same garment type, different colorway)
+const related = allProducts.filter(
+  (p) => p.name === product.name && p.slug !== product.slug
+);
+---
+
+<Layout title={`${product.name} — ${product.colorway}`}>
+  <section class="py-12 md:py-20" style="background: #000; min-height: 80vh;">
+    <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
+
+      <!-- Breadcrumb -->
+      <nav class="mb-8 pdp-fade pdp-fade-1">
+        <a href="/shop" class="text-sm hover:text-white transition" style="color: rgba(255,255,255,0.4);">Shop</a>
+        <span class="text-sm mx-2" style="color: rgba(255,255,255,0.2);">/</span>
+        <span class="text-sm" style="color: rgba(255,255,255,0.6);">{product.name}</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+
+        <!-- Image gallery -->
+        <div class="pdp-fade pdp-fade-2">
+          <!-- Main image -->
+          <div class="pdp-main-image mb-4" id="pdpMainImage">
+            <img src={product.images[0]} alt={`${product.name} — ${product.colorway}`} class="w-full" />
+            {product.badge && (
+              <span class="pdp-badge">{product.badge}</span>
+            )}
+          </div>
+
+          <!-- Thumbnail strip -->
+          {product.images.length > 1 && (
+            <div class="flex gap-3">
+              {product.images.map((img, i) => (
+                <button
+                  class="pdp-thumb"
+                  data-img={img}
+                  style={i === 0 ? 'border-color: rgba(255,255,255,0.5);' : ''}
+                >
+                  <img src={img} alt={`View ${i + 1}`} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <!-- Product details -->
+        <div class="pdp-fade pdp-fade-3" x-data={`{ selectedSize: '${product.sizes[0]}' }`}>
+          <p class="pdp-colorway">{product.colorway}</p>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-2">
+            {product.name}
+          </h1>
+          <p class="pdp-code">{product.fit} · {product.code}</p>
+          <p class="pdp-weight">{product.weight}</p>
+
+          <div class="pdp-divider"></div>
+
+          <!-- Description -->
+          <p class="pdp-desc">{product.description}</p>
+
+          <div class="pdp-divider"></div>
+
+          <!-- Colour swatch -->
+          <div class="mb-6">
+            <p class="pdp-label">Colour</p>
+            <div class="flex items-center gap-3">
+              <span class="pdp-swatch-lg" style={`background: ${product.swatch}`}></span>
+              {product.swatchBg && (
+                <span class="pdp-swatch-lg" style={`background: ${product.swatchBg}`}></span>
+              )}
+              <span class="text-sm" style="color: rgba(255,255,255,0.5);">{product.colorway}</span>
+            </div>
+          </div>
+
+          <!-- Size selection -->
+          <div class="mb-8">
+            <p class="pdp-label">Size</p>
+            <div class="flex gap-3">
+              {product.sizes.map((size) => (
+                <button
+                  class="pdp-size-pill"
+                  x-on:click={`selectedSize = '${size}'`}
+                  x-bind:class={`selectedSize === '${size}' ? 'pdp-size-active' : ''`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Buy button -->
+          {product.priceId ? (
+            <button
+              class="pdp-buy-btn"
+              id="stripeCheckoutBtn"
+              data-price-id={product.priceId}
+              data-stripe-pk={STRIPE_PK}
+            >
+              Buy Now — Secure Checkout
+            </button>
+          ) : (
+            <a href={product.stripe} rel="noopener" target="_blank" class="pdp-buy-btn">
+              Buy Now — Secure Checkout
+            </a>
+          )}
+          <p class="pdp-payment-note">
+            Stripe secure payment · ApplePay · GooglePay
+          </p>
+
+          <!-- Shipping -->
+          <div class="pdp-shipping">
+            <p>$15 express shipping · $7 standard</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Related products -->
+      {related.length > 0 && (
+        <div class="mt-20 pt-16" style="border-top: 1px solid rgba(255,255,255,0.08);">
+          <h3 class="text-2xl font-bold tracking-tight mb-8">Other Colourways</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {related.map((p) => (
+              <a href={`/shop/${p.slug}`} class="product-card-lg">
+                <div class="product-card-lg-img">
+                  <img src={p.image} alt={`${p.name} — ${p.colorway}`} loading="lazy" />
+                  {p.badge && <span class="product-card-lg-badge">{p.badge}</span>}
+                  <div class="product-card-lg-swatches">
+                    <span class="product-card-lg-swatch" style={`background: ${p.swatch}`}></span>
+                  </div>
+                </div>
+                <div class="product-card-lg-body">
+                  <p class="product-card-lg-colorway">{p.colorway}</p>
+                  <h4 class="product-card-lg-name">{p.name}</h4>
+                  <p class="product-card-lg-fit">{p.fit}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  /* PDP entrance animations */
+  .pdp-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: pdpFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .pdp-fade-1 { animation-delay: 0.1s; }
+  .pdp-fade-2 { animation-delay: 0.2s; }
+  .pdp-fade-3 { animation-delay: 0.35s; }
+  @keyframes pdpFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Main image */
+  .pdp-main-image {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #111;
+    aspect-ratio: 4 / 5;
+  }
+  .pdp-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  .pdp-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'inconsolata';
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 5px 14px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #fff;
+  }
+
+  /* Thumbnails */
+  .pdp-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    background: #111;
+  }
+  .pdp-thumb:hover { border-color: rgba(255, 255, 255, 0.4); }
+  .pdp-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Product info */
+  .pdp-colorway {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.45) !important;
+    margin-bottom: 6px;
+  }
+  .pdp-code {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-bottom: 2px;
+  }
+  .pdp-weight {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.3) !important;
+  }
+  .pdp-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 20px 0;
+  }
+  .pdp-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+  .pdp-label {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-bottom: 10px;
+  }
+  .pdp-swatch-lg {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Size pills */
+  .pdp-size-pill {
+    font-family: 'inconsolata' !important;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    padding: 10px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6) !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .pdp-size-pill:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff !important;
+  }
+  .pdp-size-pill.pdp-size-active {
+    background: #fff;
+    color: #000 !important;
+    border-color: #fff;
+  }
+
+  /* Buy button */
+  .pdp-buy-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 16px 28px;
+    border-radius: 10px;
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.9rem;
+    background: linear-gradient(135deg, #6B00CC, #FF6611);
+    color: #fff !important;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-bottom: 12px;
+  }
+  .pdp-buy-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  .pdp-payment-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3) !important;
+    margin-bottom: 16px;
+  }
+  .pdp-shipping {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35) !important;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+  }
+</style>
+
+<!-- Stripe.js for checkout -->
+<script is:inline src="https://js.stripe.com/v3/"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Thumbnail click → swap main image
+    var thumbs = document.querySelectorAll('.pdp-thumb');
+    var mainImg = document.querySelector('#pdpMainImage img');
+    if (mainImg && thumbs.length) {
+      thumbs.forEach(function(thumb) {
+        thumb.addEventListener('click', function() {
+          var src = this.getAttribute('data-img');
+          mainImg.style.opacity = '0';
+          setTimeout(function() {
+            mainImg.src = src;
+            mainImg.style.opacity = '1';
+          }, 200);
+          thumbs.forEach(function(t) { t.style.borderColor = 'rgba(255,255,255,0.12)'; });
+          thumb.style.borderColor = 'rgba(255,255,255,0.5)';
+        });
+      });
+    }
+
+    // Stripe Checkout
+    var checkoutBtn = document.getElementById('stripeCheckoutBtn');
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', function() {
+        var priceId = this.getAttribute('data-price-id');
+        var stripePk = this.getAttribute('data-stripe-pk');
+        var stripe = Stripe(stripePk);
+        checkoutBtn.textContent = 'Redirecting...';
+        checkoutBtn.style.opacity = '0.6';
+        stripe.redirectToCheckout({
+          lineItems: [{ price: priceId, quantity: 1 }],
+          mode: 'payment',
+          successUrl: window.location.origin + '/success',
+          cancelUrl: window.location.href,
+        }).then(function(result) {
+          if (result.error) {
+            checkoutBtn.textContent = 'Buy Now — Secure Checkout';
+            checkoutBtn.style.opacity = '1';
+            alert(result.error.message);
+          }
+        });
+      });
+    }
+  });
+</script>

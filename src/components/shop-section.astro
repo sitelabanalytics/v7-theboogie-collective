@@ -1,0 +1,405 @@
+---
+// Product catalog — each card is a garment + colorway combo
+const tshirts = [
+  {
+    name: "Classic Oversized Tee",
+    colorway: "Purple Ink on Black",
+    code: "5069 AS",
+    fit: "Men's Oversized",
+    weight: "220 GSM · 100% Combed Cotton",
+    sizes: ["M", "L", "XL"],
+    swatch: "#6B00CC",
+    image: "/slider-shirts/tbc-shirt-slider5.webp",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Classic Oversized Tee",
+    colorway: "Orange Ink on Black",
+    code: "5069 AS",
+    fit: "Men's Oversized",
+    weight: "220 GSM · 100% Combed Cotton",
+    sizes: ["M", "L", "XL"],
+    swatch: "#FF6611",
+    image: "/shop/tee-black-front.jpg",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Classic Oversized Tee",
+    colorway: "White Stitch on Black",
+    code: "5069 AS",
+    fit: "Men's Oversized · Premium",
+    weight: "220 GSM · 100% Combed Cotton",
+    sizes: ["L"],
+    swatch: "#FFFFFF",
+    image: "/shop/tee-black-front.jpg",
+    badge: "Limited",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Women's Crop Tee",
+    colorway: "Purple Ink on Black",
+    code: "4072 AS",
+    fit: "Women's Cropped",
+    weight: "220 GSM · 100% Combed Cotton",
+    sizes: ["S"],
+    swatch: "#6B00CC",
+    image: "/shop/crop-black-front.webp",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Women's Crop Tee",
+    colorway: "Orange Ink on Black",
+    code: "4072 AS",
+    fit: "Women's Cropped",
+    weight: "220 GSM · 100% Combed Cotton",
+    sizes: ["S"],
+    swatch: "#FF6611",
+    image: "/shop/crop-black-front.webp",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Women's Crop Tee",
+    colorway: "Purple Ink on Orchid",
+    code: "4072 AS",
+    fit: "Women's Cropped",
+    weight: "220 GSM · 100% Combed Cotton",
+    sizes: ["S"],
+    swatch: "#6B00CC",
+    swatchBg: "#DA70D6",
+    image: "/shop/crop-black-front.webp",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+];
+
+const jumpers = [
+  {
+    name: "Box Hood",
+    colorway: "Purple Ink on Black",
+    code: "5171 AS",
+    fit: "Unisex Relaxed",
+    weight: "350 GSM · Anti-Pill CVC Fleece",
+    sizes: ["M", "L"],
+    swatch: "#6B00CC",
+    image: "/shop/hood-black-front.webp",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Box Hood",
+    colorway: "Orange Ink on Black",
+    code: "5171 AS",
+    fit: "Unisex Relaxed",
+    weight: "350 GSM · Anti-Pill CVC Fleece",
+    sizes: ["M", "L"],
+    swatch: "#FF6611",
+    image: "/shop/hood-black-front.webp",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+  {
+    name: "Box Hood",
+    colorway: "Premium White Stitch on Black",
+    code: "5171 AS",
+    fit: "Unisex Relaxed · Premium",
+    weight: "350 GSM · Anti-Pill CVC Fleece",
+    sizes: ["M", "L"],
+    swatch: "#FFFFFF",
+    image: "/shop/hood-black-front.webp",
+    badge: "Limited",
+    stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+  },
+];
+---
+
+<section id="shop" class="py-16 md:py-24" style="background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);">
+  <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
+
+    <!-- Section header -->
+    <div class="mb-12 shop-reveal">
+      <h5 class="text-sm tracking-widest mb-3">The Collection</h5>
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">T-Shirts</h2>
+      <p class="text-md lg:text-lg max-w-2xl">
+        High-quality ink print on AS Colour basics. 100% combed cotton, preshrunk, built to last.
+        $15 express shipping, $7 standard.
+      </p>
+    </div>
+
+    <!-- T-Shirt grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-20">
+      {tshirts.map((product, i) => (
+        <div
+          class="product-card shop-reveal"
+          x-data={`{ selectedSize: '${product.sizes[0]}' }`}
+          style={`--delay: ${i * 0.1}s`}
+        >
+          {/* Image */}
+          <div class="product-card-image">
+            <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="lazy" />
+            {product.badge && (
+              <span class="product-badge">{product.badge}</span>
+            )}
+            {/* Swatch indicator on image */}
+            <div class="product-swatch-row">
+              <span class="product-swatch" style={`background: ${product.swatch}`}></span>
+              {product.swatchBg && (
+                <span class="product-swatch" style={`background: ${product.swatchBg}`}></span>
+              )}
+            </div>
+          </div>
+
+          {/* Info */}
+          <div class="product-card-body">
+            <h6 class="product-colorway">{product.colorway}</h6>
+            <h4 class="product-name">{product.name}</h4>
+            <p class="product-meta">{product.fit} · {product.code}</p>
+            <p class="product-weight">{product.weight}</p>
+
+            {/* Size pills */}
+            <div class="product-sizes">
+              {product.sizes.map((size) => (
+                <button
+                  class="size-pill"
+                  x-on:click={`selectedSize = '${size}'`}
+                  x-bind:class={`selectedSize === '${size}' ? 'size-active' : ''`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+
+            {/* Buy button */}
+            <a href={product.stripe} rel="noopener" target="_blank" class="buy-btn">
+              Buy Now
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Jumpers header -->
+    <div class="mb-12 shop-reveal">
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">Jumpers</h2>
+      <p class="text-md lg:text-lg max-w-2xl">
+        350 GSM anti-pill CVC fleece box hood. Drop shoulder, kangaroo pocket, relaxed fit.
+      </p>
+    </div>
+
+    <!-- Jumpers grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      {jumpers.map((product, i) => (
+        <div
+          class="product-card shop-reveal"
+          x-data={`{ selectedSize: '${product.sizes[0]}' }`}
+          style={`--delay: ${i * 0.1}s`}
+        >
+          {/* Image */}
+          <div class="product-card-image">
+            <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="lazy" />
+            {product.badge && (
+              <span class="product-badge">{product.badge}</span>
+            )}
+            <div class="product-swatch-row">
+              <span class="product-swatch" style={`background: ${product.swatch}`}></span>
+            </div>
+          </div>
+
+          {/* Info */}
+          <div class="product-card-body">
+            <h6 class="product-colorway">{product.colorway}</h6>
+            <h4 class="product-name">{product.name}</h4>
+            <p class="product-meta">{product.fit} · {product.code}</p>
+            <p class="product-weight">{product.weight}</p>
+
+            {/* Size pills */}
+            <div class="product-sizes">
+              {product.sizes.map((size) => (
+                <button
+                  class="size-pill"
+                  x-on:click={`selectedSize = '${size}'`}
+                  x-bind:class={`selectedSize === '${size}' ? 'size-active' : ''`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+
+            <a href={product.stripe} rel="noopener" target="_blank" class="buy-btn">
+              Buy Now
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style is:global>
+  /* ─── Product Card ─── */
+  .product-card {
+    background: linear-gradient(165deg, rgba(2, 0, 36, 0.5) 0%, rgba(9, 9, 121, 0.15) 65%, rgba(0, 213, 255, 0.08) 100%);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.4s;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(107, 0, 204, 0.08);
+  }
+
+  .product-card-image {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #111;
+  }
+  .product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .product-card:hover .product-card-image img {
+    transform: scale(1.05);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: 'inconsolata';
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+  }
+
+  .product-swatch-row {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    gap: 6px;
+  }
+  .product-swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .product-card-body {
+    padding: 20px;
+  }
+
+  .product-colorway {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.5) !important;
+    margin-bottom: 4px;
+  }
+  .product-name {
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+  }
+  .product-meta {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-bottom: 2px;
+  }
+  .product-weight {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3) !important;
+    margin-bottom: 16px;
+  }
+
+  /* Size pills */
+  .product-sizes {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .size-pill {
+    font-family: 'inconsolata' !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6) !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .size-pill:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff !important;
+  }
+  .size-pill.size-active {
+    background: #fff;
+    color: #000 !important;
+    border-color: #fff;
+  }
+
+  /* Buy button */
+  .buy-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    background: linear-gradient(135deg, #6B00CC, #FF6611);
+    color: #fff !important;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .buy-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* ─── Scroll reveal ─── */
+  .shop-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--delay, 0s);
+  }
+  .shop-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script is:inline>
+  // Intersection Observer for scroll-triggered card reveals
+  document.addEventListener('DOMContentLoaded', function() {
+    var reveals = document.querySelectorAll('.shop-reveal');
+    if (!reveals.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(function(el) { observer.observe(el); });
+  });
+</script>

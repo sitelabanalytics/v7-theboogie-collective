@@ -7,13 +7,13 @@ import alpinejs from "@astrojs/alpinejs";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://aidxn.com',
+  site: 'https://theboogiecollective.com',
   integrations: [tailwind(
     {
       config: {
         applyBaseStyles: false,
       },
-    } [sitemap()],
+    }
   ), image({
     serviceEntryPoint: "@astrojs/image/sharp"
   }), mdx(), sitemap(), alpinejs()]

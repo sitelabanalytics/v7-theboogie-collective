@@ -48,10 +48,17 @@ const services = [
 <style>
 
 .carousel-cell {
-    margin-right: 10px;
+    margin-right: 3px;
     margin-bottom: 20px;
     height: 460px;
-    border-radius: 15px;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .carousel-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   @media only screen and (max-width: 1680px) {
   .carousel-cell {
@@ -79,12 +86,16 @@ const services = [
   }
 }
 
-  /* Start Flickity viewport safeguards V4 */
+  /* Start Flickity viewport safeguards V5 — explicit dimensions before JS init */
   main { max-width: 100%; }
-  .flickity-viewport { margin: 0 auto; }
-  .estem-carousel, .flickity-viewport { max-width: 100vw !important; }
-  .estem-carousel { height: fit-content; }
-  /* End Flickity viewport safeguards V4 */
+  .estem-carousel { max-width: 100vw !important; height: auto; }
+  .estem-carousel .flickity-viewport {
+    margin: 0 auto;
+    max-width: 100vw !important;
+    min-height: 160px;
+    transition: height 0.3s ease;
+  }
+  /* End Flickity viewport safeguards V5 */
 
 
   #works-row { border: black; border-top: ridge; }
@@ -92,7 +103,7 @@ const services = [
   </style>
 
 <main id="works-row" class="mt-12 md:mt-24 pb-8">
-  <div class="pt-8 flex flex-row items-start sm:items-center justify-between">
+  <div class="pt-8 px-5 md:px-10 lg:px-16 flex flex-row items-start sm:items-center justify-between">
     <div>
       <h5 class="text-xs md:text-sm lg:text-md text-slate-700">
         Shopify
@@ -102,7 +113,7 @@ const services = [
       </h4>
     </div>
     <div class="my-6">
-      <Link 
+      <Link
         class="text-xs md:text-sm"
         href="/shopify"
         style="outline">
@@ -114,7 +125,7 @@ const services = [
 <div id="sliderContainer" class="estem-carousel">
   {
     services.map((item) => (
-      <div class="carousel-cell flex flex-row justify-start items-center w-2/3 sm:w-1/2 md:w-2/5 xl:w-1/3">
+      <div class="carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
         <Picture
               src={item.imgsrc}
               sizes="(max-width: 1680px) 1680px, 1260px, 840px"
@@ -124,7 +135,7 @@ const services = [
               background="#f2f2f200"
               fit="cover"
               position="center"
-              class="w-full h-full rounded-md"
+              class="w-full h-full"
             />
       </div>
     ))
@@ -140,7 +151,8 @@ const services = [
   contain: true,
   freeScroll: true,
   prevNextButtons: false,
-  pageDots: true
+  pageDots: true,
+  imagesLoaded: true
   // lower attraction and lower friction
   // slower transitions
   // easier to flick past cells

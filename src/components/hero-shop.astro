@@ -1,0 +1,281 @@
+---
+import { allProducts } from "../data/products.js";
+
+// Pick 4 hero-worthy products
+const heroProducts = allProducts.filter(p =>
+  ["classic-oversized-tee-purple-black", "box-hood-purple-black", "classic-oversized-tee-orange-black", "classic-oversized-tee-white-stitch"].includes(p.slug)
+);
+---
+
+<!-- Flickity CSS -->
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script is:inline src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+<section id="shop-hero" class="relative overflow-hidden">
+  <!-- Background glow -->
+  <div class="shop-orb shop-orb-1"></div>
+  <div class="shop-orb shop-orb-2"></div>
+  <div class="shop-orb shop-orb-3"></div>
+
+  <div class="relative z-10 shop-hero-inner">
+
+    <!-- Left: text content -->
+    <div class="shop-hero-text">
+      <div id="glass-card" class="shop-hero-card">
+        <h5 class="text-sm tracking-widest mb-3 shop-anim shop-anim-1">Limited Release</h5>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight shop-anim shop-anim-2">
+          Shop the<br>Collection.
+        </h2>
+        <p class="text-md lg:text-lg mt-4 shop-anim shop-anim-3">
+          T-Shirts & Jumpers printed on AS Colour basics.<br class="hidden md:inline">
+          Stripe secure checkout with ApplePay / GooglePay.
+        </p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 shop-anim shop-anim-4">
+          <a href="/shop" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
+            Browse Collection
+          </a>
+          <a href="/shop/classic-oversized-tee-purple-black" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 border-2 border-white/30 hover:border-white/60 text-white flex gap-1 items-center justify-center">
+            Best Seller
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: product slider -->
+    <div class="shop-hero-slider-wrap shop-anim shop-anim-5">
+      <div class="hero-product-carousel">
+        {heroProducts.map((product) => (
+          <a href={`/shop/${product.slug}`} class="hero-product-slide">
+            <div class="hero-product-img">
+              <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="eager" />
+              {product.badge && <span class="hero-product-badge">{product.badge}</span>}
+              <span class="hero-product-swatch" style={`background: ${product.swatch}`}></span>
+            </div>
+            <div class="hero-product-info">
+              <p class="hero-product-colorway">{product.colorway}</p>
+              <h4 class="hero-product-name">{product.name}</h4>
+              <span class="hero-product-cta">View Product →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style is:global>
+  #shop-hero {
+    background: #000;
+  }
+
+  .shop-hero-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    padding: 0;
+  }
+
+  /* ─── Left: text ─── */
+  .shop-hero-text {
+    padding: 2rem 1.25rem 1.5rem;
+  }
+
+  /* ─── Right: slider ─── */
+  .shop-hero-slider-wrap {
+    padding: 0 0 2rem;
+  }
+
+  /* Desktop: side by side */
+  @media (min-width: 968px) {
+    .shop-hero-inner {
+      flex-direction: row;
+      align-items: center;
+      min-height: 42vh;
+    }
+    .shop-hero-text {
+      flex: 1 1 50%;
+      padding: 3rem 1.5rem 3rem 2.5rem;
+    }
+    .shop-hero-slider-wrap {
+      flex: 1 1 50%;
+      padding: 2rem 2.5rem 2rem 0;
+    }
+  }
+  @media (min-width: 1199px) {
+    .shop-hero-text {
+      padding: 3rem 2rem 3rem 4rem;
+    }
+    .shop-hero-slider-wrap {
+      padding: 2.5rem 4rem 2.5rem 0;
+    }
+  }
+
+  /* ─── Glow orbs ─── */
+  .shop-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    animation: orbFadeIn 2.5s ease-out forwards;
+  }
+  .shop-orb-1 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(107, 0, 204, 0.35), transparent 70%);
+    top: -80px; left: 15%;
+    animation-delay: 0.3s;
+  }
+  .shop-orb-2 {
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(255, 102, 17, 0.25), transparent 70%);
+    bottom: -60px; right: 15%;
+    animation-delay: 0.8s;
+  }
+  .shop-orb-3 {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0, 180, 220, 0.15), transparent 70%);
+    top: 30%; right: 35%;
+    animation-delay: 1.2s;
+  }
+  @keyframes orbFadeIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── Card entrance ─── */
+  .shop-hero-card {
+    animation: cardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  }
+  @keyframes cardReveal {
+    from { opacity: 0; backdrop-filter: blur(0px); transform: translateY(24px); }
+    to { opacity: 1; backdrop-filter: blur(45px); transform: translateY(0); }
+  }
+
+  .shop-anim {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: textSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .shop-anim-1 { animation-delay: 0.3s; }
+  .shop-anim-2 { animation-delay: 0.45s; }
+  .shop-anim-3 { animation-delay: 0.6s; }
+  .shop-anim-4 { animation-delay: 0.75s; }
+  .shop-anim-5 { animation-delay: 0.5s; }
+  @keyframes textSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Product slider ─── */
+  .hero-product-carousel {
+    max-width: 100%;
+  }
+  .hero-product-carousel .flickity-viewport {
+    min-height: 1px;
+    overflow: visible;
+  }
+  .hero-product-carousel .flickity-page-dots {
+    bottom: -20px !important;
+  }
+
+  .hero-product-slide {
+    display: block;
+    width: 220px;
+    margin-right: 12px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(165deg, rgba(2, 0, 36, 0.5) 0%, rgba(9, 9, 121, 0.12) 65%, rgba(0, 213, 255, 0.06) 100%);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  }
+  .hero-product-slide:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  @media (min-width: 968px) {
+    .hero-product-slide { width: 240px; }
+  }
+
+  .hero-product-img {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #111;
+  }
+  .hero-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-product-slide:hover .hero-product-img img {
+    transform: scale(1.06);
+  }
+
+  .hero-product-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    font-family: 'inconsolata';
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+  }
+  .hero-product-swatch {
+    position: absolute;
+    bottom: 10px; left: 10px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .hero-product-info {
+    padding: 14px 16px 16px;
+  }
+  .hero-product-colorway {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-bottom: 3px;
+  }
+  .hero-product-name {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .hero-product-cta {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5) !important;
+    transition: color 0.2s;
+  }
+  .hero-product-slide:hover .hero-product-cta {
+    color: #fff !important;
+  }
+</style>
+
+<script is:inline>
+  var heroCarousel = new Flickity('.hero-product-carousel', {
+    cellAlign: 'left',
+    contain: true,
+    prevNextButtons: false,
+    pageDots: true,
+    freeScroll: true,
+    imagesLoaded: true,
+    autoPlay: 4000,
+    pauseAutoPlayOnHover: true,
+    wrapAround: true
+  });
+</script>

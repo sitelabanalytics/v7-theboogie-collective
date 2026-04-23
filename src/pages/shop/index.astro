@@ -1,0 +1,241 @@
+---
+import Layout from "@layouts/Layout.astro";
+import ContainerFW from "@components/container-fullwidth.astro";
+import { tshirts, jumpers } from "../../data/products.js";
+---
+
+<Layout title="Shop">
+  <!-- Hero banner -->
+  <section class="relative overflow-hidden" style="min-height: 30vh; background: #000;">
+    <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, rgba(107,0,204,0.15) 0%, rgba(0,0,0,0.9) 40%, rgba(255,102,17,0.1) 100%);"></div>
+    <div class="relative z-10 flex items-end h-full px-5 md:px-10 lg:px-16 max-w-7xl mx-auto" style="min-height: 30vh;">
+      <div class="my-10">
+        <h5 class="text-sm tracking-widest mb-2 shop-fade shop-fade-1">The Boogie Collective</h5>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight shop-fade shop-fade-2">
+          Shop the Collection.
+        </h1>
+        <p class="text-md lg:text-lg mt-4 max-w-2xl shop-fade shop-fade-3">
+          Limited release T-Shirts & Jumpers. High-quality ink print and premium stitch on AS Colour basics.
+          Stripe secure payment with ApplePay / GooglePay.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- T-Shirts -->
+  <section class="py-16" style="background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);">
+    <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
+      <div class="mb-10 shop-reveal">
+        <h5 class="text-sm tracking-widest mb-2">6 Styles Available</h5>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">T-Shirts</h2>
+        <p class="text-md max-w-xl">100% combed cotton, preshrunk. Available in men's oversized and women's crop fits.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+        {tshirts.map((product, i) => (
+          <a href={`/shop/${product.slug}`} class="product-card-lg shop-reveal" style={`--delay: ${i * 0.08}s`}>
+            <div class="product-card-lg-img">
+              <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="lazy" />
+              {product.badge && <span class="product-card-lg-badge">{product.badge}</span>}
+              <div class="product-card-lg-swatches">
+                <span class="product-card-lg-swatch" style={`background: ${product.swatch}`}></span>
+                {product.swatchBg && <span class="product-card-lg-swatch" style={`background: ${product.swatchBg}`}></span>}
+              </div>
+            </div>
+            <div class="product-card-lg-body">
+              <p class="product-card-lg-colorway">{product.colorway}</p>
+              <h3 class="product-card-lg-name">{product.name}</h3>
+              <p class="product-card-lg-fit">{product.fit} · {product.code}</p>
+              <p class="product-card-lg-weight">{product.weight}</p>
+              <div class="product-card-lg-sizes">
+                {product.sizes.map((s) => (
+                  <span class="product-card-lg-size">{s}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Jumpers -->
+  <section class="py-16" style="background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);">
+    <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
+      <div class="mb-10 shop-reveal">
+        <h5 class="text-sm tracking-widest mb-2">3 Styles Available</h5>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Jumpers</h2>
+        <p class="text-md max-w-xl">350 GSM anti-pill CVC fleece. Drop shoulder, kangaroo pocket, relaxed unisex fit.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+        {jumpers.map((product, i) => (
+          <a href={`/shop/${product.slug}`} class="product-card-lg shop-reveal" style={`--delay: ${i * 0.08}s`}>
+            <div class="product-card-lg-img">
+              <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="lazy" />
+              {product.badge && <span class="product-card-lg-badge">{product.badge}</span>}
+              <div class="product-card-lg-swatches">
+                <span class="product-card-lg-swatch" style={`background: ${product.swatch}`}></span>
+              </div>
+            </div>
+            <div class="product-card-lg-body">
+              <p class="product-card-lg-colorway">{product.colorway}</p>
+              <h3 class="product-card-lg-name">{product.name}</h3>
+              <p class="product-card-lg-fit">{product.fit} · {product.code}</p>
+              <p class="product-card-lg-weight">{product.weight}</p>
+              <div class="product-card-lg-sizes">
+                {product.sizes.map((s) => (
+                  <span class="product-card-lg-size">{s}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  /* ─── Shop page entrance ─── */
+  .shop-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: shopFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .shop-fade-1 { animation-delay: 0.1s; }
+  .shop-fade-2 { animation-delay: 0.25s; }
+  .shop-fade-3 { animation-delay: 0.4s; }
+  @keyframes shopFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Large product cards ─── */
+  .product-card-lg {
+    display: block;
+    background: linear-gradient(165deg, rgba(2, 0, 36, 0.4) 0%, rgba(9, 9, 121, 0.12) 65%, rgba(0, 213, 255, 0.06) 100%);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.4s;
+  }
+  .product-card-lg:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 80px rgba(107, 0, 204, 0.08);
+  }
+
+  .product-card-lg-img {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: #111;
+  }
+  .product-card-lg-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .product-card-lg:hover .product-card-lg-img img {
+    transform: scale(1.04);
+  }
+
+  .product-card-lg-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: 'inconsolata';
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+  }
+  .product-card-lg-swatches {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    display: flex;
+    gap: 6px;
+  }
+  .product-card-lg-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .product-card-lg-body { padding: 24px; }
+
+  .product-card-lg-colorway {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.45) !important;
+    margin-bottom: 4px;
+  }
+  .product-card-lg-name {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+  .product-card-lg-fit {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-bottom: 2px;
+  }
+  .product-card-lg-weight {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3) !important;
+    margin-bottom: 14px;
+  }
+  .product-card-lg-sizes {
+    display: flex;
+    gap: 6px;
+  }
+  .product-card-lg-size {
+    font-family: 'inconsolata' !important;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    padding: 4px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  /* ─── Scroll reveal ─── */
+  .shop-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--delay, 0s);
+  }
+  .shop-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var reveals = document.querySelectorAll('.shop-reveal');
+    if (!reveals.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el) { observer.observe(el); });
+  });
+</script>

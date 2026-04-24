@@ -3,130 +3,150 @@ import Layout from "@layouts/Layout.astro";
 import ContainerFW from "@components/container-fullwidth.astro";
 import ContainerXL from "@components/container-xl.astro";
 import Container from "@components/container.astro";
-import Sectionhead from "@components/sectionmid.astro";
-import SectionEmail from "@components/sectionhead-email.astro";
-import Cta from "@components/cta-moonshot.astro";
 import SectionHeadImg from "@components/sectionhead-img.astro";
 import SectionHeadSecImg from "@components/sectionhead-img-rev.astro";
-import SectionTextarea from "@components/sectionmid-textarea.astro";
-import MoonshotHero from "@components/sectionmid-singleproduct-moonshot.astro";
-import Integrations from "@components/logos-integrations.astro";
-import GallerySlider from "@components/slider-lrg-services-brand.astro";
 import { Picture } from "@astrojs/image/components";
-import PagecoverHero from '../assets/products-sqr/complete-brand-packages.webp';
-import Pagecover from '../assets/backgrounds/balance.webp';
-import PagecoverSecondary from '../assets/backgrounds/funnel.webp';
-import CoverTextarea from '../assets/backgrounds/cubed.webp';
 import { Icon } from "astro-icon";
 
+import HeroImg from '../assets/tbc/hh2-stage-lrg.jpg';
+import StageNight from '../assets/tbc/hero-hh2-stage-night-med.jpg';
+import Immersive2 from '../assets/tbc/immersive-2.jpg';
+import UVBanners from '../assets/tbc/uv-banners.jpg';
+import LucidSpace from '../assets/tbc/Lucid space - web size (2).jpg';
+import GalHH2_1 from '../assets/tbc/gal-hh2-1.jpg';
+import GalHH2_2 from '../assets/tbc/gal-hh2-2.webp';
+import GalHH2_3 from '../assets/tbc/gal-hh2-3.jpg';
+import GalHH2_4 from '../assets/tbc/gal-hh2-4.jpg';
+import GalHH1_1 from '../assets/tbc/gal-hh1-1.webp';
+import GalHH1_2 from '../assets/tbc/gal-hh1-2.jpg';
+import GalBoho1 from '../assets/tbc/gal-boho-1.jpg';
+import DSC01565 from '../assets/tbc/DSC01565.jpg';
+import DSC00714 from '../assets/tbc/DSC00714.jpg';
 
-const pricing = [
-  
-  // branding and graphic design packages
-  // starter 
-  {  
-    name: "Brand Direction",
-    price: "$245",
-    popular: false,
-    features: [
-      "Competitive research",
-      "Best working strategies within industry",
-      "Understand your market and audience from previous ad data",
-    ],
-    button: {
-      text: "Purchase",
-      link: "#",
-    },
-  },
-  // medium
+const services = [
   {
-    name: "Brand Starter",
-    price: "$245",
-    popular: false,
-    features: [
-      "2x 15-min video-call brand sessions",
-      "2x design revisions",
-      "8x unique design releases (and complete licensing)",
-    ],
-    button: {
-      text: "Purchase",
-      link: "#",
-    },
+    title: "Stage Design + Construction",
+    description: "Custom bamboo and timber stage builds shaped to the landscape. We design stages that work with the terrain, not against it — creating focal points that draw people in from every angle of the site.",
+    icon: "ph:codepen-logo-light",
   },
-  // large
   {
-    name: "Brand Expansion",
-    price: "$445",
-    popular: true,
-    features: [
-      "2x 15-min video-call brand sessions",
-      "2x design revisions",
-      "16x unique design releases (must have idea to expand upon)",
-    ],
-    button: {
-      text: "Purchase",
-      link: "#",
-    },
+    title: "Lighting Design",
+    description: "RGB floodlighting, festoon rigs, treelumination, and full-spectrum colour programming across the night. We design lighting shows that evolve with the music, shifting tone from golden sunset sessions into deep late-night atmospheres.",
+    icon: "ph:lightning-fill",
   },
-  // e-commerce
   {
-    name: "Complete Brand Pack",
-    price: "$945",
-    popular: false,
-    features: [
-      "2x 15-min video-call brand sessions",
-      "2x design revisions",
-      "24x unique design releases",
-    ],
-    button: {
-      text: "Purchase",
-      link: "#",
-    },
+    title: "UV Reactive Art",
+    description: "Hand-painted UV banners, reactive sculptures, and blacklight environments that come alive after dark. We create pieces specifically for the ultraviolet spectrum — hidden layers that reveal themselves when the sun goes down.",
+    icon: "ph:planet-light",
   },
+  {
+    title: "Shade Structures",
+    description: "Engineered shade sail systems designed for fast install and minimal rigging. Our shade setups use custom pole configurations that adapt to uneven terrain, keeping dancefloors cool during daytime sets without blocking sightlines.",
+    icon: "ph:table",
+  },
+  {
+    title: "Projection Mapping",
+    description: "Large-format projection onto natural surfaces, structures, and custom screens. We map visuals to the geometry of the stage and surrounding environment, adding depth and motion to the physical build.",
+    icon: "ph:film-slate-light",
+  },
+  {
+    title: "LED Structures",
+    description: "Programmable LED installations integrated into stage builds and site decor. From pixel-mapped panels to individually addressable strips woven through bamboo frames — all synced to the music and controllable in real time.",
+    icon: "ph:lightning-fill",
+  },
+];
+
+const galleryImages = [
+  { src: GalHH2_1, alt: "Stage lighting at Happiness Hill" },
+  { src: DSC01565, alt: "Immersive installation at night" },
+  { src: GalHH2_2, alt: "UV-lit dancefloor" },
+  { src: GalBoho1, alt: "Boho event stage design" },
+  { src: GalHH1_1, alt: "Lighting rig in the trees" },
+  { src: DSC00714, alt: "Stage build during setup" },
+  { src: GalHH2_3, alt: "Late night LED installation" },
+  { src: GalHH1_2, alt: "Sunset session stage" },
+  { src: GalHH2_4, alt: "Full stage production at night" },
 ];
 ---
 
-<Layout title="Installations and Lighting for Event and Weddings | Immersive Structures">
+<Layout title="Immersive Structures | Stage Design and Lighting for Outdoor Events | The Boogie Collective">
 
-
-
+  <!-- Hero Section -->
   <ContainerFW>
-    <SectionEmail>
-      <Fragment slot="title">
-        Event / Wedding Installations + Lighting Hire
-      </Fragment>
-      <Fragment slot="desc">
-        Custom commisioned decor and installations including shade sails, art works, lighting hire and design, event management and supplies. 
-      </Fragment>
-      <Fragment slot="cover">
-        <Picture
-                  src={PagecoverHero}
-                  sizes="(max-width: 2000px) 2000px, 1000px"
-                  widths={[1000, 1500, 2000]}
-                  aspectRatio="3:2"
-                  background="#f2f2f2"
-                  fit="cover"
-                  position="center"
-                  class="w-full rounded duration-200 hover:shadow-sm"
-                />
-      </Fragment>
-    </SectionEmail>
+    <style>
+      #immersiveHero {
+        background-image: url('../assets/tbc/hh2-stage-lrg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 55vh;
+      }
+      @media only screen and (max-width: 1199px) {
+        #immersiveHero {
+          min-height: 65vh;
+        }
+      }
+      @media only screen and (max-width: 768px) {
+        #immersiveHero {
+          min-height: 80vh;
+        }
+      }
+    </style>
+
+    <main class="my-8 md:my-16">
+      <div id="immersiveHero" class="mx-auto flex flex-row items-end rounded-3xl">
+        <div>
+          <div id="glass-card" class="max-w-4xl mx-4 my-8">
+            <h5 class="text-xs md:text-sm lg:text-md mb-2">The Boogie Collective</h5>
+            <h1 class="text-4xl sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl w-full max-w-6xl font-bold tracking-tight">
+              Immersive Structures.
+            </h1>
+            <p class="text-md lg:text-lg mt-4 max-w-2xl">
+              Stage design, lighting installations, and visual production for outdoor electronic music events
+              across the Eastern Coast of Australia. Built by hand. Shaped by the landscape.
+            </p>
+            <div class="mt-6 flex flex-col sm:flex-row justify-start gap-3">
+              <a href="/contact" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
+                <svg viewBox="0 0 24 24" class="w-4 h-4">
+                  <Icon class="text-black" name="ph:chat-teardrop-dots-light" />
+                </svg>
+                Get in Touch
+              </a>
+              <a href="#what-we-build" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-transparent text-white hover:bg-white/10 border-2 border-white/30 flex gap-1 items-center justify-center">
+                <svg viewBox="0 0 24 24" class="w-4 h-4">
+                  <Icon class="text-white" name="ph:codepen-logo-light" />
+                </svg>
+                See Our Work
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </ContainerFW>
 
-  <ContainerXL>
+
+  <!-- Intro Section: Stage Design -->
+  <Container>
     <SectionHeadImg>
+      <Fragment slot="smltitle">
+        What We Do
+      </Fragment>
       <Fragment slot="title">
-        Shade Sails for Weddings and Events
+        Stages built for the bush.
       </Fragment>
       <Fragment slot="desc">
-        Custom designed shade sails for hire, offering a range of sizes to suit needs including pole installation, rigging and removal.
+        We design and construct stages for outdoor electronic music events. Every build starts with the
+        site itself — the treeline, the slope of the land, the way sound moves through the space. Using
+        bamboo, timber, and steel, we create structures that feel like they belong in the landscape rather
+        than being dropped onto it. Over 50 events across Queensland and the East Coast since 2016.
       </Fragment>
       <Fragment slot="cover">
-        <Picture
-                  src={Pagecover}
+        <Picture id="glass-card-dark"
+                  src={StageNight}
                   sizes="(max-width: 2000px) 2000px, 1000px"
                   widths={[1000, 1500, 2000]}
-                  aspectRatio="3:2"
+                  aspectRatio="1:1"
                   background="#f2f2f2"
                   fit="cover"
                   position="center"
@@ -134,22 +154,31 @@ const pricing = [
                 />
       </Fragment>
     </SectionHeadImg>
-  </ContainerXL>
+  </Container>
 
-  <ContainerXL>
+
+  <!-- Intro Section: Lighting -->
+  <Container>
     <SectionHeadSecImg>
+      <Fragment slot="smltitle">
+        After Dark
+      </Fragment>
       <Fragment slot="title">
-        Lighting Design and Lighting Hire
+        Lighting that moves with the music.
       </Fragment>
       <Fragment slot="desc">
-        Managing and designing lighting shows for over 6 years, we have a passion for creating beautiful spaces using a range of lighting and altering shows over the course of the night to keep things interesting. Hire RGB flood lights for treelumination, festoon light hire for pathways and event / wedding area lighting design.
+        We have been managing and designing lighting shows for outdoor events for over six years.
+        Our approach layers RGB flood lights for treelumination, festoon strings for pathway definition,
+        and programmable colour washes across stages and dancefloors. The lighting shifts throughout the
+        night — warm golden tones for sunset sets, deep purples and blues as the night deepens, and full
+        spectrum strobes when the energy peaks. Every show is designed to be felt, not just seen.
       </Fragment>
       <Fragment slot="cover">
-        <Picture
-                  src={PagecoverSecondary}
+        <Picture id="glass-card-dark"
+                  src={Immersive2}
                   sizes="(max-width: 2000px) 2000px, 1000px"
                   widths={[1000, 1500, 2000]}
-                  aspectRatio="3:2"
+                  aspectRatio="1:1"
                   background="#f2f2f2"
                   fit="cover"
                   position="center"
@@ -157,111 +186,229 @@ const pricing = [
                 />
       </Fragment>
     </SectionHeadSecImg>
+  </Container>
 
-    <Integrations />
-    
-  </ContainerXL>
 
-  <ContainerXL>
-    <SectionTextarea>
-      <Fragment slot="title">Organic brand strategies.</Fragment>
+  <!-- UV + Art Section -->
+  <Container>
+    <SectionHeadImg>
+      <Fragment slot="smltitle">
+        Hidden Layers
+      </Fragment>
+      <Fragment slot="title">
+        UV reactive art and blacklight environments.
+      </Fragment>
       <Fragment slot="desc">
-        Ignite your brand's online presence with Aidxn Design's SEO-friendly strategies. 
-        Experts in SEO designing brand strategies that not only captivate your audience 
-        but also rank high in search engine results with ease. From keyword mockups and 
-        to content category validation all before your brand hits the ground ensures a 
-        smooth sailing brand launch or direction shift. Driving organic traffic as a key 
-        pillar of your marketing plan.
+        Some of our favourite work only becomes visible after sundown. We create hand-painted UV banners,
+        reactive sculptures, and blacklight zones that transform familiar spaces into something entirely
+        different once the UV floods switch on. These pieces are designed to reward the people who explore
+        the site — hidden corners, unexpected details, and visual surprises that keep the environment alive
+        throughout the night.
       </Fragment>
       <Fragment slot="cover">
-        <Picture
-                  src={CoverTextarea}
+        <Picture id="glass-card-dark"
+                  src={UVBanners}
                   sizes="(max-width: 2000px) 2000px, 1000px"
                   widths={[1000, 1500, 2000]}
-                  aspectRatio="3:2"
+                  aspectRatio="1:1"
                   background="#f2f2f2"
                   fit="cover"
                   position="center"
                   class="w-full rounded duration-200 hover:shadow-sm"
                 />
       </Fragment>
-      <Fragment slot="iconleft">
-        <Icon class="w-16 h-16" name="simple-icons:googleads" />
-      </Fragment>
-      <Fragment slot="titleleft">
-        Google Search / Shopping / Display
-      </Fragment>
-      <Fragment slot="textleft">
-        Zapier's powerful automation platform works directly
-        with Velocity7. Automate tasks, synchronize data, 
-        and reduce costs. All made simple with Velocity7 
-        API connection.
-      </Fragment>
-      <Fragment slot="iconright">
-        <Icon class="w-16 h-16" name="ph:device-mobile-camera-light" />
-      </Fragment>
-      <Fragment slot="titleright">
-        Meta (FB / IG)
-      </Fragment>
-      <Fragment slot="textright">
-        All our Velocity sites are powered by Netlify's powerful, 
-        load-balancing network of servers to deliver your content 
-        to the end user faster than anyone else. Absolutely necessary
-        with the cell networks available in Australia. Take back control 
-        of your website's velocity with the speed of Velocity7 on Netlify's network.
-      </Fragment>
-      <Fragment slot="iconleft2">
-        <Icon class="w-16 h-16" name="mdi:billboard" />
-      </Fragment>
-      <Fragment slot="titleleft2">
-        Billboards and Buses
-      </Fragment>
-      <Fragment slot="textleft2">
-        Maximize your advertising effectiveness with Google Ads' 
-        conversion tracking built deeply into Velocity7. Easily 
-        track and measure conversions that matter most to your 
-        business. Gain valuable insights into customer behavior 
-        and optimize your ad strategy accordingly. With Google Ads' 
-        comprehensive conversion tracking, you can make data-driven 
-        decisions and drive higher ROI for your advertising efforts.
-      </Fragment>
-      <Fragment slot="iconright2">
-        <Icon class="w-16 h-16" name="ph:file-search-light" />
-      </Fragment>
-      <Fragment slot="titleright2">
-        AI and Automation
-      </Fragment>
-      <Fragment slot="textright2">
-        Streamline your payment process and boost sales with Stripe's 
-        secure payment gateway. With one-click checkout, you can 
-        provide a seamless payment experience for your customers, 
-        reducing cart abandonment and driving conversions. Benefit 
-        from Stripe's transparent pricing, and robust fraud prevention 
-        from day one for your business. For frictionless payment experiences.
-      </Fragment>      
-    </SectionTextarea>
-  </ContainerXL>
-
-  <Container>
-
-    <Sectionhead>
-      <Fragment slot="title">Turn Around in 14 Days.</Fragment>
-      <Fragment slot="desc"
-        >We move as fast as possible with all design work as we know it makes all the difference. 
-        Easily allowing for mockup revision and creative direction using Figma.
-      </Fragment>
-    </Sectionhead>
-
-    <MoonshotHero />
-
+    </SectionHeadImg>
   </Container>
 
+
+  <!-- What We Build Grid -->
   <Container>
-    <Cta />
+    <div id="what-we-build" class="scroll-mt-24 my-8 md:my-16">
+      <div class="mb-8 md:mb-12">
+        <h5 class="text-xs md:text-sm lg:text-md mb-2">Our Capabilities</h5>
+        <h3 class="max-w-3xl text-2xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight">
+          What We Build.
+        </h3>
+        <p class="text-sm lg:text-lg max-w-3xl mt-4">
+          From concept to construction to packdown. We handle every stage of the build
+          and bring our own equipment, crew, and years of site experience.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {services.map((service) => (
+          <div id="glass-card" class="card-padding flex flex-col items-start justify-start">
+            <div class="mb-4">
+              <Icon class="w-10 h-10" name={service.icon} />
+            </div>
+            <h4 class="font-semibold text-lg md:text-xl lg:text-2xl mb-2">{service.title}</h4>
+            <p class="text-xs md:text-sm leading-relaxed">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </Container>
 
+
+  <!-- Gallery Section -->
   <ContainerFW>
-    <GallerySlider />
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <script is:inline src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+    <style>
+      .immersive-carousel-cell {
+        margin-right: 3px;
+        margin-bottom: 20px;
+        border-radius: 0;
+        aspect-ratio: 5 / 3;
+        min-height: 300px;
+        overflow: hidden;
+      }
+      .immersive-carousel-cell img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .immersive-carousel { max-width: 100vw !important; height: auto; }
+      .immersive-carousel .flickity-viewport {
+        margin: 0 auto;
+        max-width: 100vw !important;
+        min-height: 300px;
+        transition: height 0.3s ease;
+      }
+    </style>
+
+    <main class="mx-auto mt-4 md:mt-0 pb-4">
+      <div class="pt-4 px-5 md:px-10 lg:px-16 flex flex-row items-start sm:items-center justify-between">
+        <div>
+          <h5 class="text-xs md:text-sm lg:text-md">
+            Past Builds
+          </h5>
+          <h4 class="text-2xl md:text-3xl lg:text-5xl my-2 font-bold lg:tracking-tight">
+            From the Field.
+          </h4>
+        </div>
+      </div>
+
+      <div class="immersive-carousel">
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={GalHH2_1} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="eager" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={DSC01565} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={GalHH2_2} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={GalBoho1} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={DSC00714} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={GalHH2_3} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={GalHH1_2} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+        <div class="immersive-carousel-cell flex flex-row justify-start items-center w-full sm:w-4/5 lg:w-3/4">
+          <Picture src={GalHH2_4} sizes="(max-width: 1680px) 1680px, 1260px, 840px" widths={[840, 1260, 1680]} aspectRatio="5:3" loading="lazy" background="#f2f2f200" fit="cover" position="center" class="w-full h-full" />
+        </div>
+      </div>
+    </main>
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Flickity !== 'undefined') {
+          new Flickity('.immersive-carousel', {
+            cellAlign: 'left',
+            contain: true,
+            prevNextButtons: false,
+            pageDots: true,
+            imagesLoaded: true
+          });
+        }
+      });
+    </script>
+  </ContainerFW>
+
+
+  <!-- Grid Gallery -->
+  <Container>
+    <div class="my-8 md:my-16">
+      <h5 class="text-xs md:text-sm lg:text-md mb-2">Gallery</h5>
+      <h3 class="max-w-3xl text-2xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight mb-8">
+        Stages, structures, and light.
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+        {galleryImages.map((img) => (
+          <div class="aspect-square overflow-hidden">
+            <Picture
+              src={img.src}
+              sizes="(max-width: 800px) 400px, 600px"
+              widths={[400, 600]}
+              aspectRatio="1:1"
+              loading="lazy"
+              background="#f2f2f200"
+              fit="cover"
+              position="center"
+              class="w-full h-full object-cover hover:scale-105 duration-500"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </Container>
+
+
+  <!-- Work With Us CTA -->
+  <ContainerFW>
+    <style>
+      #immersiveCta {
+        background-image: url('../assets/tbc/hero-hh2-stage-night-med.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 40vh;
+      }
+      @media only screen and (max-width: 768px) {
+        #immersiveCta {
+          min-height: 60vh;
+        }
+      }
+    </style>
+
+    <main class="my-8 md:my-16">
+      <div id="immersiveCta" class="mx-auto flex flex-col items-start justify-end rounded-3xl">
+        <div id="glass-card" class="max-w-3xl mx-4 my-8">
+          <h5 class="text-xs md:text-sm lg:text-md mb-2">For Event Organisers</h5>
+          <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold lg:tracking-tight">
+            Work with us.
+          </h3>
+          <p class="text-md lg:text-lg mt-4 max-w-xl">
+            Planning an outdoor event and need stage design, lighting, or full site production?
+            We bring our own equipment, crew, and years of experience building in the Queensland
+            bush. From single-stage setups to multi-area festivals, we handle concept through to packdown.
+          </p>
+          <div class="mt-6 flex flex-col sm:flex-row justify-start gap-3">
+            <a href="/contact" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
+              <svg viewBox="0 0 24 24" class="w-4 h-4">
+                <Icon class="text-black" name="ph:chat-teardrop-dots-light" />
+              </svg>
+              Get in Touch
+            </a>
+            <a href="/events" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-transparent text-white hover:bg-white/10 border-2 border-white/30 flex gap-1 items-center justify-center">
+              <svg viewBox="0 0 24 24" class="w-4 h-4">
+                <Icon class="text-white" name="ph:planet-light" />
+              </svg>
+              See Our Events
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
   </ContainerFW>
 
 </Layout>

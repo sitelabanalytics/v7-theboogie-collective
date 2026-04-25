@@ -1,10 +1,13 @@
 ---
-import { allProducts } from "../data/products.js";
+import { products } from "../data/products.js";
 
-// Pick 4 hero-worthy products
-const heroProducts = allProducts.filter(p =>
-  ["classic-oversized-tee-purple-black", "box-hood-purple-black", "classic-oversized-tee-orange-black", "classic-oversized-tee-white-stitch"].includes(p.slug)
-);
+// Pick hero-worthy variants across products
+const heroProducts = [];
+for (const product of products) {
+  for (const v of product.variants.slice(0, 2)) {
+    heroProducts.push({ slug: product.slug, name: product.name, ...v });
+  }
+}
 ---
 
 <!-- Flickity CSS -->
@@ -34,7 +37,7 @@ const heroProducts = allProducts.filter(p =>
           <a href="/shop" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
             Browse Collection
           </a>
-          <a href="/shop/classic-oversized-tee-purple-black" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 border-2 border-white/30 hover:border-white/60 text-white flex gap-1 items-center justify-center">
+          <a href="/shop/classic-tee" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 border-2 border-white/30 hover:border-white/60 text-white flex gap-1 items-center justify-center">
             Best Seller
           </a>
         </div>
@@ -44,16 +47,16 @@ const heroProducts = allProducts.filter(p =>
     <!-- Right: product slider -->
     <div class="shop-hero-slider-wrap shop-anim shop-anim-5">
       <div class="hero-product-carousel">
-        {heroProducts.map((product) => (
-          <a href={`/shop/${product.slug}`} class="hero-product-slide">
+        {heroProducts.map((item) => (
+          <a href={`/shop/${item.slug}`} class="hero-product-slide">
             <div class="hero-product-img">
-              <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="eager" />
-              {product.badge && <span class="hero-product-badge">{product.badge}</span>}
-              <span class="hero-product-swatch" style={`background: ${product.swatch}`}></span>
+              <img src={item.image} alt={`${item.name} — ${item.colorway}`} loading="eager" />
+              {item.badge && <span class="hero-product-badge">{item.badge}</span>}
+              <span class="hero-product-swatch" style={`background: ${item.swatch}`}></span>
             </div>
             <div class="hero-product-info">
-              <p class="hero-product-colorway">{product.colorway}</p>
-              <h4 class="hero-product-name">{product.name}</h4>
+              <p class="hero-product-colorway">{item.colorway}</p>
+              <h4 class="hero-product-name">{item.name}</h4>
               <span class="hero-product-cta">View Product →</span>
             </div>
           </a>

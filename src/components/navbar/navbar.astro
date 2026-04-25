@@ -3,7 +3,7 @@ import ContainerSticky from "@components/container-sticky.astro";
 import Link from "@components/ui/link.astro";
 import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
-import aidxnLogo from 'assets/tbc/tbc-immersive-logo-white.svg'; 
+import aidxnLogo from 'assets/tbc/tbc-immersive-logo-white.svg';
 
 
 const menuitems = [
@@ -27,22 +27,78 @@ const menuitems = [
 ---
 
 <style>
-  #navLogo {height: 75px; margin: 15px auto;} 
+  #navLogo {
+    height: 75px;
+    margin: 15px auto;
+    transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), margin 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  header.nav-scrolled #navLogo {
+    height: 38px;
+    margin: 8px auto;
+  }
   @media only screen and (max-width: 968px) {
-    #navLogo {
-      height: 60px;
-    }
+    #navLogo { height: 60px; }
+    header.nav-scrolled #navLogo { height: 30px; margin: 6px auto; }
   }
   @media only screen and (max-width: 568px) {
-    #navLogo {
-      height: 50px;
+    #navLogo { height: 50px; }
+    header.nav-scrolled #navLogo { height: 25px; margin: 6px auto; }
+  }
+
+  header {
+    background: rgba(0, 0, 0, 0.33);
+    backdrop-filter: blur(15px);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  header.nav-scrolled {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  /* ─── Logo suspense splash ─── */
+  .logo-suspense {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: suspenseFade 0.6s ease-in 1.4s forwards;
+    pointer-events: all;
+  }
+  .logo-suspense img {
+    width: 33vw;
+    max-width: 400px;
+    opacity: 0;
+    transform: scale(0.92);
+    animation: suspenseLogoIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  }
+  @media (max-width: 768px) {
+    .logo-suspense img {
+      width: 66vw;
+      max-width: 320px;
     }
   }
-  header { background: rgba(0, 0, 0, 0.33); backdrop-filter: blur(15px); border: 0.5px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+  @keyframes suspenseLogoIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes suspenseFade {
+    from { opacity: 1; pointer-events: all; }
+    to { opacity: 0; pointer-events: none; }
+  }
 </style>
 
+<!-- Logo suspense splash -->
+<div class="logo-suspense" id="logoSuspense">
+  <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" />
+</div>
+
 <ContainerSticky>
-  <header class="m-2 border rounded-lg mx-auto flex flex-col lg:flex-row justify-between items-center mb-4 px-2 md:px-6 lg:px-8">
+  <header id="mainNav" class="m-2 border rounded-lg mx-auto flex flex-col lg:flex-row justify-between items-center mb-4 px-2 md:px-6 lg:px-8">
     <Astronav>
       <div class="flex w-full  lg:w-auto items-center justify-between">
         <a href="/" class="">
@@ -95,4 +151,35 @@ const menuitems = [
   </header>
 </ContainerSticky>
 
+<script is:inline>
+  (function() {
+    // Scroll-shrink header
+    var nav = document.getElementById('mainNav');
+    var lastY = 0;
+    var scrolled = false;
 
+    function onScroll() {
+      var y = window.scrollY;
+      if (y > 60 && !scrolled) {
+        nav.classList.add('nav-scrolled');
+        scrolled = true;
+      } else if (y <= 30 && scrolled) {
+        nav.classList.remove('nav-scrolled');
+        scrolled = false;
+      }
+      lastY = y;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Remove suspense after animation completes
+    var suspense = document.getElementById('logoSuspense');
+    if (suspense) {
+      suspense.addEventListener('animationend', function(e) {
+        if (e.animationName === 'suspenseFade') {
+          suspense.remove();
+        }
+      });
+    }
+  })();
+</script>

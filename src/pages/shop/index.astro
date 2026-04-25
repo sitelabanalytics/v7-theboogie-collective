@@ -1,7 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import ContainerFW from "@components/container-fullwidth.astro";
-import { tshirts, jumpers } from "../../data/products.js";
+import { products } from "../../data/products.js";
 ---
 
 <Layout title="Shop">
@@ -18,85 +17,92 @@ import { tshirts, jumpers } from "../../data/products.js";
           Limited release T-Shirts & Jumpers. High-quality ink print and premium stitch on AS Colour basics.
           Stripe secure payment with ApplePay / GooglePay.
         </p>
+        <div class="preorder-banner shop-fade shop-fade-3">
+          <span class="preorder-banner-dot"></span>
+          <p>Pre-orders are open now. Orders will ship in a few weeks — you'll get a notification when yours is on the way.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- T-Shirts -->
-  <section class="py-16" style="background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);">
+  <!-- Products -->
+  <section class="py-16" style="background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);">
     <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-      <div class="mb-10 shop-reveal">
-        <h5 class="text-sm tracking-widest mb-2">6 Styles Available</h5>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">T-Shirts</h2>
-        <p class="text-md max-w-xl">100% combed cotton, preshrunk. Available in men's oversized and women's crop fits.</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-        {tshirts.map((product, i) => (
-          <a href={`/shop/${product.slug}`} class="product-card-lg shop-reveal" style={`--delay: ${i * 0.08}s`}>
-            <div class="product-card-lg-img">
-              <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="lazy" />
-              {product.badge && <span class="product-card-lg-badge">{product.badge}</span>}
-              <div class="product-card-lg-swatches">
-                <span class="product-card-lg-swatch" style={`background: ${product.swatch}`}></span>
-                {product.swatchBg && <span class="product-card-lg-swatch" style={`background: ${product.swatchBg}`}></span>}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {products.map((product, i) => {
+          const defaultVariant = product.variants[0];
+          const fits = [...new Set(product.variants.map(v => v.fit))];
+          const uniqueColors = [];
+          const seenColors = new Set();
+          product.variants.forEach(v => {
+            if (!seenColors.has(v.colorKey)) {
+              seenColors.add(v.colorKey);
+              uniqueColors.push(v);
+            }
+          });
+          return (
+            <a href={`/shop/${product.slug}`} class="product-card-lg shop-reveal" style={`--delay: ${i * 0.1}s`}>
+              <div class="product-card-lg-img">
+                <img src={defaultVariant.image} alt={product.name} loading="lazy" />
+                {defaultVariant.badge && <span class="product-card-lg-badge">{defaultVariant.badge}</span>}
+                <div class="product-card-lg-swatches">
+                  {uniqueColors.map(v => (
+                    <span class="product-card-lg-swatch" style={`background: ${v.swatch}`}></span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div class="product-card-lg-body">
-              <p class="product-card-lg-colorway">{product.colorway}</p>
-              <h3 class="product-card-lg-name">{product.name}</h3>
-              <p class="product-card-lg-fit">{product.fit} · {product.code}</p>
-              <p class="product-card-lg-weight">{product.weight}</p>
-              <div class="product-card-lg-sizes">
-                {product.sizes.map((s) => (
-                  <span class="product-card-lg-size">{s}</span>
-                ))}
+              <div class="product-card-lg-body">
+                <p class="product-card-lg-colorway">{fits.join(' · ')}</p>
+                <h3 class="product-card-lg-name">{product.name}</h3>
+                <p class="product-card-lg-fit">{uniqueColors.length} colourways · {defaultVariant.code}</p>
+                <p class="product-card-lg-weight">{defaultVariant.weight}</p>
+                <div class="product-card-lg-sizes">
+                  {[...new Set(product.variants.flatMap(v => v.sizes))].map(s => (
+                    <span class="product-card-lg-size">{s}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Jumpers -->
-  <section class="py-16" style="background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);">
-    <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-      <div class="mb-10 shop-reveal">
-        <h5 class="text-sm tracking-widest mb-2">3 Styles Available</h5>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Jumpers</h2>
-        <p class="text-md max-w-xl">350 GSM anti-pill CVC fleece. Drop shoulder, kangaroo pocket, relaxed unisex fit.</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-        {jumpers.map((product, i) => (
-          <a href={`/shop/${product.slug}`} class="product-card-lg shop-reveal" style={`--delay: ${i * 0.08}s`}>
-            <div class="product-card-lg-img">
-              <img src={product.image} alt={`${product.name} — ${product.colorway}`} loading="lazy" />
-              {product.badge && <span class="product-card-lg-badge">{product.badge}</span>}
-              <div class="product-card-lg-swatches">
-                <span class="product-card-lg-swatch" style={`background: ${product.swatch}`}></span>
-              </div>
-            </div>
-            <div class="product-card-lg-body">
-              <p class="product-card-lg-colorway">{product.colorway}</p>
-              <h3 class="product-card-lg-name">{product.name}</h3>
-              <p class="product-card-lg-fit">{product.fit} · {product.code}</p>
-              <p class="product-card-lg-weight">{product.weight}</p>
-              <div class="product-card-lg-sizes">
-                {product.sizes.map((s) => (
-                  <span class="product-card-lg-size">{s}</span>
-                ))}
-              </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          );
+        })}
       </div>
     </div>
   </section>
 </Layout>
 
 <style is:global>
+  /* ─── Pre-order banner ─── */
+  .preorder-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: rgba(107, 0, 204, 0.12);
+    border: 0.5px solid rgba(107, 0, 204, 0.3);
+    max-width: 540px;
+  }
+  .preorder-banner-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: #FF6611;
+    box-shadow: 0 0 8px rgba(255, 102, 17, 0.6);
+    animation: preorderPulse 2s ease-in-out infinite;
+  }
+  @keyframes preorderPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .preorder-banner p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
   /* ─── Shop page entrance ─── */
   .shop-fade {
     opacity: 0;
@@ -199,6 +205,7 @@ import { tshirts, jumpers } from "../../data/products.js";
   .product-card-lg-sizes {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
   }
   .product-card-lg-size {
     font-family: 'inconsolata' !important;

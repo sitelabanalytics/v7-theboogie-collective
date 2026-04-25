@@ -1,28 +1,33 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { allProducts, STRIPE_PK } from "../../data/products.js";
+import { products } from "../../data/products.js";
 
 export function getStaticPaths() {
-  return allProducts.map((product) => ({
+  return products.map((product) => ({
     params: { slug: product.slug },
     props: { product },
   }));
 }
 
 const { product } = Astro.props;
-
-const related = allProducts.filter(
-  (p) => p.name === product.name && p.slug !== product.slug
-);
+const defaultVariant = product.variants[0];
+const fits = [...new Map(product.variants.map(v => [v.fitKey, v.fit])).entries()];
+const hasFitSelector = fits.length > 1;
 ---
 
-<Layout title={`${product.name} — ${product.colorway}`}>
+<Layout title={product.name}>
 
-  <!-- ═══ HERO: Full-bleed product image with overlayed info ═══ -->
-  <section class="pdp-hero" x-data={`{ selectedSize: '${product.sizes[0]}' }`}>
+  <!-- Alpine.js -->
+  <script is:inline src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" defer></script>
+
+  <!-- Variant data for Alpine -->
+  <script id="product-variants" type="application/json" set:html={JSON.stringify(product.variants)}></script>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="pdp-hero" x-data="productPage()" x-cloak>
     <!-- Background image -->
     <div class="pdp-hero-img" id="pdpHeroImg">
-      <img src={product.images[0]} alt={`${product.name} — ${product.colorway}`} />
+      <img x-bind:src="activeVariant.images[currentImageIndex] || activeVariant.images[0]" x-bind:alt="activeVariant.colorway" />
       <div class="pdp-hero-gradient"></div>
     </div>
 
@@ -33,140 +38,142 @@ const related = allProducts.filter(
       <span>{product.name}</span>
     </nav>
 
-    <!-- Top-right badge -->
-    {product.badge && (
-      <span class="pdp-hero-badge pdp-a pdp-a-2">{product.badge}</span>
-    )}
+    <!-- Badge -->
+    <template x-if="activeVariant.badge">
+      <span class="pdp-hero-badge" x-text="activeVariant.badge"></span>
+    </template>
 
-    <!-- Bottom-left: product info stack -->
+    <!-- Bottom-left: product info -->
     <div class="pdp-hero-info">
-      <p class="pdp-hero-colorway pdp-a pdp-a-2">{product.colorway}</p>
+      <p class="pdp-hero-colorway pdp-a pdp-a-2" x-text="activeVariant.colorway"></p>
       <h1 class="pdp-hero-title pdp-a pdp-a-3">{product.name}</h1>
       <div class="pdp-hero-meta pdp-a pdp-a-4">
-        <span class="pdp-hero-swatch" style={`background: ${product.swatch}`}></span>
-        {product.swatchBg && <span class="pdp-hero-swatch" style={`background: ${product.swatchBg}`}></span>}
-        <span>{product.fit}</span>
-        <span class="pdp-hero-dot">·</span>
-        <span>{product.code}</span>
+        <span class="pdp-hero-swatch" x-bind:style="`background: ${activeVariant.swatch}`"></span>
+        <span x-text="activeVariant.fit"></span>
+        <span class="pdp-hero-dot">&middot;</span>
+        <span x-text="activeVariant.code"></span>
       </div>
-      <p class="pdp-hero-weight pdp-a pdp-a-5">{product.weight}</p>
+      <p class="pdp-hero-weight pdp-a pdp-a-5" x-text="activeVariant.weight"></p>
     </div>
 
-    <!-- Bottom-right: sizes + buy -->
+    <!-- Bottom-right: selectors + buy -->
     <div class="pdp-hero-action pdp-a pdp-a-5">
-      <div class="pdp-hero-sizes">
-        {product.sizes.map((size) => (
+      {/* Fit selector — only for multi-fit products */}
+      {hasFitSelector && (
+        <div class="pdp-selector-row">
+          {fits.map(([key, label]) => (
+            <button
+              class="pdp-fit-pill"
+              x-on:click={`selectFit('${key}')`}
+              x-bind:class={`selectedFit === '${key}' ? 'pdp-fit-active' : ''`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Color selector */}
+      <div class="pdp-selector-row">
+        <template x-for="v in availableColors" x-bind:key="v.colorKey">
+          <button
+            class="pdp-color-btn"
+            x-on:click="selectColor(v.colorKey)"
+            x-bind:class="selectedColor === v.colorKey ? 'pdp-color-active' : ''"
+            x-bind:title="v.colorway"
+          >
+            <span class="pdp-color-dot" x-bind:style="`background: ${v.swatch}`"></span>
+          </button>
+        </template>
+      </div>
+
+      {/* Size selector */}
+      <div class="pdp-selector-row">
+        <template x-for="size in activeVariant.sizes" x-bind:key="size">
           <button
             class="pdp-hs-pill"
-            x-on:click={`selectedSize = '${size}'`}
-            x-bind:class={`selectedSize === '${size}' ? 'pdp-hs-active' : ''`}
-          >
-            {size}
-          </button>
-        ))}
+            x-on:click="selectedSize = size"
+            x-bind:class="selectedSize === size ? 'pdp-hs-active' : ''"
+            x-text="size"
+          ></button>
+        </template>
       </div>
-      {product.priceId ? (
-        <button
-          class="pdp-hero-buy"
-          id="stripeCheckoutBtn"
-          data-price-id={product.priceId}
-          data-stripe-pk={STRIPE_PK}
-        >
-          Buy Now
-        </button>
-      ) : (
-        <a href={product.stripe} rel="noopener" target="_blank" class="pdp-hero-buy">
-          Buy Now
-        </a>
-      )}
+
+      {/* Buy button */}
+      <a x-bind:href="activeVariant.stripe" rel="noopener" target="_blank" class="pdp-hero-buy">
+        Pre-Order Now
+      </a>
     </div>
 
-    <!-- Thumbnail strip (bottom center on desktop) -->
-    {product.images.length > 1 && (
-      <div class="pdp-hero-thumbs pdp-a pdp-a-6">
-        {product.images.map((img, i) => (
-          <button class="pdp-ht" data-img={img} style={i === 0 ? 'border-color: rgba(255,255,255,0.6);' : ''}>
-            <img src={img} alt={`View ${i + 1}`} />
-          </button>
-        ))}
-      </div>
-    )}
+    <!-- Pre-order notice -->
+    <div class="pdp-preorder-notice pdp-a pdp-a-6">
+      <span class="pdp-preorder-dot"></span>
+      <span>Pre-order — ships in a few weeks. We'll message you when it's on the way.</span>
+    </div>
+
+    <!-- Thumbnail strip (desktop) -->
+    <div class="pdp-hero-thumbs pdp-a pdp-a-6" x-show="activeVariant.images.length > 1">
+      <template x-for="(img, i) in activeVariant.images" x-bind:key="img">
+        <button
+          class="pdp-ht"
+          x-on:click="selectThumb(i)"
+          x-bind:style="currentImageIndex === i ? 'border-color: rgba(255,255,255,0.6)' : ''"
+        >
+          <img x-bind:src="img" x-bind:alt="`View ${i + 1}`" />
+        </button>
+      </template>
+    </div>
   </section>
 
-  <!-- ═══ DETAILS: Below the fold ═══ -->
+  <!-- ═══ DETAILS ═══ -->
   <section class="pdp-details">
     <div class="max-w-5xl mx-auto px-5 md:px-10 lg:px-16">
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-        <!-- Description -->
         <div class="pdp-det-block">
           <h3 class="pdp-det-heading">About This Product</h3>
           <p class="pdp-det-body">{product.description}</p>
         </div>
-
-        <!-- Specs + Purchase -->
         <div class="pdp-det-block">
           <h3 class="pdp-det-heading">Details</h3>
           <div class="pdp-spec-grid">
             <div class="pdp-spec">
               <span class="pdp-spec-label">Garment</span>
-              <span class="pdp-spec-value">{product.code}</span>
+              <span class="pdp-spec-value" x-text="activeVariant.code"></span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Fit</span>
-              <span class="pdp-spec-value">{product.fit}</span>
+              <span class="pdp-spec-value" x-text="activeVariant.fit"></span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Fabric</span>
-              <span class="pdp-spec-value">{product.weight}</span>
+              <span class="pdp-spec-value" x-text="activeVariant.weight"></span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Shipping</span>
-              <span class="pdp-spec-value">$15 express · $7 standard</span>
+              <span class="pdp-spec-value">$15 express &middot; $7 standard</span>
+            </div>
+            <div class="pdp-spec">
+              <span class="pdp-spec-label">Pre-Order</span>
+              <span class="pdp-spec-value">Ships in a few weeks</span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Payment</span>
-              <span class="pdp-spec-value">Stripe · ApplePay · GooglePay</span>
+              <span class="pdp-spec-value">Stripe &middot; ApplePay &middot; GooglePay</span>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
-
-  <!-- ═══ RELATED ═══ -->
-  {related.length > 0 && (
-    <section class="pdp-related">
-      <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-        <h3 class="text-2xl font-bold tracking-tight mb-8">Other Colourways</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {related.map((p) => (
-            <a href={`/shop/${p.slug}`} class="product-card-lg">
-              <div class="product-card-lg-img">
-                <img src={p.image} alt={`${p.name} — ${p.colorway}`} loading="lazy" />
-                {p.badge && <span class="product-card-lg-badge">{p.badge}</span>}
-                <div class="product-card-lg-swatches">
-                  <span class="product-card-lg-swatch" style={`background: ${p.swatch}`}></span>
-                </div>
-              </div>
-              <div class="product-card-lg-body">
-                <p class="product-card-lg-colorway">{p.colorway}</p>
-                <h4 class="product-card-lg-name">{p.name}</h4>
-                <p class="product-card-lg-fit">{p.fit}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
 
 </Layout>
 
 <style is:global>
+  /* Hide Alpine elements until init */
+  [x-cloak] { display: none !important; }
+
   /* ═══════════════════════════════════════
-     PDP HERO — full-viewport product image
+     PDP HERO
      ═══════════════════════════════════════ */
   .pdp-hero {
     position: relative;
@@ -176,14 +183,19 @@ const related = allProducts.filter(
     overflow: hidden;
   }
   @media (max-width: 767px) {
-    .pdp-hero { min-height: 75vh; }
+    .pdp-hero { min-height: auto; padding-bottom: 24px; }
   }
 
-  /* Background image */
   .pdp-hero-img {
     position: absolute;
     inset: 0;
     z-index: 0;
+  }
+  @media (max-width: 767px) {
+    .pdp-hero-img {
+      position: relative;
+      aspect-ratio: 3 / 4;
+    }
   }
   .pdp-hero-img img {
     width: 100%;
@@ -191,13 +203,13 @@ const related = allProducts.filter(
     object-fit: cover;
     object-position: center top;
     animation: pdpImgReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: opacity 0.3s, transform 0.3s;
   }
   @keyframes pdpImgReveal {
     from { opacity: 0; transform: scale(1.06); }
     to { opacity: 1; transform: scale(1); }
   }
 
-  /* Gradient overlays for text readability */
   .pdp-hero-gradient {
     position: absolute;
     inset: 0;
@@ -258,6 +270,13 @@ const related = allProducts.filter(
   @media (min-width: 968px) {
     .pdp-hero-info { bottom: 40px; left: 40px; max-width: 600px; }
   }
+  @media (max-width: 767px) {
+    .pdp-hero-info {
+      position: relative;
+      bottom: auto; left: auto;
+      padding: 20px 20px 0;
+    }
+  }
 
   .pdp-hero-colorway {
     font-family: 'inconsolata' !important;
@@ -295,6 +314,7 @@ const related = allProducts.filter(
     border-radius: 50%;
     border: 2px solid rgba(255,255,255,0.4);
     flex-shrink: 0;
+    transition: background 0.3s;
   }
   .pdp-hero-weight {
     font-size: 0.75rem;
@@ -307,27 +327,84 @@ const related = allProducts.filter(
     bottom: 28px; right: 20px;
     z-index: 10;
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
   }
   @media (min-width: 968px) {
-    .pdp-hero-action { bottom: 40px; right: 40px; gap: 16px; }
+    .pdp-hero-action { bottom: 40px; right: 40px; gap: 12px; }
   }
-  @media (max-width: 479px) {
+  @media (max-width: 767px) {
     .pdp-hero-action {
-      bottom: auto; top: auto;
-      left: 20px; right: 20px;
-      bottom: 28px;
-      flex-direction: column;
+      position: relative;
+      bottom: auto; right: auto;
+      padding: 16px 20px 0;
       align-items: stretch;
     }
-    .pdp-hero-info { bottom: 120px; }
   }
 
-  .pdp-hero-sizes {
+  /* Selector rows */
+  .pdp-selector-row {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
+  @media (max-width: 767px) {
+    .pdp-selector-row { justify-content: flex-start; }
+  }
+
+  /* Fit pills */
+  .pdp-fit-pill {
+    font-family: 'inconsolata' !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    padding: 7px 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.6) !important;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .pdp-fit-pill:hover {
+    border-color: rgba(255,255,255,0.4);
+    color: #fff !important;
+  }
+  .pdp-fit-pill.pdp-fit-active {
+    background: #fff;
+    color: #000 !important;
+    border-color: #fff;
+  }
+
+  /* Color swatches */
+  .pdp-color-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .pdp-color-btn:hover { border-color: rgba(255,255,255,0.5); }
+  .pdp-color-btn.pdp-color-active {
+    border-color: #fff;
+    transform: scale(1.1);
+  }
+  .pdp-color-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+
+  /* Size pills */
   .pdp-hs-pill {
     font-family: 'inconsolata' !important;
     font-size: 0.8rem;
@@ -350,6 +427,7 @@ const related = allProducts.filter(
     border-color: #fff;
   }
 
+  /* Buy button */
   .pdp-hero-buy {
     display: inline-block;
     padding: 10px 28px;
@@ -364,10 +442,63 @@ const related = allProducts.filter(
     cursor: pointer;
     transition: opacity 0.2s, transform 0.2s;
     white-space: nowrap;
+    text-align: center;
+  }
+  @media (max-width: 767px) {
+    .pdp-hero-buy {
+      width: 100%;
+      padding: 12px 28px;
+    }
   }
   .pdp-hero-buy:hover {
     opacity: 0.9;
     transform: translateY(-2px);
+  }
+
+  /* ─── Pre-order notice ─── */
+  .pdp-preorder-notice {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+  }
+  .pdp-preorder-notice span:last-child {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+  .pdp-preorder-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #FF6611;
+    box-shadow: 0 0 6px rgba(255, 102, 17, 0.6);
+    animation: pdpPreorderPulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pdpPreorderPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @media (max-width: 767px) {
+    .pdp-preorder-notice {
+      position: relative;
+      bottom: auto; left: auto;
+      transform: none;
+      margin: 16px 20px 0;
+      white-space: normal;
+    }
+  }
+  @media (min-width: 968px) {
+    .pdp-preorder-notice { bottom: 40px; }
   }
 
   /* ─── Thumbnails ─── */
@@ -397,7 +528,7 @@ const related = allProducts.filter(
   }
   .pdp-ht img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* ═══ Staggered entrance animations ═══ */
+  /* ═══ Staggered animations ═══ */
   .pdp-a {
     opacity: 0;
     transform: translateY(18px);
@@ -414,7 +545,7 @@ const related = allProducts.filter(
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ═══ DETAILS SECTION ═══ */
+  /* ═══ DETAILS ═══ */
   .pdp-details {
     background: #000;
     padding: 4rem 0;
@@ -452,62 +583,64 @@ const related = allProducts.filter(
     color: rgba(255,255,255,0.6) !important;
     text-align: right;
   }
-
-  /* ═══ RELATED ═══ */
-  .pdp-related {
-    background: #000;
-    padding: 4rem 0 5rem;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
 </style>
 
-<!-- Stripe.js -->
-<script is:inline src="https://js.stripe.com/v3/"></script>
-
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Thumbnail → swap hero image
-    var thumbs = document.querySelectorAll('.pdp-ht');
-    var heroImg = document.querySelector('#pdpHeroImg img');
-    if (heroImg && thumbs.length) {
-      thumbs.forEach(function(thumb) {
-        thumb.addEventListener('click', function() {
-          var src = this.getAttribute('data-img');
-          heroImg.style.opacity = '0';
-          heroImg.style.transform = 'scale(1.03)';
-          setTimeout(function() {
-            heroImg.src = src;
-            heroImg.style.opacity = '1';
-            heroImg.style.transform = 'scale(1)';
-          }, 250);
-          thumbs.forEach(function(t) { t.style.borderColor = 'rgba(255,255,255,0.15)'; });
-          thumb.style.borderColor = 'rgba(255,255,255,0.6)';
-        });
-      });
+  function productPage() {
+    var variants = JSON.parse(document.getElementById('product-variants').textContent);
+    var first = variants[0];
+
+    function findVariant(fit, color) {
+      for (var i = 0; i < variants.length; i++) {
+        if (variants[i].fitKey === fit && variants[i].colorKey === color) return variants[i];
+      }
+      return variants[0];
     }
 
-    // Stripe Checkout
-    var checkoutBtn = document.getElementById('stripeCheckoutBtn');
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', function() {
-        var priceId = this.getAttribute('data-price-id');
-        var stripePk = this.getAttribute('data-stripe-pk');
-        var stripe = Stripe(stripePk);
-        checkoutBtn.textContent = 'Redirecting...';
-        checkoutBtn.style.opacity = '0.6';
-        stripe.redirectToCheckout({
-          lineItems: [{ price: priceId, quantity: 1 }],
-          mode: 'payment',
-          successUrl: window.location.origin + '/success',
-          cancelUrl: window.location.href,
-        }).then(function(result) {
-          if (result.error) {
-            checkoutBtn.textContent = 'Buy Now';
-            checkoutBtn.style.opacity = '1';
-            alert(result.error.message);
-          }
-        });
-      });
+    function findColors(fit) {
+      var seen = {};
+      var result = [];
+      for (var i = 0; i < variants.length; i++) {
+        if (variants[i].fitKey === fit && !seen[variants[i].colorKey]) {
+          seen[variants[i].colorKey] = true;
+          result.push(variants[i]);
+        }
+      }
+      return result;
     }
-  });
+
+    return {
+      variants: variants,
+      selectedFit: first.fitKey,
+      selectedColor: first.colorKey,
+      selectedSize: first.sizes[0],
+      currentImageIndex: 0,
+      availableColors: findColors(first.fitKey),
+      activeVariant: first,
+
+      selectFit: function(fit) {
+        this.selectedFit = fit;
+        this.availableColors = findColors(fit);
+        var sc = this.selectedColor;
+        var hasColor = this.availableColors.some(function(v) { return v.colorKey === sc; });
+        if (!hasColor) {
+          this.selectedColor = this.availableColors[0].colorKey;
+        }
+        this.currentImageIndex = 0;
+        this.activeVariant = findVariant(this.selectedFit, this.selectedColor);
+        this.selectedSize = this.activeVariant.sizes[0];
+      },
+
+      selectColor: function(color) {
+        this.selectedColor = color;
+        this.currentImageIndex = 0;
+        this.activeVariant = findVariant(this.selectedFit, color);
+        this.selectedSize = this.activeVariant.sizes[0];
+      },
+
+      selectThumb: function(i) {
+        this.currentImageIndex = i;
+      }
+    };
+  }
 </script>

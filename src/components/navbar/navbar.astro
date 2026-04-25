@@ -4,18 +4,59 @@ import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
 import aidxnLogo from 'assets/tbc/tbc-immersive-logo-white.svg';
 
 const navLinks = [
-  { ref: '01', title: 'Shop',           path: '/shop' },
-  { ref: '02', title: 'Artists',        path: '/artists' },
-  { ref: '03', title: 'Events',         path: '/events' },
-  { ref: '04', title: 'Boog.VJ',        path: '/boog-vj' },
-  { ref: '05', title: 'Blog',           path: '/blog' },
-  { ref: '06', title: 'Installations',  path: '/immersive-structures' },
-  { ref: '07', title: 'Contact',        path: 'https://theboogiecollective.com/contact' },
+  { ref: '01', title: 'Shop', path: '/shop' },
+  { ref: '02', title: 'Artists', path: '/artists' },
+  { ref: '03', title: 'Events', path: '/events', children: [
+    { title: 'Happiness Hill', path: '/blog/happiness-hill-festival' },
+    { title: 'Rabbits Eat Lettuce', path: '/blog/rabbits-eat-lettuce' },
+    { title: 'Rainbow Serpent', path: '/blog/rainbow-serpent-festival' },
+    { title: 'Bohemian Beatfreaks', path: '/blog/bohemian-beatfreaks' },
+    { title: 'Dragon Dreaming', path: '/blog/dragon-dreaming' },
+  ]},
+  { ref: '04', title: 'Services', path: '/boog-vj', children: [
+    { title: 'Event Curation', path: '/events' },
+    { title: 'Projection Mapping', path: '/boog-vj' },
+    { title: 'Stage Design', path: '/immersive-structures' },
+    { title: 'UV Art Installations', path: '/boog-vj' },
+    { title: 'Artist Bookings', path: '/artists' },
+    { title: 'Merch & Apparel', path: '/shop' },
+  ]},
+  { ref: '05', title: 'Boog.VJ', path: '/boog-vj' },
+  { ref: '06', title: 'Blog', path: '/blog', children: [
+    { title: 'Happiness Hill Festival', path: '/blog/happiness-hill-festival' },
+    { title: 'Rabbits Eat Lettuce 2026', path: '/blog/rabbits-eat-lettuce' },
+    { title: 'Esoteric Festival', path: '/blog/esoteric-festival' },
+    { title: 'Subsonic Music Festival', path: '/blog/subsonic-music-festival' },
+  ]},
+  { ref: '07', title: 'Contact', path: 'https://theboogiecollective.com/contact' },
 ];
 ---
 
 <style>
   /* ─── Top bar ─── */
+  .nav-header {
+    background: rgba(0, 0, 0, 0.33);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  @media (prefers-color-scheme: light) {
+    .nav-header {
+      background: rgba(255, 255, 255, 0.6);
+      border: 0.5px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+    #navLogo { filter: invert(1); }
+    .nav-motto { color: rgba(0, 0, 0, 0.4) !important; }
+    .nav-icon-btn { color: rgba(0, 0, 0, 0.5); }
+    .nav-icon-btn:hover { background: rgba(0, 0, 0, 0.06); color: #000; }
+    .nav-toggle { color: #000; }
+    .nav-toggle:hover { background: rgba(0, 0, 0, 0.06); }
+    .nav-secondary { background: rgba(255, 255, 255, 0.4); border-color: rgba(0, 0, 0, 0.04); }
+    .nav-sec-link { color: rgba(0, 0, 0, 0.45) !important; }
+    .nav-sec-link:hover { color: rgba(0, 0, 0, 0.8) !important; }
+  }
   #navBar {
     transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -136,20 +177,48 @@ const navLinks = [
     align-items: center;
     justify-content: space-between;
     padding: 20px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
     transition: opacity 0.2s;
     text-decoration: none;
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  .nav-overlay.open .nav-link {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @media (min-width: 768px) { .nav-link { padding: 28px 0; } }
 
   .nav-link:hover { opacity: 0.7; }
+
+  .nav-link-group {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .nav-overlay.open .nav-link-group {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Dropdown sub-links */
+  .nav-dropdown {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    padding: 0 0 16px 32px;
+  }
+  @media (min-width: 768px) {
+    .nav-dropdown { padding: 0 0 20px 40px; gap: 6px 12px; }
+  }
+  .nav-dropdown-link {
+    font-family: 'wotfard' !important;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.35) !important;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-link:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.05);
+  }
 
   .nav-link-left {
     display: flex;
@@ -199,6 +268,31 @@ const navLinks = [
     text-decoration: none;
   }
   .nav-bottom-link:hover { color: #fff !important; }
+
+  /* ─── Icon buttons (notifications, account) ─── */
+  .nav-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.45);
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+  .nav-icon-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  @media (min-width: 768px) {
+    .nav-icon-btn { width: 42px; height: 42px; }
+    .nav-icon-btn svg { width: 20px; height: 20px; }
+  }
 
   /* ─── Secondary nav row ─── */
   .nav-secondary {
@@ -252,7 +346,7 @@ const navLinks = [
     animation: suspenseFade 0.6s ease-in 1.4s forwards;
     pointer-events: all;
   }
-  .logo-suspense img {
+  .logo-suspense > img:last-of-type {
     width: 33vw;
     max-width: 400px;
     opacity: 0;
@@ -260,7 +354,24 @@ const navLinks = [
     animation: suspenseLogoIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   }
   @media (max-width: 768px) {
-    .logo-suspense img { width: 66vw; max-width: 320px; }
+    .logo-suspense > img:last-of-type { width: 66vw; max-width: 320px; }
+  }
+
+  .suspense-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    opacity: 0.35;
+  }
+  .suspense-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 70%);
   }
   @keyframes suspenseLogoIn {
     from { opacity: 0; transform: scale(0.92); }
@@ -274,13 +385,15 @@ const navLinks = [
 
 <!-- Logo suspense splash -->
 <div class="logo-suspense" id="logoSuspense">
+  <img class="suspense-bg" id="suspenseBg" src="" alt="" />
+  <div class="suspense-gradient"></div>
   <AudioReactiveOverlay />
-  <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" style="position: relative; z-index: 2;" />
+  <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" style="position: relative; z-index: 3;" />
 </div>
 
 <!-- Top bar -->
 <div class="w-full px-2 top-2 sticky z-50">
-  <header id="navBar" class="m-2 rounded-lg mx-auto flex items-center justify-between px-4 md:px-6 lg:px-8" style="background: rgba(0,0,0,0.33); backdrop-filter: blur(15px); border: 0.5px solid rgba(255,255,255,0.1); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+  <header id="navBar" class="nav-header m-2 rounded-lg mx-auto flex items-center justify-between px-4 md:px-6 lg:px-8">
     <!-- Left: logo + motto -->
     <div class="flex items-center gap-3 md:gap-4">
       <a href="/">
@@ -290,10 +403,16 @@ const navLinks = [
     </div>
 
     <!-- Right: actions -->
-    <div class="flex items-center gap-2 md:gap-3">
-      <a href="/shop" class="hidden sm:inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-xs font-medium bg-white text-black hover:bg-gray-200 transition">
-        Shop
+    <div class="flex items-center gap-1 md:gap-2">
+      <!-- Notifications -->
+      <a href="/blog" class="nav-icon-btn" aria-label="Notifications" title="Updates">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 17H22V19H2V17H4V10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10V17ZM18 17V10C18 6.68629 15.3137 4 12 4C8.68629 4 6 6.68629 6 10V17H18ZM9 21H15V23H9V21Z"/></svg>
       </a>
+      <!-- Account / My Orders -->
+      <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-icon-btn" aria-label="My Account" title="My Orders">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"/></svg>
+      </a>
+      <!-- Menu -->
       <button class="nav-toggle" id="navMenuBtn" aria-label="Open menu">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8H5V10H19V8ZM19 14H5V16H19V14Z"/></svg>
       </button>
@@ -336,13 +455,22 @@ const navLinks = [
     <!-- Right: navigation links -->
     <nav class="nav-links">
       {navLinks.map((link, i) => (
-        <a href={link.path} class="nav-link" style={`transition-delay: ${0.05 + i * 0.05}s`}>
-          <div class="nav-link-left">
-            <span class="nav-link-ref">{link.ref}</span>
-            <h4 class="nav-link-title">{link.title}</h4>
-          </div>
-          <svg class="nav-link-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"/></svg>
-        </a>
+        <div class="nav-link-group" style={`transition-delay: ${0.05 + i * 0.05}s`}>
+          <a href={link.path} class="nav-link">
+            <div class="nav-link-left">
+              <span class="nav-link-ref">{link.ref}</span>
+              <h4 class="nav-link-title">{link.title}</h4>
+            </div>
+            <svg class="nav-link-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"/></svg>
+          </a>
+          {link.children && (
+            <div class="nav-dropdown">
+              {link.children.map((child) => (
+                <a href={child.path} class="nav-dropdown-link">{child.title}</a>
+              ))}
+            </div>
+          )}
+        </div>
       ))}
     </nav>
   </div>
@@ -376,7 +504,7 @@ const navLinks = [
       document.body.style.overflow = '';
     });
     // Close on link click
-    var links = overlay.querySelectorAll('.nav-link');
+    var links = overlay.querySelectorAll('.nav-link, .nav-dropdown-link, .nav-bottom-link');
     for (var i = 0; i < links.length; i++) {
       links[i].addEventListener('click', function() {
         overlay.classList.remove('open');
@@ -384,24 +512,34 @@ const navLinks = [
       });
     }
 
-    // Scroll-shrink header + secondary row
+    // Scroll-shrink header + secondary row — expands on 50px scroll-up
     var secondary = document.getElementById('navSecondary');
     var scrolled = false;
+    var lastY = window.scrollY;
+    var highY = 0;
     window.addEventListener('scroll', function() {
       var y = window.scrollY;
-      if (y > 60 && !scrolled) {
+      if (y > lastY) { highY = y; } // track highest scroll point
+      if (y > 80 && !scrolled) {
         navBar.classList.add('nav-scrolled');
         if (secondary) secondary.classList.add('nav-sec-hidden');
         scrolled = true;
-      } else if (y <= 30 && scrolled) {
+      } else if (scrolled && (y <= 20 || (highY - y) > 50)) {
         navBar.classList.remove('nav-scrolled');
         if (secondary) secondary.classList.remove('nav-sec-hidden');
         scrolled = false;
+        highY = y;
       }
+      lastY = y;
     }, { passive: true });
 
-    // Remove suspense
+    // Suspense — random event background + cleanup
     var suspense = document.getElementById('logoSuspense');
+    var suspenseBg = document.getElementById('suspenseBg');
+    if (suspenseBg) {
+      var eventImages = ['/event-1.jpg', '/event-2.webp', '/event-3.jpg', '/event-4.jpg', '/event-5.jpg', '/event-6.jpg'];
+      suspenseBg.src = eventImages[Math.floor(Math.random() * eventImages.length)];
+    }
     if (suspense) {
       suspense.addEventListener('animationend', function(e) {
         if (e.animationName === 'suspenseFade') {

@@ -26,6 +26,7 @@ import WorksSliderDD from "@components/slider-med-dd.astro";
 import WorksSliderRabbits from "@components/slider-med-rabbits.astro";
 
 import SectionHeadImg from "@components/sectionhead-img.astro";
+import ServicesSlider from "@components/services-slider.astro";
 
 import EventsCover from '../assets/tbc/hh2-2-med.jpg';
 import EventsCover2 from '../assets/tbc/hh2-3-med.jpg';
@@ -52,6 +53,14 @@ import Layout from "@layouts/Layout.astro";
 
   <ContainerFW class="!pb-0">
     <VideoSection />
+  </ContainerFW>
+
+  <ContainerFW>
+    <ServicesSlider />
+  </ContainerFW>
+
+  <ContainerFW class="!pb-0">
+    <Immersive />
   </ContainerFW>
 
   <ContainerFW href="#installations">
@@ -132,11 +141,6 @@ import Layout from "@layouts/Layout.astro";
   </ContainerFW>
 
   
-
-  <ContainerFW>
-    <Immersive />
-    
-  </ContainerFW>
 
   <ContainerFW>
     <Grid />

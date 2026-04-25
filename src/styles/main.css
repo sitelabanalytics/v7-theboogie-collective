@@ -19,39 +19,69 @@
   }
   @font-face {
     font-family: 'wotfard';
-    font-display: block; /* This property will help us not flash unstyled text for a couple hundred milliseconds, and then it would act like font-display: swap */
-    src: url('/fonts/Wotfard-Light.otf') format('otf');
-    src: url('/fonts/Wotfard-Light.ttf') format('truetype');
-    src: url('/fonts/Wotfard-Light.woff2') format('woff2');
+    font-display: block;
+    src: url('/fonts/Wotfard-Medium.ttf') format('truetype');
   }
   @font-face {
-    font-family: 'peacenow';
+    font-family: 'idlewild';
     font-display: block;
-    src: url('/fonts/PeaceNow-Basic.ttf') format('truetype');
+    src: url('/fonts/Idlewild-Bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'idlewild';
+    font-display: block;
+    src: url('/fonts/Idlewild-Medium.ttf') format('truetype');
+    font-weight: 500;
   }
 }
 
 
-h1, h2, h3, h4 { font-family: 'quarto'; color: white; }
-/* PeaceNow brand font — always add letter-spacing for readability */
-[style*="peacenow"] { letter-spacing: 0.06em !important; }
-h5, h6 { font-family: 'inconsolata'; text-transform: uppercase; color: #d8d8d8; }
-p, span, html, button, a, b { font-family: 'wotfard'; color: #d8d8d8; }
+/* ─── Theme variables ─── */
+:root {
+  --bg: #000;
+  --bg-subtle: #0a0a0a;
+  --text: #ffffff;
+  --text-body: #d8d8d8;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --border: rgba(255, 255, 255, 0.1);
+  --glass-bg: linear-gradient(165deg, rgba(2, 0, 36, 0.2) 0%, rgba(9, 9, 121, 0.2) 65%, rgba(0, 213, 255, 0.2) 100%);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(2, 0, 36, 0.5);
+  --card-border: rgba(255, 255, 255, 0.08);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f5f5;
+    --bg-subtle: #ebebeb;
+    --text: #111111;
+    --text-body: #333333;
+    --text-muted: rgba(0, 0, 0, 0.5);
+    --border: rgba(0, 0, 0, 0.1);
+    --glass-bg: linear-gradient(165deg, rgba(255, 255, 255, 0.7) 0%, rgba(240, 240, 255, 0.5) 65%, rgba(220, 240, 255, 0.4) 100%);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(0, 0, 0, 0.08);
+  }
+}
+
+h1, h2, h3, h4 { font-family: 'idlewild'; color: var(--text); font-size: 0.72em; }
+/* Idlewild brand font — headers */
+[style*="idlewild"] { letter-spacing: 0.02em !important; }
+h5, h6 { font-family: 'inconsolata'; text-transform: uppercase; color: var(--text-body); }
+p, span, html, button, a, b { font-family: 'wotfard'; color: var(--text-body); }
 
 /* Glass-card effect v7 */
 #glass-card {
   border-radius: 12px;
   padding: 45px 20px;
   backdrop-filter: blur(45px);
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border: 0.5px solid var(--glass-border);
   box-shadow: 0 20px 30px 5px rgba(0, 0, 0, 0.1);
   transition-duration: 0.5s;
   transition: background .5s;
   transition-timing-function: ease-in-out;
-
-  background: rgba(2, 0, 36, 0.7);
-  background: linear-gradient(165deg, rgba(2, 0, 36, 0.2) 0%, rgba(9, 9, 121, 0.2) 65%, rgba(0, 213, 255, 0.2) 100%);
-  
+  background: var(--glass-bg);
 }
 
 #glass-card:hover {
@@ -99,12 +129,104 @@ p, span, html, button, a, b { font-family: 'wotfard'; color: #d8d8d8; }
 }
 
 
-#glass-card-dark {     
+#glass-card-dark {
   border-radius: 24px;
   background: rgba(255,255,255,.1);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 0.5px solid rgb(0 0 0 / 30%);
   box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -2px #0000000d;
-  transition-duration: .2s; 
+  transition-duration: .2s;
+}
+
+/* ─── Light mode overrides ─── */
+@media (prefers-color-scheme: light) {
+  body { background: var(--bg); }
+
+  /* Flickity dots */
+  .flickity-page-dots .dot {
+    background: rgba(0, 0, 0, 0.2) !important;
+  }
+  .flickity-page-dots .dot.is-selected {
+    background: rgba(0, 0, 0, 0.7) !important;
+  }
+
+  /* Section backgrounds */
+  [style*="background: #000"], [style*="background:#000"] {
+    background: var(--bg) !important;
+  }
+
+  /* Cards with dark gradient backgrounds */
+  .shop-slider-cell,
+  .shop-var-cell,
+  .artist-cell,
+  .product-card-lg,
+  .bvj-work-card {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Text color fixes for cards */
+  .shop-slider-cell-colorway,
+  .shop-var-cell-colorway,
+  .product-card-lg-colorway,
+  .bvj-work-location {
+    color: rgba(0, 0, 0, 0.45) !important;
+  }
+  .shop-slider-cell-name,
+  .shop-var-cell-name,
+  .product-card-lg-name,
+  .bvj-work-title,
+  .artist-name {
+    color: var(--text) !important;
+  }
+  .shop-slider-cell-meta,
+  .shop-var-cell-meta,
+  .product-card-lg-fit,
+  .product-card-lg-weight,
+  .artist-desc,
+  .bvj-work-desc {
+    color: rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* Size pills in cards */
+  .product-card-lg-size {
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Footer */
+  footer {
+    background-color: #1a1a1a !important;
+  }
+
+  /* Preorder banner */
+  .preorder-banner {
+    background: rgba(107, 0, 204, 0.06);
+    border-color: rgba(107, 0, 204, 0.2);
+  }
+  .preorder-banner p {
+    color: rgba(0, 0, 0, 0.55) !important;
+  }
+
+  /* Video/hero sections stay dark — they have bg images/video */
+  .video-section,
+  #heroSection,
+  .shop-fs-carousel,
+  .pdp-hero,
+  .logo-suspense,
+  .nav-overlay {
+    color-scheme: dark;
+  }
+  .video-section *,
+  #heroSection *,
+  .shop-fs-carousel *,
+  .pdp-hero * {
+    color: inherit;
+  }
+  .video-section h1, .video-section h2, .video-section h3, .video-section h4,
+  .shop-fs-carousel h1, .shop-fs-carousel h2, .shop-fs-carousel h3, .shop-fs-carousel h4,
+  #heroSection h1 {
+    color: #fff !important;
+  }
 }

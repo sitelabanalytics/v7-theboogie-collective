@@ -1,17 +1,4 @@
 ---
-import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
-
-const rollerLines = [
-  'event curation',
-  'stage design',
-  'projection mapping',
-  'UV art installations',
-  'artist management',
-  'merch & apparel',
-  'lighting design',
-  'sound engineering',
-];
-
 const silentLinks = [
   { label: 'Events', href: '/events' },
   { label: 'Boog.VJ', href: '/boog-vj' },
@@ -82,49 +69,18 @@ const silentLinks = [
   }
 
   .video-headline {
-    font-family: 'quarto' !important;
-    font-size: 1.6rem;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-family: 'idlewild' !important;
+    font-size: 1.1rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
     margin-bottom: 0;
     mix-blend-mode: difference;
     color: #fff !important;
   }
-  @media (min-width: 480px) { .video-headline { font-size: 2rem; } }
-  @media (min-width: 768px) { .video-headline { font-size: 4rem; } }
-  @media (min-width: 1024px) { .video-headline { font-size: 5.5rem; } }
-
-  /* Text roller */
-  .text-roller {
-    display: inline-block;
-    height: 1.15em;
-    overflow: hidden;
-    vertical-align: bottom;
-  }
-  .text-roller-inner {
-    display: inline-flex;
-    flex-direction: column;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .text-roller-item {
-    height: 1.15em;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    font-family: 'quarto' !important;
-    background: linear-gradient(135deg, #6B00CC, #FF6611);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .video-sub {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.4) !important;
-    margin-top: 16px;
-    max-width: 440px;
-    line-height: 1.6;
-  }
+  @media (min-width: 480px) { .video-headline { font-size: 1.4rem; } }
+  @media (min-width: 768px) { .video-headline { font-size: 2.2rem; } }
+  @media (min-width: 1024px) { .video-headline { font-size: 2.8rem; } }
+  @media (min-width: 1280px) { .video-headline { font-size: 3.2rem; } }
 
   /* ─── Silent buttons ─── */
   .silent-btns {
@@ -223,25 +179,13 @@ const silentLinks = [
       </video>
     </div>
 
-    <AudioReactiveOverlay />
     <div class="video-gradient"></div>
 
     <!-- Content -->
     <div class="video-content px-5 md:px-10 lg:px-16">
-      <p class="video-label">What We Do</p>
       <h2 class="video-headline">
-        We do<br>
-        <span class="text-roller" id="videoRoller">
-          <span class="text-roller-inner" id="videoRollerInner">
-            {rollerLines.map((line) => (
-              <span class="text-roller-item">{line}</span>
-            ))}
-          </span>
-        </span>
+        Helping you stop dancing inside, since 2016.
       </h2>
-      <p class="video-sub">
-        The Boogie Collective — outdoor electronic music events, artist bookings, immersive stage installations, and limited release merch across the Australian east coast.
-      </p>
       <div class="silent-btns">
         {silentLinks.map((link) => (
           <a href={link.href} class="silent-btn">{link.label}</a>
@@ -270,15 +214,3 @@ const silentLinks = [
   </div>
 </section>
 
-<script is:inline>
-  (function() {
-    var lines = 8;
-    var index = 0;
-    var inner = document.getElementById('videoRollerInner');
-    if (!inner) return;
-    setInterval(function() {
-      index = (index + 1) % lines;
-      inner.style.transform = 'translateY(-' + (index * (100 / lines)) + '%)';
-    }, 2800);
-  })();
-</script>

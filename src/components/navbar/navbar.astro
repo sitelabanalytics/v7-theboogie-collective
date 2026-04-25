@@ -202,10 +202,10 @@ const navLinks = [
 
   /* ─── Secondary nav row ─── */
   .nav-secondary {
-    display: none;
+    display: flex;
     align-items: center;
-    gap: 2px;
-    padding: 0 8px;
+    gap: 0;
+    padding: 0 4px;
     margin: 0 2px;
     border-radius: 0 0 8px 8px;
     background: rgba(0, 0, 0, 0.2);
@@ -215,27 +215,30 @@ const navLinks = [
     border-top: none;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    transition: all 0.3s;
   }
   @media (min-width: 768px) {
-    .nav-secondary { display: flex; padding: 0 12px; }
+    .nav-secondary { padding: 0 12px; }
   }
   .nav-secondary::-webkit-scrollbar { display: none; }
 
   .nav-sec-link {
     display: inline-flex;
     align-items: center;
-    padding: 7px 12px;
+    padding: 6px 8px;
     font-family: 'wotfard' !important;
-    font-size: 0.68rem;
+    font-size: 0.52rem;
     color: rgba(255, 255, 255, 0.35) !important;
     text-decoration: none;
     transition: color 0.2s;
     white-space: nowrap;
     flex-shrink: 0;
   }
+  @media (min-width: 480px) { .nav-sec-link { font-size: 0.58rem; padding: 6px 10px; } }
+  @media (min-width: 768px) { .nav-sec-link { font-size: 0.68rem; padding: 7px 12px; } }
   .nav-sec-link:hover { color: rgba(255, 255, 255, 0.7) !important; }
 
-  #navBar.nav-scrolled + .nav-secondary { opacity: 0; pointer-events: none; height: 0; padding: 0; overflow: hidden; transition: all 0.3s; }
+  .nav-secondary.nav-sec-hidden { opacity: 0; pointer-events: none; height: 0; padding: 0; overflow: hidden; }
 
   /* ─── Logo suspense splash ─── */
   .logo-suspense {
@@ -301,9 +304,10 @@ const navLinks = [
     <a href="/artists" class="nav-sec-link">Artists</a>
     <a href="/events" class="nav-sec-link">Events</a>
     <a href="/boog-vj" class="nav-sec-link">Boog.VJ</a>
-    <a href="/blog" class="nav-sec-link">Blog</a>
     <a href="/immersive-structures" class="nav-sec-link">Installations</a>
+    <a href="/blog" class="nav-sec-link">Blog</a>
     <a href="https://theboogiecollective.com/contact" class="nav-sec-link">Contact</a>
+    <a href="/shop" class="nav-sec-link">Shop</a>
     <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-sec-link">My Orders</a>
   </div>
 </div>
@@ -380,15 +384,18 @@ const navLinks = [
       });
     }
 
-    // Scroll-shrink header
+    // Scroll-shrink header + secondary row
+    var secondary = document.getElementById('navSecondary');
     var scrolled = false;
     window.addEventListener('scroll', function() {
       var y = window.scrollY;
       if (y > 60 && !scrolled) {
         navBar.classList.add('nav-scrolled');
+        if (secondary) secondary.classList.add('nav-sec-hidden');
         scrolled = true;
       } else if (y <= 30 && scrolled) {
         navBar.classList.remove('nav-scrolled');
+        if (secondary) secondary.classList.remove('nav-sec-hidden');
         scrolled = false;
       }
     }, { passive: true });

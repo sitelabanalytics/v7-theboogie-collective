@@ -30,7 +30,14 @@ const makeTitle = title
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link id="favicon" rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (function() {
+        var favicons = ['/favicon.svg', '/favicon-orange.svg', '/favicon-purple.svg', '/favicon-purple2.svg'];
+        var link = document.getElementById('favicon');
+        if (link) link.href = favicons[Math.floor(Math.random() * favicons.length)];
+      })();
+    </script>
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap.xml">
     

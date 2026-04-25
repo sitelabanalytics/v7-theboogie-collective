@@ -1,82 +1,203 @@
 ---
-import ContainerSticky from "@components/container-sticky.astro";
 import Link from "@components/ui/link.astro";
-import Dropdown from "./dropdown.astro";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import aidxnLogo from 'assets/tbc/tbc-immersive-logo-white.svg';
 
-
-const menuitems = [
-  {
-    title: "Artists",
-    path: "/artists",
-  },
-  {
-    title: "Events",
-    path: "/events",
-  },
-  {
-    title: "Installations",
-    path: "/immersive-structures",
-  },
-  {
-    title: "Contact",
-    path: "https://theboogiecollective.com/contact",
-  },
+const navLinks = [
+  { ref: '01', title: 'Shop',           path: '/shop' },
+  { ref: '02', title: 'Artists',        path: '/artists' },
+  { ref: '03', title: 'Events',         path: '/events' },
+  { ref: '04', title: 'Boog.VJ',        path: '/boog-vj' },
+  { ref: '05', title: 'Blog',           path: '/blog' },
+  { ref: '06', title: 'Installations',  path: '/immersive-structures' },
+  { ref: '07', title: 'Contact',        path: 'https://theboogiecollective.com/contact' },
 ];
 ---
 
 <style>
+  /* ─── Top bar ─── */
+  #navBar {
+    transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #navBar.nav-scrolled { padding-top: 4px; padding-bottom: 4px; }
+
   #navLogo {
-    height: 75px;
-    margin: 15px auto;
+    height: 65px;
+    margin: 10px 0;
     transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), margin 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  header.nav-scrolled #navLogo {
-    height: 38px;
-    margin: 8px auto;
-  }
-  @media only screen and (max-width: 968px) {
-    #navLogo { height: 60px; }
-    header.nav-scrolled #navLogo { height: 30px; margin: 6px auto; }
-  }
-  @media only screen and (max-width: 568px) {
+  #navBar.nav-scrolled #navLogo { height: 32px; margin: 6px 0; }
+  @media (max-width: 768px) {
     #navLogo { height: 50px; }
-    header.nav-scrolled #navLogo { height: 25px; margin: 6px auto; }
-  }
-
-  header {
-    background: rgba(0, 0, 0, 0.33);
-    backdrop-filter: blur(15px);
-    border: 0.5px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    #navBar.nav-scrolled #navLogo { height: 26px; }
   }
 
   .nav-motto {
     font-family: 'wotfard';
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     line-height: 1.4;
-    color: rgba(255, 255, 255, 0.35) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
     letter-spacing: 0.02em;
     white-space: nowrap;
     transition: opacity 0.35s;
   }
-  header.nav-scrolled .nav-motto { opacity: 0; }
+  #navBar.nav-scrolled .nav-motto { opacity: 0; pointer-events: none; }
 
-  .nav-orders-link {
+  /* ─── Hamburger button ─── */
+  .nav-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    color: #fff;
+  }
+  .nav-toggle:hover { background: rgba(255,255,255,0.08); }
+  .nav-toggle svg { width: 22px; height: 22px; fill: currentColor; }
+
+  /* ─── Full overlay menu ─── */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-overlay-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+  }
+  @media (min-width: 768px) { .nav-overlay-top { padding: 16px 40px; } }
+  @media (min-width: 1024px) { .nav-overlay-top { padding: 16px 64px; } }
+
+  .nav-overlay-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0 20px 40px;
+    overflow-y: auto;
+  }
+  @media (min-width: 1024px) {
+    .nav-overlay-body {
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      padding: 0 64px 60px;
+    }
+  }
+
+  /* Left panel — description (desktop only) */
+  .nav-panel {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.06);
+  }
+  @media (min-width: 1024px) { .nav-panel { display: flex; } }
+  .nav-panel p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.5) !important;
+    max-width: 360px;
+  }
+  .nav-panel strong {
+    color: rgba(255,255,255,0.8) !important;
+    font-weight: 500;
+  }
+
+  /* Right panel — links */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: opacity 0.2s;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .nav-overlay.open .nav-link {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (min-width: 768px) { .nav-link { padding: 28px 0; } }
+
+  .nav-link:hover { opacity: 0.7; }
+
+  .nav-link-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .nav-link-ref {
     font-family: 'inconsolata' !important;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.3) !important;
+    letter-spacing: 0.05em;
+  }
+  .nav-link-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) { .nav-link-title { font-size: 2.4rem; } }
+
+  .nav-link-arrow {
+    width: 20px;
+    height: 20px;
+    fill: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+  @media (min-width: 768px) { .nav-link-arrow { width: 24px; height: 24px; } }
+
+  /* Bottom bar in overlay */
+  .nav-overlay-bottom {
+    padding: 0 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  @media (min-width: 768px) { .nav-overlay-bottom { padding: 0 40px 36px; } }
+  @media (min-width: 1024px) { .nav-overlay-bottom { padding: 0 64px 40px; } }
+
+  .nav-bottom-link {
+    font-family: 'inconsolata' !important;
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.45) !important;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.35) !important;
     transition: color 0.2s;
+    text-decoration: none;
   }
-  .nav-orders-link:hover { color: #fff !important; }
-  header.nav-scrolled {
-    padding-top: 2px;
-    padding-bottom: 2px;
-  }
+  .nav-bottom-link:hover { color: #fff !important; }
 
   /* ─── Logo suspense splash ─── */
   .logo-suspense {
@@ -98,10 +219,7 @@ const menuitems = [
     animation: suspenseLogoIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   }
   @media (max-width: 768px) {
-    .logo-suspense img {
-      width: 66vw;
-      max-width: 320px;
-    }
+    .logo-suspense img { width: 66vw; max-width: 320px; }
   }
   @keyframes suspenseLogoIn {
     from { opacity: 0; transform: scale(0.92); }
@@ -118,87 +236,115 @@ const menuitems = [
   <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" />
 </div>
 
-<ContainerSticky>
-  <header id="mainNav" class="m-2 border rounded-lg mx-auto flex flex-col lg:flex-row justify-between items-center mb-4 px-2 md:px-6 lg:px-8">
-    <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <div class="flex items-center gap-3 md:gap-4">
-          <a href="/">
-            <img id="navLogo" src={aidxnLogo} alt="The Boogie Collective Logo"/>
-          </a>
-          <p class="nav-motto hidden sm:block">Helping you stop<br>dancing inside.</p>
-        </div>
-        <div class="block lg:hidden">
-          <MenuIcon class="w-6 h-6 pr-2 text-white" />
-        </div>
-      </div>
-      <MenuItems class="text-xs xl:text-sm hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-4">
-          {
-            menuitems.map((item, index) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
-                )}
+<!-- Top bar -->
+<div class="w-full px-2 top-2 sticky z-50">
+  <header id="navBar" class="m-2 rounded-lg mx-auto flex items-center justify-between px-4 md:px-6 lg:px-8" style="background: rgba(0,0,0,0.33); backdrop-filter: blur(15px); border: 0.5px solid rgba(255,255,255,0.1); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+    <!-- Left: logo + motto -->
+    <div class="flex items-center gap-3 md:gap-4">
+      <a href="/">
+        <img id="navLogo" src={aidxnLogo} alt="The Boogie Collective Logo"/>
+      </a>
+      <p class="nav-motto hidden sm:block">Helping you stop<br>dancing inside.</p>
+    </div>
 
-                {!item.children && (
-                  <li>
-                    <a
-                      href={item.path}
-                      class="flex lg:px-3 py-2 text-black hover:text-gray-700"
-                    >
-                      <h5 style="color: #fff !important;">
-                        {item.title}
-                      </h5>
-                    </a>
-                  </li>
-                )}
-              </>
-            ))
-          }
-        </ul>
-
-        <div class="text-sm lg:hidden flex flex-col my-3 gap-3">
-          <Link href="/shop" size="md" block>Shop</Link>
-          <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-orders-link text-center py-2">My Orders</a>
-        </div>
-      </MenuItems>
-    </Astronav>
-    <div>
-      <div class="text-sm hidden lg:flex items-center gap-4">
-        <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-orders-link">My Orders</a>
-        <Link href="/shop" size="md">Shop</Link>
-      </div>
+    <!-- Right: actions -->
+    <div class="flex items-center gap-2 md:gap-3">
+      <a href="/shop" class="hidden sm:inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-xs font-medium bg-white text-black hover:bg-gray-200 transition">
+        Shop
+      </a>
+      <button class="nav-toggle" id="navMenuBtn" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8H5V10H19V8ZM19 14H5V16H19V14Z"/></svg>
+      </button>
     </div>
   </header>
-</ContainerSticky>
+</div>
+
+<!-- Full overlay menu -->
+<div class="nav-overlay" id="navOverlay">
+  <!-- Top bar (mirror) -->
+  <div class="nav-overlay-top">
+    <a href="/">
+      <img src={aidxnLogo} alt="The Boogie Collective" style="height: 50px;"/>
+    </a>
+    <button class="nav-toggle" id="navCloseBtn" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"/></svg>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="nav-overlay-body">
+    <!-- Left: info panel (desktop) -->
+    <div class="nav-panel">
+      <p>
+        <strong>The Boogie Collective</strong> is an Australian outdoor electronic music label. We curate events, book artists, design immersive stage installations, and produce limited release merch — helping you stop dancing inside since 2016.
+      </p>
+    </div>
+
+    <!-- Right: navigation links -->
+    <nav class="nav-links">
+      {navLinks.map((link, i) => (
+        <a href={link.path} class="nav-link" style={`transition-delay: ${0.05 + i * 0.05}s`}>
+          <div class="nav-link-left">
+            <span class="nav-link-ref">{link.ref}</span>
+            <h4 class="nav-link-title">{link.title}</h4>
+          </div>
+          <svg class="nav-link-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"/></svg>
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="nav-overlay-bottom">
+    <div class="flex gap-6">
+      <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-bottom-link">My Orders</a>
+      <a href="https://instagram.com/theboogiecollective/" target="_blank" rel="noopener" class="nav-bottom-link">Instagram</a>
+      <a href="https://instagram.com/boog.vj/" target="_blank" rel="noopener" class="nav-bottom-link">@boog.vj</a>
+      <a href="https://facebook.com/theboogiecollective/" target="_blank" rel="noopener" class="nav-bottom-link">Facebook</a>
+    </div>
+    <p class="nav-bottom-link" style="cursor: default;">&copy; {new Date().getFullYear()} The Boogie Collective</p>
+  </div>
+</div>
 
 <script is:inline>
   (function() {
-    // Scroll-shrink header
-    var nav = document.getElementById('mainNav');
-    var lastY = 0;
-    var scrolled = false;
+    var navBar = document.getElementById('navBar');
+    var overlay = document.getElementById('navOverlay');
+    var openBtn = document.getElementById('navMenuBtn');
+    var closeBtn = document.getElementById('navCloseBtn');
 
-    function onScroll() {
-      var y = window.scrollY;
-      if (y > 60 && !scrolled) {
-        nav.classList.add('nav-scrolled');
-        scrolled = true;
-      } else if (y <= 30 && scrolled) {
-        nav.classList.remove('nav-scrolled');
-        scrolled = false;
-      }
-      lastY = y;
+    // Open/close menu
+    openBtn.addEventListener('click', function() {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    closeBtn.addEventListener('click', function() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    // Close on link click
+    var links = overlay.querySelectorAll('.nav-link');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      });
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Scroll-shrink header
+    var scrolled = false;
+    window.addEventListener('scroll', function() {
+      var y = window.scrollY;
+      if (y > 60 && !scrolled) {
+        navBar.classList.add('nav-scrolled');
+        scrolled = true;
+      } else if (y <= 30 && scrolled) {
+        navBar.classList.remove('nav-scrolled');
+        scrolled = false;
+      }
+    }, { passive: true });
 
-    // Remove suspense after animation completes
+    // Remove suspense
     var suspense = document.getElementById('logoSuspense');
     if (suspense) {
       suspense.addEventListener('animationend', function(e) {

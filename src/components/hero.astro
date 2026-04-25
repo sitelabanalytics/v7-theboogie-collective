@@ -1,54 +1,56 @@
 ---
 import Link from "@components/ui/link.astro";
 import { Icon } from "astro-icon";
-import { Picture } from "@astrojs/image/components";
-
 ---
 <style>
   #heroSection {
-    background-image: url('../assets/tbc/gal-hh2-1.jpg');
+    background-image: url('/hero-bg.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 640px;
     max-height: 640px;
+    position: relative;
+  }
+  @media (max-width: 768px) {
+    #heroSection {
+      background-image: url('/hero-bg-mobile.webp');
+    }
+  }
+
+  .hero-text {
+    max-width: 900px;
+    mix-blend-mode: difference;
+    padding: 0 20px;
+  }
+  .hero-text h1 {
+    font-size: 4rem;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  @media (min-width: 768px) { .hero-text h1 { font-size: 6rem; } }
+  @media (min-width: 1024px) { .hero-text h1 { font-size: 8rem; } }
+
+  .hero-sub {
+    mix-blend-mode: normal;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5) !important;
+    margin-top: 14px;
+    max-width: 380px;
   }
 </style>
 
 <main class="">
-  <div id="heroSection" class="mx-auto flex flex-row items-end">
-    
-    <div>
-
-      <div id="glass-card" class="max-w-4xl mx-4 my-8">
-        <h1 style="heroTagline" class="text-4xl sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl w-full max-w-6xl font-bold tracking-tight">
-          Welcome to the Collective.
-        </h1>
-        <p class="text-md lg:text-lg mt-4">
-          Australian music label for outdoor focused electronic DJ's and producers.
-          Helping you stop dancing inside since 2016.   
-          <wbr>
-        </p>
-        <div class="mt-6 flex flex-col sm:flex-row justify-start gap-3">
-          <a href="/shop" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
-            <svg viewBox="0 0 24 24" class="w-4 h-4">
-              <Icon class="text-black" name="ph:shopping-cart-light" />
-            </svg>
-
-            Shop Now
-
-          </a>
-          <a href="https://theboogiecollective.com/contact" rel="noopener" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
-            <svg viewBox="0 0 24 24" class="w-4 h-4">
-              <Icon class="text-black" name="ph:chat-teardrop-dots-light" />
-            </svg>
-
-            Contact
-
-          </a>
-        </div>
-      </div>
+  <div id="heroSection" class="mx-auto flex flex-col justify-start items-start">
+    <div class="hero-text px-5 md:px-10 lg:px-16 mt-24 md:mt-32">
+      <h1 class="font-bold">
+        Welcome to<br>the Collective.
+      </h1>
+      <p class="hero-sub">
+        Australian music label for outdoor electronic DJ's and producers.
+        Helping you stop dancing inside since 2016.
+      </p>
     </div>
-    
   </div>
 </main>

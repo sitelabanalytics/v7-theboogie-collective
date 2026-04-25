@@ -1,26 +1,26 @@
 ---
 import { products } from "../data/products.js";
 
-// All unique variants across products as individual cards
-const cards = [];
-for (const product of products) {
-  const seen = new Set();
-  for (const v of product.variants) {
-    if (seen.has(v.colorKey)) continue;
-    seen.add(v.colorKey);
-    cards.push({
-      slug: product.slug,
-      name: product.name,
-      colorway: v.colorway,
-      fit: v.fit,
-      code: v.code,
-      swatch: v.swatch,
-      image: v.image,
-      badge: v.badge,
-      sizes: v.sizes,
-    });
-  }
+// All unique variants as cards — manually ordered for the slider
+// Order: purple tee, orange tee, purple hood, orchid crop, orange hood, white-stitch hood, white-stitch tee
+const tee = products.find(p => p.slug === 'classic-tee');
+const hood = products.find(p => p.slug === 'box-hood');
+
+function pick(product, fitKey, colorKey) {
+  const v = product.variants.find(v => v.fitKey === fitKey && v.colorKey === colorKey);
+  if (!v) return null;
+  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes };
 }
+
+const cards = [
+  pick(tee, 'mens', 'purple'),
+  pick(tee, 'mens', 'orange'),
+  pick(hood, 'unisex', 'purple'),
+  pick(tee, 'womens', 'orchid'),
+  pick(hood, 'unisex', 'orange'),
+  pick(hood, 'unisex', 'white-stitch'),
+  pick(tee, 'mens', 'white-stitch'),
+].filter(Boolean);
 ---
 
 <style is:global>

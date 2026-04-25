@@ -1,0 +1,229 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+const works = [
+  {
+    title: "Rabbits Eat Lettuce 2026",
+    location: "Warwick, QLD",
+    categories: ["Projection Mapping", "UV Painting", "Installation"],
+    description: "Solo installation featuring large-scale projection mapping across stage structures, UV reactive painted elements, and custom-built immersive installations.",
+    featured: true,
+  },
+  {
+    title: "Happiness Hill 2",
+    location: "QLD",
+    categories: ["Installation", "Stage Design"],
+    description: "Full stage design and immersive installation for TBC's own flagship event.",
+  },
+  {
+    title: "Bohemian Beatfreaks",
+    location: "Deni, VIC",
+    categories: ["UV Painting", "Installation"],
+    description: "UV reactive art installations across multiple zones of the festival grounds.",
+  },
+  {
+    title: "Dragon Dreaming",
+    location: "Wee Jasper, NSW",
+    categories: ["Projection Mapping", "Installation"],
+    description: "Projection mapping on natural rock formations and purpose-built structures.",
+  },
+];
+
+const categories = ["Projection Mapping", "UV Painting", "Installation", "Stage Design"];
+---
+
+<Layout title="Boog.VJ — Projection Mapping & Visual Art">
+
+  <!-- Hero -->
+  <section class="bvj-hero">
+    <div class="bvj-hero-gradient"></div>
+    <div class="bvj-hero-content px-5 md:px-10 lg:px-16">
+      <p class="bvj-hero-label">@boog.vj</p>
+      <h1 class="bvj-hero-title">
+        Boog<span class="bvj-dot">.</span>VJ
+      </h1>
+      <p class="bvj-hero-sub">
+        Projection mapping, UV painting, and immersive installations for outdoor electronic music events across Australia.
+      </p>
+      <div class="bvj-cats">
+        {categories.map(cat => (
+          <span class="bvj-cat">{cat}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Works -->
+  <section class="py-16" style="background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);">
+    <div class="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
+      <div class="mb-12">
+        <h5 class="text-sm tracking-widest mb-2" style="color: rgba(255,255,255,0.4);">Selected Works</h5>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Installations & Projects</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {works.map((work) => (
+          <div class={`bvj-work-card ${work.featured ? 'bvj-featured' : ''}`}>
+            <div class="bvj-work-body">
+              {work.featured && <span class="bvj-work-badge">Latest</span>}
+              <p class="bvj-work-location">{work.location}</p>
+              <h3 class="bvj-work-title">{work.title}</h3>
+              <p class="bvj-work-desc">{work.description}</p>
+              <div class="bvj-work-tags">
+                {work.categories.map(cat => (
+                  <span class="bvj-work-tag">{cat}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20" style="background: #000;">
+    <div class="max-w-3xl mx-auto px-5 md:px-10 lg:px-16 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Book Boog.VJ</h2>
+      <p class="text-md mb-8" style="color: rgba(255,255,255,0.5);">
+        Available for festivals, club nights, private events, and gallery installations. Projection mapping, UV art, and bespoke immersive design.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://theboogiecollective.com/contact" class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition">
+          Get in Touch
+        </a>
+        <a href="https://instagram.com/boog.vj/" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-8 py-3 rounded-full border border-white/25 text-white font-semibold text-sm hover:border-white/50 transition">
+          @boog.vj
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style is:global>
+  /* ─── Boog.VJ Hero ─── */
+  .bvj-hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    background: #000;
+    overflow: hidden;
+  }
+  .bvj-hero-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(107,0,204,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(255,102,17,0.12) 0%, transparent 50%),
+      linear-gradient(180deg, #000 0%, rgba(0,0,0,0.6) 100%);
+  }
+  .bvj-hero-content {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 48px;
+    padding-top: 120px;
+  }
+  .bvj-hero-label {
+    font-family: 'inconsolata' !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4) !important;
+    margin-bottom: 12px;
+  }
+  .bvj-hero-title {
+    font-size: 4rem;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+    mix-blend-mode: difference;
+  }
+  @media (min-width: 768px) { .bvj-hero-title { font-size: 6rem; } }
+  @media (min-width: 1024px) { .bvj-hero-title { font-size: 8rem; } }
+  .bvj-dot {
+    background: linear-gradient(135deg, #6B00CC, #FF6611);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bvj-hero-sub {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.5) !important;
+    max-width: 520px;
+    margin-bottom: 20px;
+  }
+  .bvj-cats { display: flex; gap: 8px; flex-wrap: wrap; }
+  .bvj-cat {
+    font-family: 'inconsolata' !important;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.5) !important;
+  }
+
+  /* ─── Work cards ─── */
+  .bvj-work-card {
+    border-radius: 14px;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    background: linear-gradient(165deg, rgba(2,0,36,0.3) 0%, rgba(9,9,121,0.08) 65%, rgba(0,213,255,0.04) 100%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s;
+    overflow: hidden;
+  }
+  .bvj-work-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .bvj-featured {
+    border-color: rgba(107,0,204,0.3);
+    background: linear-gradient(165deg, rgba(107,0,204,0.08) 0%, rgba(2,0,36,0.3) 50%, rgba(255,102,17,0.05) 100%);
+  }
+  .bvj-work-body { padding: 28px; }
+  .bvj-work-badge {
+    font-family: 'inconsolata' !important;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: rgba(107,0,204,0.2);
+    border: 0.5px solid rgba(107,0,204,0.4);
+    color: #c084fc !important;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .bvj-work-location {
+    font-family: 'inconsolata' !important;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.35) !important;
+    margin-bottom: 6px;
+  }
+  .bvj-work-title {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  .bvj-work-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.45) !important;
+    margin-bottom: 16px;
+  }
+  .bvj-work-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .bvj-work-tag {
+    font-family: 'inconsolata' !important;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.4) !important;
+  }
+</style>

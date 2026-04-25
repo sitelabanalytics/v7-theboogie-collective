@@ -1,76 +1,284 @@
 ---
 import { getCollection } from "astro:content";
-import { Picture } from "@astrojs/image/components";
 import Layout from "@layouts/Layout.astro";
+import ContainerFW from "@components/container-fullwidth.astro";
 import Container from "@components/container.astro";
-import Sectionhead from "@components/sectionmid-important.astro";
 
 // Filter blog entries with 'draft: false' & date before current date
 const publishedBlogEntries = await getCollection("blog", ({ data }) => {
   return !data.draft && data.publishDate < new Date();
 });
 
-// Sort content entries by publication date
+// Sort content entries by publication date (newest first)
 publishedBlogEntries.sort(function (a, b) {
   return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
 });
+
+// Build calendar data — which months have posts
+const calendarYears = [2024, 2025, 2026];
+const monthAbbrs = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Build a Set of "YYYY-MM" strings that have posts
+const activeMonths = new Set();
+publishedBlogEntries.forEach((entry) => {
+  const d = entry.data.publishDate;
+  const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}`;
+  activeMonths.add(key);
+});
+
+// Generate calendar rows
+const calendarRows = calendarYears.map((year) => ({
+  year,
+  months: monthAbbrs.map((abbr, idx) => ({
+    abbr,
+    monthIndex: idx,
+    key: `${year}-${String(idx).padStart(2, '0')}`,
+    active: activeMonths.has(`${year}-${String(idx).padStart(2, '0')}`),
+  })),
+}));
 ---
 
-<Layout title="Design, Dev + Marketing Blog">
-  <Container>
-    <Sectionhead>
-      <Fragment slot="title">The current state of digital design + marketing.</Fragment>
-      <Fragment slot="desc">
-        We write about building the Velocity7 framework and thoughts going on in our minds about the digital marketing evolution and forecasting strategies..
-      </Fragment>
-    </Sectionhead>
-    <main class="mt-16">
-      <ul class="grid gap-16 max-w-4xl mx-auto">
-        {
-          publishedBlogEntries.map((blogPostEntry, index) => (
-            <li>
-              <a href={`/blog/${blogPostEntry.slug}`}>
-                <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
-                  <Picture
-                    src={blogPostEntry.data.image.src}
-                    alt={blogPostEntry.data.image.alt}
-                    sizes="(max-width: 800px) 100vw, 800px"
-                    widths={[200, 400, 800]}
-                    aspectRatio="16:9"
-                    background="#ffffff"
-                    fit="cover"
-                    position="center"
-                    loading={index <= 2 ? "eager" : "lazy"}
-                    decoding={index <= 2 ? "sync" : "async"}
-                    class="w-full rounded-md"
-                  />
-                  <div>
-                    <span class="text-blue-400 uppercase tracking-wider text-sm font-medium">
-                      {blogPostEntry.data.category}
-                    </span>
+<Layout title="Doof Guide — Australian Outdoor Electronic Music">
 
-                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
-                      {blogPostEntry.data.title}
-                    </h2>
+  <!-- Calendar Hero -->
+  <ContainerFW>
+    <main class="my-8 md:my-16">
+      <div class="mx-auto rounded-3xl" style="background: linear-gradient(165deg, rgba(2,0,36,0.9) 0%, rgba(20,0,60,0.85) 50%, rgba(107,0,204,0.3) 100%); border: 0.5px solid rgba(255,255,255,0.08);">
+        <div class="px-5 md:px-10 lg:px-16 py-12 md:py-16 lg:py-20">
 
-                    <div class="flex gap-2 mt-3">
-                      <span class="text-gray-400">
-                        {blogPostEntry.data.author}
+          <!-- Header -->
+          <div class="mb-10">
+            <h5 class="text-xs md:text-sm lg:text-md mb-2">The Boogie Collective</h5>
+            <h1 class="text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-bold tracking-tight max-w-4xl">
+              Australian Doof Guide.
+            </h1>
+            <p class="text-md lg:text-lg mt-4 max-w-2xl">
+              A field guide to outdoor electronic music festivals across Australia.
+              From legendary gatherings to emerging gems — if it's worth dancing at, it's here.
+            </p>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="flex flex-col gap-4 md:gap-5" id="doof-calendar">
+            {calendarRows.map((row) => (
+              <div class="flex flex-row items-center gap-3 md:gap-4">
+                <span class="text-xs md:text-sm w-10 md:w-12 shrink-0 text-gray-400" style="font-family: inconsolata; text-transform: uppercase;">{row.year}</span>
+                <div class="flex flex-row gap-1.5 md:gap-2.5 flex-wrap">
+                  {row.months.map((m) => (
+                    <button
+                      class:list={[
+                        "cal-month group relative flex flex-col items-center justify-center rounded-full transition-all duration-300",
+                        "w-7 h-7 md:w-9 md:h-9",
+                        m.active
+                          ? "cursor-pointer hover:scale-110"
+                          : "cursor-default opacity-30",
+                      ]}
+                      data-month-key={m.key}
+                      data-active={m.active ? "true" : "false"}
+                      style={m.active
+                        ? `background: ${m.monthIndex % 2 === 0 ? '#6B00CC' : '#FF6611'}; box-shadow: 0 0 12px ${m.monthIndex % 2 === 0 ? 'rgba(107,0,204,0.5)' : 'rgba(255,102,17,0.5)'};`
+                        : 'background: rgba(255,255,255,0.08);'
+                      }
+                    >
+                      <span class="text-[9px] md:text-[10px] leading-none text-white" style="font-family: inconsolata; text-transform: uppercase;">
+                        {m.abbr}
                       </span>
-                      <span class="text-gray-400">• </span>
-                      <time
-                        class="text-gray-400"
-                        datetime={blogPostEntry.data.publishDate.toISOString()}>
-                        {blogPostEntry.data.publishDate.toDateString()}
-                      </time>
-                    </div>
-                  </div>
+                    </button>
+                  ))}
                 </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+              </div>
+            ))}
+          </div>
+
+          <p class="text-xs text-gray-500 mt-6" style="font-family: inconsolata; text-transform: uppercase;">
+            Tap an active month to filter posts
+          </p>
+
+        </div>
+      </div>
     </main>
+  </ContainerFW>
+
+
+  <!-- Blog Posts Grid -->
+  <Container>
+    <div class="mb-4 flex flex-row items-center justify-between">
+      <div>
+        <h5 class="text-xs md:text-sm lg:text-md mb-1">Festival Guides</h5>
+        <h2 class="text-2xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight">
+          All Posts.
+        </h2>
+      </div>
+      <button
+        id="clear-filter"
+        class="hidden text-xs px-3 py-1.5 rounded-full border border-white/20 hover:bg-white/10 transition-colors"
+        style="font-family: inconsolata; text-transform: uppercase; color: #d8d8d8;"
+      >
+        Clear filter
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8" id="blog-grid">
+      {
+        publishedBlogEntries.map((entry, index) => {
+          const pubDate = entry.data.publishDate;
+          const monthKey = `${pubDate.getFullYear()}-${String(pubDate.getMonth()).padStart(2, '0')}`;
+          return (
+            <a
+              href={`/blog/${entry.slug}`}
+              class="blog-card group block rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02]"
+              data-month-key={monthKey}
+              style="background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.08);"
+            >
+              <div class="aspect-video overflow-hidden">
+                <img
+                  src={entry.data.image.src}
+                  alt={entry.data.image.alt}
+                  loading={index <= 2 ? "eager" : "lazy"}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="p-5 md:p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span
+                    class="text-[10px] px-2 py-0.5 rounded-full"
+                    style={`font-family: inconsolata; text-transform: uppercase; background: ${entry.data.category === 'Doofs' ? 'rgba(107,0,204,0.3)' : 'rgba(255,102,17,0.3)'}; color: ${entry.data.category === 'Doofs' ? '#c084fc' : '#fb923c'};`}
+                  >
+                    {entry.data.category}
+                  </span>
+                  <time
+                    class="text-[10px] text-gray-500"
+                    datetime={pubDate.toISOString()}
+                    style="font-family: inconsolata; text-transform: uppercase;"
+                  >
+                    {monthAbbrs[pubDate.getMonth()]} {pubDate.getFullYear()}
+                  </time>
+                </div>
+
+                <h3 class="text-lg md:text-xl font-bold tracking-tight leading-snug mb-2" style="font-family: quarto;">
+                  {entry.data.title}
+                </h3>
+
+                <p class="text-sm text-gray-400 leading-relaxed line-clamp-3" style="font-family: wotfard;">
+                  {entry.data.snippet}
+                </p>
+
+                <div class="mt-4 flex items-center gap-2">
+                  <span class="text-xs text-gray-500" style="font-family: inconsolata; text-transform: uppercase;">
+                    {entry.data.author}
+                  </span>
+                </div>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </Container>
+
+
+  <!-- CTA -->
+  <Container>
+    <div class="my-8 md:my-16 rounded-2xl px-8 py-12 md:py-16 text-center" style="background: linear-gradient(165deg, rgba(2,0,36,0.6) 0%, rgba(107,0,204,0.15) 100%); border: 0.5px solid rgba(255,255,255,0.08);">
+      <h5 class="text-xs md:text-sm mb-2">Stay Connected</h5>
+      <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+        Know about it before it happens.
+      </h3>
+      <p class="text-sm md:text-md text-gray-400 max-w-lg mx-auto mb-6" style="font-family: wotfard;">
+        We announce events, share lineups, and drop festival guides through our network.
+        No spam — just the signal.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 rounded px-6 py-3 bg-white text-black hover:bg-gray-200 transition text-sm font-medium"
+        style="font-family: wotfard;"
+      >
+        Get on the list
+      </a>
+    </div>
   </Container>
 </Layout>
+
+
+<style>
+  /* Line clamp for card excerpts */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Blog card hover glow */
+  .blog-card:hover {
+    border-color: rgba(107, 0, 204, 0.3) !important;
+    box-shadow: 0 8px 30px rgba(107, 0, 204, 0.1);
+  }
+
+  /* Calendar month pulse for active months */
+  .cal-month[data-active="true"]::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 9999px;
+    border: 1px solid currentColor;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cal-month[data-active="true"]:hover::after {
+    opacity: 0.4;
+  }
+</style>
+
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calButtons = document.querySelectorAll('.cal-month[data-active="true"]');
+    var cards = document.querySelectorAll('.blog-card');
+    var clearBtn = document.getElementById('clear-filter');
+    var activeFilter = null;
+
+    function filterCards(monthKey) {
+      activeFilter = monthKey;
+      cards.forEach(function (card) {
+        if (card.getAttribute('data-month-key') === monthKey) {
+          card.style.display = '';
+          card.style.opacity = '1';
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+        }
+      });
+      if (clearBtn) clearBtn.classList.remove('hidden');
+    }
+
+    function clearFilter() {
+      activeFilter = null;
+      cards.forEach(function (card) {
+        card.style.display = '';
+        card.style.opacity = '1';
+      });
+      if (clearBtn) clearBtn.classList.add('hidden');
+    }
+
+    calButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-month-key');
+        if (activeFilter === key) {
+          clearFilter();
+        } else {
+          filterCards(key);
+          // Scroll to grid
+          var grid = document.getElementById('blog-grid');
+          if (grid) {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', clearFilter);
+    }
+  });
+</script>

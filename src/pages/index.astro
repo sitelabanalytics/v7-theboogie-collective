@@ -9,6 +9,7 @@ import Hero from "@components/hero.astro";
 import HeroShop from "@components/hero-shop.astro";
 import ShopSlider from "@components/shop-slider.astro";
 import ShopVariants from "@components/shop-variants-slider.astro";
+import VideoSection from "@components/hero-video-section.astro";
 
 import ContactHero from "@components/hero-end.astro";
 
@@ -47,6 +48,10 @@ import Layout from "@layouts/Layout.astro";
 
   <ContainerFW>
     <ShopVariants />
+  </ContainerFW>
+
+  <ContainerFW class="!pb-0">
+    <VideoSection />
   </ContainerFW>
 
   <ContainerFW href="#installations">

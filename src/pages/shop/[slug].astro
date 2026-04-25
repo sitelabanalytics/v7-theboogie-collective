@@ -17,17 +17,14 @@ const hasFitSelector = fits.length > 1;
 
 <Layout title={product.name}>
 
-  <!-- Alpine.js -->
-  <script is:inline src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" defer></script>
-
-  <!-- Variant data for Alpine -->
+  <!-- Variant data -->
   <script id="product-variants" type="application/json" set:html={JSON.stringify(product.variants)}></script>
 
   <!-- ═══ HERO ═══ -->
-  <section class="pdp-hero" x-data="productPage()" x-cloak>
+  <section class="pdp-hero">
     <!-- Background image -->
-    <div class="pdp-hero-img" id="pdpHeroImg">
-      <img x-bind:src="activeVariant.images[currentImageIndex] || activeVariant.images[0]" x-bind:alt="activeVariant.colorway" />
+    <div class="pdp-hero-img">
+      <img id="heroImg" src={defaultVariant.images[0]} alt={defaultVariant.colorway} />
       <div class="pdp-hero-gradient"></div>
     </div>
 
@@ -39,33 +36,29 @@ const hasFitSelector = fits.length > 1;
     </nav>
 
     <!-- Badge -->
-    <template x-if="activeVariant.badge">
-      <span class="pdp-hero-badge" x-text="activeVariant.badge"></span>
-    </template>
+    <span class="pdp-hero-badge pdp-a pdp-a-2" id="heroBadge" style={defaultVariant.badge ? '' : 'display:none'}>{defaultVariant.badge || ''}</span>
 
     <!-- Bottom-left: product info -->
     <div class="pdp-hero-info">
-      <p class="pdp-hero-colorway pdp-a pdp-a-2" x-text="activeVariant.colorway"></p>
+      <p class="pdp-hero-colorway pdp-a pdp-a-2" id="heroColorway">{defaultVariant.colorway}</p>
       <h1 class="pdp-hero-title pdp-a pdp-a-3">{product.name}</h1>
       <div class="pdp-hero-meta pdp-a pdp-a-4">
-        <span class="pdp-hero-swatch" x-bind:style="`background: ${activeVariant.swatch}`"></span>
-        <span x-text="activeVariant.fit"></span>
+        <span class="pdp-hero-swatch" id="heroSwatch" style={`background: ${defaultVariant.swatch}`}></span>
+        <span id="heroFit">{defaultVariant.fit}</span>
         <span class="pdp-hero-dot">&middot;</span>
-        <span x-text="activeVariant.code"></span>
+        <span id="heroCode">{defaultVariant.code}</span>
       </div>
-      <p class="pdp-hero-weight pdp-a pdp-a-5" x-text="activeVariant.weight"></p>
+      <p class="pdp-hero-weight pdp-a pdp-a-5" id="heroWeight">{defaultVariant.weight}</p>
     </div>
 
     <!-- Bottom-right: selectors + buy -->
     <div class="pdp-hero-action pdp-a pdp-a-5">
-      {/* Fit selector — only for multi-fit products */}
       {hasFitSelector && (
-        <div class="pdp-selector-row">
+        <div class="pdp-selector-row" id="fitSelector">
           {fits.map(([key, label]) => (
             <button
-              class="pdp-fit-pill"
-              x-on:click={`selectFit('${key}')`}
-              x-bind:class={`selectedFit === '${key}' ? 'pdp-fit-active' : ''`}
+              class={`pdp-fit-pill ${key === defaultVariant.fitKey ? 'pdp-fit-active' : ''}`}
+              data-fit={key}
             >
               {label}
             </button>
@@ -73,34 +66,10 @@ const hasFitSelector = fits.length > 1;
         </div>
       )}
 
-      {/* Color selector */}
-      <div class="pdp-selector-row">
-        <template x-for="v in availableColors" x-bind:key="v.colorKey">
-          <button
-            class="pdp-color-btn"
-            x-on:click="selectColor(v.colorKey)"
-            x-bind:class="selectedColor === v.colorKey ? 'pdp-color-active' : ''"
-            x-bind:title="v.colorway"
-          >
-            <span class="pdp-color-dot" x-bind:style="`background: ${v.swatch}`"></span>
-          </button>
-        </template>
-      </div>
+      <div class="pdp-selector-row" id="colorSelector"></div>
+      <div class="pdp-selector-row" id="sizeSelector"></div>
 
-      {/* Size selector */}
-      <div class="pdp-selector-row">
-        <template x-for="size in activeVariant.sizes" x-bind:key="size">
-          <button
-            class="pdp-hs-pill"
-            x-on:click="selectedSize = size"
-            x-bind:class="selectedSize === size ? 'pdp-hs-active' : ''"
-            x-text="size"
-          ></button>
-        </template>
-      </div>
-
-      {/* Buy button */}
-      <a x-bind:href="activeVariant.stripe" rel="noopener" target="_blank" class="pdp-hero-buy">
+      <a id="buyLink" href={defaultVariant.stripe} rel="noopener" target="_blank" class="pdp-hero-buy">
         Pre-Order Now
       </a>
     </div>
@@ -112,17 +81,7 @@ const hasFitSelector = fits.length > 1;
     </div>
 
     <!-- Thumbnail strip (desktop) -->
-    <div class="pdp-hero-thumbs pdp-a pdp-a-6" x-show="activeVariant.images.length > 1">
-      <template x-for="(img, i) in activeVariant.images" x-bind:key="img">
-        <button
-          class="pdp-ht"
-          x-on:click="selectThumb(i)"
-          x-bind:style="currentImageIndex === i ? 'border-color: rgba(255,255,255,0.6)' : ''"
-        >
-          <img x-bind:src="img" x-bind:alt="`View ${i + 1}`" />
-        </button>
-      </template>
-    </div>
+    <div class="pdp-hero-thumbs pdp-a pdp-a-6" id="thumbStrip"></div>
   </section>
 
   <!-- ═══ DETAILS ═══ -->
@@ -138,15 +97,15 @@ const hasFitSelector = fits.length > 1;
           <div class="pdp-spec-grid">
             <div class="pdp-spec">
               <span class="pdp-spec-label">Garment</span>
-              <span class="pdp-spec-value" x-text="activeVariant.code"></span>
+              <span class="pdp-spec-value" id="specCode">{defaultVariant.code}</span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Fit</span>
-              <span class="pdp-spec-value" x-text="activeVariant.fit"></span>
+              <span class="pdp-spec-value" id="specFit">{defaultVariant.fit}</span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Fabric</span>
-              <span class="pdp-spec-value" x-text="activeVariant.weight"></span>
+              <span class="pdp-spec-value" id="specWeight">{defaultVariant.weight}</span>
             </div>
             <div class="pdp-spec">
               <span class="pdp-spec-label">Shipping</span>
@@ -169,9 +128,6 @@ const hasFitSelector = fits.length > 1;
 </Layout>
 
 <style is:global>
-  /* Hide Alpine elements until init */
-  [x-cloak] { display: none !important; }
-
   /* ═══════════════════════════════════════
      PDP HERO
      ═══════════════════════════════════════ */
@@ -179,22 +135,25 @@ const hasFitSelector = fits.length > 1;
     position: relative;
     min-height: 85vh;
     display: flex;
+    flex-direction: column;
     background: #000;
     overflow: hidden;
   }
-  @media (max-width: 767px) {
-    .pdp-hero { min-height: auto; padding-bottom: 24px; }
+  @media (min-width: 768px) {
+    .pdp-hero { display: block; }
   }
 
   .pdp-hero-img {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
   }
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .pdp-hero-img {
-      position: relative;
-      aspect-ratio: 3 / 4;
+      position: absolute;
+      inset: 0;
+      aspect-ratio: auto;
     }
   }
   .pdp-hero-img img {
@@ -229,10 +188,7 @@ const hasFitSelector = fits.length > 1;
     gap: 8px;
     font-size: 0.8rem;
   }
-  .pdp-breadcrumb a {
-    color: rgba(255,255,255,0.5) !important;
-    transition: color 0.2s;
-  }
+  .pdp-breadcrumb a { color: rgba(255,255,255,0.5) !important; transition: color 0.2s; }
   .pdp-breadcrumb a:hover { color: #fff !important; }
   .pdp-breadcrumb span { color: rgba(255,255,255,0.3) !important; }
   .pdp-breadcrumb span:last-child { color: rgba(255,255,255,0.7) !important; }
@@ -262,19 +218,15 @@ const hasFitSelector = fits.length > 1;
 
   /* ─── Bottom-left info ─── */
   .pdp-hero-info {
-    position: absolute;
-    bottom: 28px; left: 20px;
+    padding: 20px 20px 0;
     z-index: 10;
-    max-width: 500px;
   }
-  @media (min-width: 968px) {
-    .pdp-hero-info { bottom: 40px; left: 40px; max-width: 600px; }
-  }
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .pdp-hero-info {
-      position: relative;
-      bottom: auto; left: auto;
-      padding: 20px 20px 0;
+      position: absolute;
+      bottom: 40px; left: 40px;
+      padding: 0;
+      max-width: 600px;
     }
   }
 
@@ -291,12 +243,8 @@ const hasFitSelector = fits.length > 1;
     line-height: 1.1;
     margin-bottom: 10px;
   }
-  @media (min-width: 768px) {
-    .pdp-hero-title { font-size: 3rem; }
-  }
-  @media (min-width: 1199px) {
-    .pdp-hero-title { font-size: 3.8rem; }
-  }
+  @media (min-width: 768px) { .pdp-hero-title { font-size: 3rem; } }
+  @media (min-width: 1199px) { .pdp-hero-title { font-size: 3.8rem; } }
 
   .pdp-hero-meta {
     display: flex;
@@ -308,7 +256,6 @@ const hasFitSelector = fits.length > 1;
   }
   .pdp-hero-meta span { color: rgba(255,255,255,0.5) !important; }
   .pdp-hero-dot { opacity: 0.3; }
-
   .pdp-hero-swatch {
     width: 16px; height: 16px;
     border-radius: 50%;
@@ -321,37 +268,31 @@ const hasFitSelector = fits.length > 1;
     color: rgba(255,255,255,0.35) !important;
   }
 
-  /* ─── Bottom-right action ─── */
+  /* ─── Action area ─── */
   .pdp-hero-action {
-    position: absolute;
-    bottom: 28px; right: 20px;
-    z-index: 10;
+    padding: 16px 20px 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
+    z-index: 10;
   }
-  @media (min-width: 968px) {
-    .pdp-hero-action { bottom: 40px; right: 40px; gap: 12px; }
-  }
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .pdp-hero-action {
-      position: relative;
-      bottom: auto; right: auto;
-      padding: 16px 20px 0;
-      align-items: stretch;
+      position: absolute;
+      bottom: 40px; right: 40px;
+      padding: 0;
+      align-items: flex-end;
+      gap: 12px;
     }
   }
 
-  /* Selector rows */
   .pdp-selector-row {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
-    justify-content: flex-end;
   }
-  @media (max-width: 767px) {
-    .pdp-selector-row { justify-content: flex-start; }
+  @media (min-width: 768px) {
+    .pdp-selector-row { justify-content: flex-end; }
   }
 
   /* Fit pills */
@@ -369,15 +310,8 @@ const hasFitSelector = fits.length > 1;
     transition: all 0.2s;
     text-transform: uppercase;
   }
-  .pdp-fit-pill:hover {
-    border-color: rgba(255,255,255,0.4);
-    color: #fff !important;
-  }
-  .pdp-fit-pill.pdp-fit-active {
-    background: #fff;
-    color: #000 !important;
-    border-color: #fff;
-  }
+  .pdp-fit-pill:hover { border-color: rgba(255,255,255,0.4); color: #fff !important; }
+  .pdp-fit-pill.pdp-fit-active { background: #fff; color: #000 !important; border-color: #fff; }
 
   /* Color swatches */
   .pdp-color-btn {
@@ -394,14 +328,10 @@ const hasFitSelector = fits.length > 1;
     padding: 0;
   }
   .pdp-color-btn:hover { border-color: rgba(255,255,255,0.5); }
-  .pdp-color-btn.pdp-color-active {
-    border-color: #fff;
-    transform: scale(1.1);
-  }
+  .pdp-color-btn.pdp-color-active { border-color: #fff; transform: scale(1.1); }
   .pdp-color-dot {
     width: 20px; height: 20px;
     border-radius: 50%;
-    transition: background 0.2s;
   }
 
   /* Size pills */
@@ -417,20 +347,13 @@ const hasFitSelector = fits.length > 1;
     cursor: pointer;
     transition: all 0.2s;
   }
-  .pdp-hs-pill:hover {
-    border-color: rgba(255,255,255,0.5);
-    color: #fff !important;
-  }
-  .pdp-hs-pill.pdp-hs-active {
-    background: #fff;
-    color: #000 !important;
-    border-color: #fff;
-  }
+  .pdp-hs-pill:hover { border-color: rgba(255,255,255,0.5); color: #fff !important; }
+  .pdp-hs-pill.pdp-hs-active { background: #fff; color: #000 !important; border-color: #fff; }
 
   /* Buy button */
   .pdp-hero-buy {
-    display: inline-block;
-    padding: 10px 28px;
+    display: block;
+    padding: 12px 28px;
     border-radius: 8px;
     font-family: 'inconsolata' !important;
     text-transform: uppercase;
@@ -441,36 +364,38 @@ const hasFitSelector = fits.length > 1;
     border: none;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.2s;
-    white-space: nowrap;
     text-align: center;
   }
-  @media (max-width: 767px) {
-    .pdp-hero-buy {
-      width: 100%;
-      padding: 12px 28px;
-    }
+  @media (min-width: 768px) {
+    .pdp-hero-buy { display: inline-block; }
   }
-  .pdp-hero-buy:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-  }
+  .pdp-hero-buy:hover { opacity: 0.9; transform: translateY(-2px); }
 
   /* ─── Pre-order notice ─── */
   .pdp-preorder-notice {
-    position: absolute;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 10px 20px;
+    margin: 16px 20px 20px;
     border-radius: 8px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(12px);
-    border: 0.5px solid rgba(255, 255, 255, 0.1);
-    white-space: nowrap;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    z-index: 10;
+  }
+  @media (min-width: 768px) {
+    .pdp-preorder-notice {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+      padding: 8px 16px;
+    }
   }
   .pdp-preorder-notice span:last-child {
     font-size: 0.72rem;
@@ -487,18 +412,6 @@ const hasFitSelector = fits.length > 1;
   @keyframes pdpPreorderPulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
-  }
-  @media (max-width: 767px) {
-    .pdp-preorder-notice {
-      position: relative;
-      bottom: auto; left: auto;
-      transform: none;
-      margin: 16px 20px 0;
-      white-space: normal;
-    }
-  }
-  @media (min-width: 968px) {
-    .pdp-preorder-notice { bottom: 40px; }
   }
 
   /* ─── Thumbnails ─── */
@@ -522,10 +435,8 @@ const hasFitSelector = fits.length > 1;
     transition: border-color 0.2s, transform 0.2s;
     background: #111;
   }
-  .pdp-ht:hover {
-    border-color: rgba(255,255,255,0.5);
-    transform: scale(1.05);
-  }
+  .pdp-ht:hover { border-color: rgba(255,255,255,0.5); transform: scale(1.05); }
+  .pdp-ht.pdp-ht-active { border-color: rgba(255,255,255,0.6); }
   .pdp-ht img { width: 100%; height: 100%; object-fit: cover; }
 
   /* ═══ Staggered animations ═══ */
@@ -551,20 +462,9 @@ const hasFitSelector = fits.length > 1;
     padding: 4rem 0;
     border-top: 1px solid rgba(255,255,255,0.06);
   }
-  .pdp-det-heading {
-    font-size: 1.1rem;
-    margin-bottom: 16px;
-  }
-  .pdp-det-body {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: rgba(255,255,255,0.55) !important;
-  }
-  .pdp-spec-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  .pdp-det-heading { font-size: 1.1rem; margin-bottom: 16px; }
+  .pdp-det-body { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.55) !important; }
+  .pdp-spec-grid { display: flex; flex-direction: column; gap: 12px; }
   .pdp-spec {
     display: flex;
     justify-content: space-between;
@@ -586,22 +486,43 @@ const hasFitSelector = fits.length > 1;
 </style>
 
 <script is:inline>
-  function productPage() {
+  document.addEventListener('DOMContentLoaded', function() {
     var variants = JSON.parse(document.getElementById('product-variants').textContent);
-    var first = variants[0];
+    var state = {
+      fit: variants[0].fitKey,
+      color: variants[0].colorKey,
+      size: variants[0].sizes[0],
+      imgIndex: 0
+    };
 
-    function findVariant(fit, color) {
+    var heroImg = document.getElementById('heroImg');
+    var heroBadge = document.getElementById('heroBadge');
+    var heroColorway = document.getElementById('heroColorway');
+    var heroSwatch = document.getElementById('heroSwatch');
+    var heroFit = document.getElementById('heroFit');
+    var heroCode = document.getElementById('heroCode');
+    var heroWeight = document.getElementById('heroWeight');
+    var buyLink = document.getElementById('buyLink');
+    var colorEl = document.getElementById('colorSelector');
+    var sizeEl = document.getElementById('sizeSelector');
+    var thumbEl = document.getElementById('thumbStrip');
+    var fitEl = document.getElementById('fitSelector');
+    var specCode = document.getElementById('specCode');
+    var specFit = document.getElementById('specFit');
+    var specWeight = document.getElementById('specWeight');
+
+    function getVariant() {
       for (var i = 0; i < variants.length; i++) {
-        if (variants[i].fitKey === fit && variants[i].colorKey === color) return variants[i];
+        if (variants[i].fitKey === state.fit && variants[i].colorKey === state.color) return variants[i];
       }
       return variants[0];
     }
 
-    function findColors(fit) {
+    function getColors() {
       var seen = {};
       var result = [];
       for (var i = 0; i < variants.length; i++) {
-        if (variants[i].fitKey === fit && !seen[variants[i].colorKey]) {
+        if (variants[i].fitKey === state.fit && !seen[variants[i].colorKey]) {
           seen[variants[i].colorKey] = true;
           result.push(variants[i]);
         }
@@ -609,38 +530,126 @@ const hasFitSelector = fits.length > 1;
       return result;
     }
 
-    return {
-      variants: variants,
-      selectedFit: first.fitKey,
-      selectedColor: first.colorKey,
-      selectedSize: first.sizes[0],
-      currentImageIndex: 0,
-      availableColors: findColors(first.fitKey),
-      activeVariant: first,
-
-      selectFit: function(fit) {
-        this.selectedFit = fit;
-        this.availableColors = findColors(fit);
-        var sc = this.selectedColor;
-        var hasColor = this.availableColors.some(function(v) { return v.colorKey === sc; });
-        if (!hasColor) {
-          this.selectedColor = this.availableColors[0].colorKey;
-        }
-        this.currentImageIndex = 0;
-        this.activeVariant = findVariant(this.selectedFit, this.selectedColor);
-        this.selectedSize = this.activeVariant.sizes[0];
-      },
-
-      selectColor: function(color) {
-        this.selectedColor = color;
-        this.currentImageIndex = 0;
-        this.activeVariant = findVariant(this.selectedFit, color);
-        this.selectedSize = this.activeVariant.sizes[0];
-      },
-
-      selectThumb: function(i) {
-        this.currentImageIndex = i;
+    function makeEl(tag, className, attrs) {
+      var el = document.createElement(tag);
+      if (className) el.className = className;
+      if (attrs) {
+        for (var k in attrs) el.setAttribute(k, attrs[k]);
       }
-    };
-  }
+      return el;
+    }
+
+    function render() {
+      var v = getVariant();
+      var colors = getColors();
+
+      // Hero image
+      heroImg.src = v.images[state.imgIndex] || v.images[0];
+      heroImg.alt = v.colorway;
+
+      // Badge
+      if (v.badge) {
+        heroBadge.textContent = v.badge;
+        heroBadge.style.display = '';
+      } else {
+        heroBadge.style.display = 'none';
+      }
+
+      // Info text
+      heroColorway.textContent = v.colorway;
+      heroSwatch.style.background = v.swatch;
+      heroFit.textContent = v.fit;
+      heroCode.textContent = v.code;
+      heroWeight.textContent = v.weight;
+      buyLink.href = v.stripe;
+
+      // Spec values
+      if (specCode) specCode.textContent = v.code;
+      if (specFit) specFit.textContent = v.fit;
+      if (specWeight) specWeight.textContent = v.weight;
+
+      // Fit pills active state
+      if (fitEl) {
+        var fitBtns = fitEl.querySelectorAll('.pdp-fit-pill');
+        for (var i = 0; i < fitBtns.length; i++) {
+          if (fitBtns[i].getAttribute('data-fit') === state.fit) {
+            fitBtns[i].classList.add('pdp-fit-active');
+          } else {
+            fitBtns[i].classList.remove('pdp-fit-active');
+          }
+        }
+      }
+
+      // Color swatches — rebuild
+      while (colorEl.firstChild) colorEl.removeChild(colorEl.firstChild);
+      for (var ci = 0; ci < colors.length; ci++) {
+        (function(cv) {
+          var btn = makeEl('button', 'pdp-color-btn' + (cv.colorKey === state.color ? ' pdp-color-active' : ''), { title: cv.colorway });
+          var dot = makeEl('span', 'pdp-color-dot');
+          dot.style.background = cv.swatch;
+          btn.appendChild(dot);
+          btn.addEventListener('click', function() {
+            state.color = cv.colorKey;
+            state.imgIndex = 0;
+            state.size = getVariant().sizes[0];
+            render();
+          });
+          colorEl.appendChild(btn);
+        })(colors[ci]);
+      }
+
+      // Size pills — rebuild
+      while (sizeEl.firstChild) sizeEl.removeChild(sizeEl.firstChild);
+      for (var si = 0; si < v.sizes.length; si++) {
+        (function(s) {
+          var btn = makeEl('button', 'pdp-hs-pill' + (s === state.size ? ' pdp-hs-active' : ''));
+          btn.textContent = s;
+          btn.addEventListener('click', function() {
+            state.size = s;
+            render();
+          });
+          sizeEl.appendChild(btn);
+        })(v.sizes[si]);
+      }
+
+      // Thumbnails — rebuild
+      while (thumbEl.firstChild) thumbEl.removeChild(thumbEl.firstChild);
+      if (v.images.length > 1) {
+        for (var ti = 0; ti < v.images.length; ti++) {
+          (function(img, idx) {
+            var btn = makeEl('button', 'pdp-ht' + (idx === state.imgIndex ? ' pdp-ht-active' : ''));
+            var imgEl = makeEl('img', null, { src: img, alt: 'View ' + (idx + 1) });
+            btn.appendChild(imgEl);
+            btn.addEventListener('click', function() {
+              state.imgIndex = idx;
+              render();
+            });
+            thumbEl.appendChild(btn);
+          })(v.images[ti], ti);
+        }
+      }
+    }
+
+    // Fit selector clicks (event delegation)
+    if (fitEl) {
+      fitEl.addEventListener('click', function(e) {
+        var btn = e.target.closest('.pdp-fit-pill');
+        if (!btn) return;
+        var fit = btn.getAttribute('data-fit');
+        state.fit = fit;
+        var colors = getColors();
+        var hasColor = false;
+        for (var i = 0; i < colors.length; i++) {
+          if (colors[i].colorKey === state.color) { hasColor = true; break; }
+        }
+        if (!hasColor) state.color = colors[0].colorKey;
+        state.imgIndex = 0;
+        state.size = getVariant().sizes[0];
+        render();
+      });
+    }
+
+    // Initial render
+    render();
+  });
 </script>

@@ -1,5 +1,6 @@
 ---
 import Link from "@components/ui/link.astro";
+import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
 import aidxnLogo from 'assets/tbc/tbc-immersive-logo-white.svg';
 
 const navLinks = [
@@ -199,6 +200,43 @@ const navLinks = [
   }
   .nav-bottom-link:hover { color: #fff !important; }
 
+  /* ─── Secondary nav row ─── */
+  .nav-secondary {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    padding: 0 8px;
+    margin: 0 2px;
+    border-radius: 0 0 8px 8px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.04);
+    border-top: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 768px) {
+    .nav-secondary { display: flex; padding: 0 12px; }
+  }
+  .nav-secondary::-webkit-scrollbar { display: none; }
+
+  .nav-sec-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    font-family: 'wotfard' !important;
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.35) !important;
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-sec-link:hover { color: rgba(255, 255, 255, 0.7) !important; }
+
+  #navBar.nav-scrolled + .nav-secondary { opacity: 0; pointer-events: none; height: 0; padding: 0; overflow: hidden; transition: all 0.3s; }
+
   /* ─── Logo suspense splash ─── */
   .logo-suspense {
     position: fixed;
@@ -233,7 +271,8 @@ const navLinks = [
 
 <!-- Logo suspense splash -->
 <div class="logo-suspense" id="logoSuspense">
-  <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" />
+  <AudioReactiveOverlay />
+  <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" style="position: relative; z-index: 2;" />
 </div>
 
 <!-- Top bar -->
@@ -257,6 +296,16 @@ const navLinks = [
       </button>
     </div>
   </header>
+  <div class="nav-secondary" id="navSecondary">
+    <a href="/about" class="nav-sec-link">About</a>
+    <a href="/artists" class="nav-sec-link">Artists</a>
+    <a href="/events" class="nav-sec-link">Events</a>
+    <a href="/boog-vj" class="nav-sec-link">Boog.VJ</a>
+    <a href="/blog" class="nav-sec-link">Blog</a>
+    <a href="/immersive-structures" class="nav-sec-link">Installations</a>
+    <a href="https://theboogiecollective.com/contact" class="nav-sec-link">Contact</a>
+    <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-sec-link">My Orders</a>
+  </div>
 </div>
 
 <!-- Full overlay menu -->

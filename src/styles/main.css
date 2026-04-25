@@ -24,20 +24,17 @@
     src: url('/fonts/Wotfard-Light.ttf') format('truetype');
     src: url('/fonts/Wotfard-Light.woff2') format('woff2');
   }
-  /* 4th font load, if needed
   @font-face {
-    font-family: 'wotfard-bold';
-    font-display: block;  
-    src: url('/fonts/Wotfard-Medium.woff2') format('woff2');
-    src: url('/fonts/Wotfard-Medium.ttf') format('truetype');
-    src: url('/fonts/Wotfard-Medium.otf') format('otf');
-
+    font-family: 'peacenow';
+    font-display: block;
+    src: url('/fonts/PeaceNow-Basic.ttf') format('truetype');
   }
-  */
 }
 
 
 h1, h2, h3, h4 { font-family: 'quarto'; color: white; }
+/* PeaceNow brand font — always add letter-spacing for readability */
+[style*="peacenow"] { letter-spacing: 0.06em !important; }
 h5, h6 { font-family: 'inconsolata'; text-transform: uppercase; color: #d8d8d8; }
 p, span, html, button, a, b { font-family: 'wotfard'; color: #d8d8d8; }
 

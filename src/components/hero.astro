@@ -1,6 +1,7 @@
 ---
 import Link from "@components/ui/link.astro";
 import { Icon } from "astro-icon";
+import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
 ---
 <style>
   #heroSection {
@@ -42,10 +43,11 @@ import { Icon } from "astro-icon";
 </style>
 
 <main class="">
-  <div id="heroSection" class="mx-auto flex flex-col justify-start items-start">
-    <div class="hero-text px-5 md:px-10 lg:px-16 mt-24 md:mt-32">
+  <div id="heroSection" class="mx-auto flex flex-col justify-start items-start relative">
+    <AudioReactiveOverlay />
+    <div class="hero-text px-5 md:px-10 lg:px-16 mt-24 md:mt-32" style="z-index: 2;">
       <h1 class="font-bold">
-        Welcome to<br>the Collective.
+        Welcome to<br>the&nbsp;&nbsp;&nbsp;<span style="font-family: 'peacenow';">Collective.</span>
       </h1>
       <p class="hero-sub">
         Australian music label for outdoor electronic DJ's and producers.

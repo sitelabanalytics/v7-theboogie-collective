@@ -1,118 +1,97 @@
 ---
-// Cinematic background section with crossfading images and text roller
-const bgImages = [
-  '/hero-bg.webp',
-  '/hero-bg-mobile.webp',
-  '/bg-radial.png',
-];
+import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
 
 const rollerLines = [
-  'curating outdoor electronic events',
-  'stage design & immersive installations',
-  'artist bookings across the east coast',
-  'limited release merch & apparel',
-  'lighting & production design',
-  'helping you stop dancing inside',
+  'event curation',
+  'stage design',
+  'projection mapping',
+  'UV art installations',
+  'artist management',
+  'merch & apparel',
+  'lighting design',
+  'sound engineering',
+];
+
+const silentLinks = [
+  { label: 'Events', href: '/events' },
+  { label: 'Boog.VJ', href: '/boog-vj' },
+  { label: 'Installations', href: '/immersive-structures' },
+  { label: 'Shop', href: '/shop' },
 ];
 ---
 
 <style is:global>
   .video-section {
     position: relative;
-    height: 480px;
+    height: 560px;
     overflow: hidden;
     background: #000;
   }
   @media (min-width: 768px) {
-    .video-section { height: 560px; }
+    .video-section { height: 640px; }
   }
 
-  /* Crossfading Ken Burns backgrounds */
-  .video-bg {
+  /* Video background */
+  .video-bg-wrap {
     position: absolute;
     inset: 0;
     z-index: 0;
   }
-  .video-bg-img {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    animation: videoCrossfade 18s ease-in-out infinite;
-    will-change: opacity, transform;
-  }
-  .video-bg-img img {
+  .video-bg-wrap video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
   }
-  .video-bg-img:nth-child(1) {
-    animation-delay: 0s;
-    animation-name: kenBurns1;
-  }
-  .video-bg-img:nth-child(2) {
-    animation-delay: 6s;
-    animation-name: kenBurns2;
-  }
-  .video-bg-img:nth-child(3) {
-    animation-delay: 12s;
-    animation-name: kenBurns3;
-  }
-
-  @keyframes kenBurns1 {
-    0%    { opacity: 1; transform: scale(1); }
-    28%   { opacity: 1; transform: scale(1.08); }
-    33%   { opacity: 0; transform: scale(1.08); }
-    95%   { opacity: 0; transform: scale(1); }
-    100%  { opacity: 1; transform: scale(1); }
-  }
-  @keyframes kenBurns2 {
-    0%    { opacity: 0; transform: scale(1.05); }
-    28%   { opacity: 0; transform: scale(1); }
-    33%   { opacity: 1; transform: scale(1); }
-    61%   { opacity: 1; transform: scale(1.08); }
-    66%   { opacity: 0; transform: scale(1.08); }
-    100%  { opacity: 0; transform: scale(1.05); }
-  }
-  @keyframes kenBurns3 {
-    0%    { opacity: 0; transform: scale(1); }
-    61%   { opacity: 0; transform: scale(1.05); }
-    66%   { opacity: 1; transform: scale(1); }
-    94%   { opacity: 1; transform: scale(1.08); }
-    100%  { opacity: 0; transform: scale(1.08); }
+  .video-bg-desktop { display: block; }
+  .video-bg-mobile { display: none; }
+  @media (max-width: 768px) {
+    .video-bg-desktop { display: none; }
+    .video-bg-mobile { display: block; }
   }
 
   /* Gradient overlay */
   .video-gradient {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
     background:
-      linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.2) 100%);
+      linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.25) 100%);
     pointer-events: none;
   }
 
   /* Content */
   .video-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 20px 48px;
+    padding-bottom: 48px;
   }
-  @media (min-width: 768px) { .video-content { padding: 0 40px 60px; } }
-  @media (min-width: 1024px) { .video-content { padding: 0 64px 60px; } }
+  @media (min-width: 768px) { .video-content { padding-bottom: 60px; } }
+
+  .video-label {
+    font-family: 'inconsolata' !important;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.35) !important;
+    margin-bottom: 12px;
+  }
 
   .video-headline {
-    font-size: 2rem;
+    font-family: 'quarto' !important;
+    font-size: 2.5rem;
     line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
+    letter-spacing: -0.03em;
+    margin-bottom: 0;
+    mix-blend-mode: difference;
+    color: #fff !important;
   }
-  @media (min-width: 768px) { .video-headline { font-size: 3rem; } }
-  @media (min-width: 1024px) { .video-headline { font-size: 3.8rem; } }
+  @media (min-width: 768px) { .video-headline { font-size: 4rem; } }
+  @media (min-width: 1024px) { .video-headline { font-size: 5.5rem; } }
 
   /* Text roller */
   .text-roller {
@@ -131,6 +110,7 @@ const rollerLines = [
     display: flex;
     align-items: center;
     white-space: nowrap;
+    font-family: 'quarto' !important;
     background: linear-gradient(135deg, #6B00CC, #FF6611);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -140,44 +120,156 @@ const rollerLines = [
   .video-sub {
     font-size: 0.8rem;
     color: rgba(255,255,255,0.4) !important;
-    margin-top: 12px;
-    max-width: 400px;
+    margin-top: 16px;
+    max-width: 440px;
+    line-height: 1.6;
+  }
+
+  /* ─── Silent buttons ─── */
+  .silent-btns {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  @media (min-width: 768px) { .silent-btns { gap: 10px; margin-top: 28px; } }
+
+  .silent-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    font-family: 'inconsolata' !important;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.5) !important;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+  }
+  .silent-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+  @media (min-width: 768px) {
+    .silent-btn { padding: 9px 24px; font-size: 0.65rem; }
+  }
+
+  /* ─── Secondary nav row ─── */
+  .video-subnav {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 768px) {
+    .video-subnav { gap: 6px; padding: 16px 40px; }
+  }
+
+  .subnav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-family: 'inconsolata' !important;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.35) !important;
+    text-decoration: none;
+    transition: all 0.25s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .subnav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+  .subnav-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
   }
 </style>
 
-<section class="video-section">
-  <!-- Crossfading backgrounds -->
-  <div class="video-bg">
-    {bgImages.map((src, i) => (
-      <div class="video-bg-img">
-        <img src={src} alt="" loading="lazy" />
+<section>
+  <div class="video-section">
+    <!-- Video backgrounds -->
+    <div class="video-bg-wrap">
+      <video class="video-bg-desktop" autoplay muted loop playsinline>
+        <source src="/video-bg.mp4" type="video/mp4" />
+      </video>
+      <video class="video-bg-mobile" autoplay muted loop playsinline>
+        <source src="/video-bg-mobile.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <AudioReactiveOverlay />
+    <div class="video-gradient"></div>
+
+    <!-- Content -->
+    <div class="video-content px-5 md:px-10 lg:px-16">
+      <p class="video-label">What We Do</p>
+      <h2 class="video-headline">
+        We do<br>
+        <span class="text-roller" id="videoRoller">
+          <span class="text-roller-inner" id="videoRollerInner">
+            {rollerLines.map((line) => (
+              <span class="text-roller-item">{line}</span>
+            ))}
+          </span>
+        </span>
+      </h2>
+      <p class="video-sub">
+        The Boogie Collective — outdoor electronic music events, artist bookings, immersive stage installations, and limited release merch across the Australian east coast.
+      </p>
+      <div class="silent-btns">
+        {silentLinks.map((link) => (
+          <a href={link.href} class="silent-btn">{link.label}</a>
+        ))}
       </div>
-    ))}
+    </div>
   </div>
 
-  <div class="video-gradient"></div>
-
-  <!-- Content -->
-  <div class="video-content px-5 md:px-10 lg:px-16">
-    <h2 class="video-headline">
-      We're<br>
-      <span class="text-roller" id="videoRoller">
-        <span class="text-roller-inner" id="videoRollerInner">
-          {rollerLines.map((line) => (
-            <span class="text-roller-item">{line}</span>
-          ))}
-        </span>
-      </span>
-    </h2>
-    <p class="video-sub">
-      The Boogie Collective — outdoor electronic music events, artist bookings, and immersive stage installations across the Australian east coast.
-    </p>
+  <!-- Secondary nav row -->
+  <div class="video-subnav">
+    <a href="/shop" class="subnav-link">Shop</a>
+    <span class="subnav-dot"></span>
+    <a href="/artists" class="subnav-link">Artists</a>
+    <span class="subnav-dot"></span>
+    <a href="/events" class="subnav-link">Events</a>
+    <span class="subnav-dot"></span>
+    <a href="/boog-vj" class="subnav-link">Boog.VJ</a>
+    <span class="subnav-dot"></span>
+    <a href="/immersive-structures" class="subnav-link">Installations</a>
+    <span class="subnav-dot"></span>
+    <a href="/blog" class="subnav-link">Blog</a>
+    <span class="subnav-dot"></span>
+    <a href="https://theboogiecollective.com/contact" class="subnav-link">Contact</a>
+    <span class="subnav-dot"></span>
+    <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="subnav-link">My Orders</a>
   </div>
 </section>
 
 <script is:inline>
   (function() {
-    var lines = 6;
+    var lines = 8;
     var index = 0;
     var inner = document.getElementById('videoRollerInner');
     if (!inner) return;

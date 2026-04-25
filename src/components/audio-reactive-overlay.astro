@@ -1,0 +1,178 @@
+---
+// Reusable triangle-based branded overlay
+// Slow, outline-heavy, difference-blended fills
+---
+
+<div class="aro-wrap" aria-hidden="true">
+  <svg class="aro-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Difference-filled shapes — slow breathe -->
+    <polygon class="aro-diff aro-d1" points="960,80 1200,500 720,500" />
+    <polygon class="aro-diff aro-d2" points="200,400 480,850 -80,850" />
+    <polygon class="aro-diff aro-d3" points="1700,350 1950,780 1450,780" />
+
+    <!-- Large outlines — very slow drift -->
+    <polygon class="aro-outline aro-ol1" points="960,50 1260,570 660,570" />
+    <polygon class="aro-outline aro-ol2" points="150,300 500,900 -200,900" />
+    <polygon class="aro-outline aro-ol3" points="1750,250 2050,800 1450,800" />
+    <polygon class="aro-outline aro-ol4" points="600,150 800,500 400,500" />
+    <polygon class="aro-outline aro-ol5" points="1350,100 1550,450 1150,450" />
+
+    <!-- Medium outlines — staggered fade -->
+    <polygon class="aro-outline-med aro-om1" points="480,200 620,440 340,440" />
+    <polygon class="aro-outline-med aro-om2" points="1400,180 1540,420 1260,420" />
+    <polygon class="aro-outline-med aro-om3" points="960,400 1100,640 820,640" />
+    <polygon class="aro-outline-med aro-om4" points="300,600 440,840 160,840" />
+    <polygon class="aro-outline-med aro-om5" points="1600,550 1740,790 1460,790" />
+    <polygon class="aro-outline-med aro-om6" points="750,650 890,890 610,890" />
+
+    <!-- Small outlines — gentle pulse -->
+    <polygon class="aro-outline-sm aro-os1" points="200,120 270,240 130,240" />
+    <polygon class="aro-outline-sm aro-os2" points="1720,160 1790,280 1650,280" />
+    <polygon class="aro-outline-sm aro-os3" points="580,380 650,500 510,500" />
+    <polygon class="aro-outline-sm aro-os4" points="1100,320 1170,440 1030,440" />
+    <polygon class="aro-outline-sm aro-os5" points="400,720 470,840 330,840" />
+    <polygon class="aro-outline-sm aro-os6" points="1500,680 1570,800 1430,800" />
+    <polygon class="aro-outline-sm aro-os7" points="850,780 920,900 780,900" />
+    <polygon class="aro-outline-sm aro-os8" points="1200,750 1270,870 1130,870" />
+
+    <!-- Nested outlines — concentric pairs that breathe together -->
+    <polygon class="aro-outline-nest aro-on1" points="960,200 1100,440 820,440" />
+    <polygon class="aro-outline-nest aro-on2" points="960,240 1060,420 860,420" />
+    <polygon class="aro-outline-nest aro-on3" points="300,500 440,740 160,740" />
+    <polygon class="aro-outline-nest aro-on4" points="300,540 400,720 200,720" />
+    <polygon class="aro-outline-nest aro-on5" points="1600,400 1740,640 1460,640" />
+    <polygon class="aro-outline-nest aro-on6" points="1600,440 1700,620 1500,620" />
+
+  </svg>
+</div>
+
+<style is:global>
+  .aro-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .aro-svg {
+    width: 100%;
+    height: 100%;
+  }
+  .aro-tri, .aro-diff, .aro-outline, .aro-outline-med, .aro-outline-sm, .aro-outline-nest {
+    transform-origin: center;
+    will-change: opacity, transform;
+  }
+
+  /* ─── Difference fills — large, very slow breathe ─── */
+  .aro-diff {
+    fill: rgba(255, 255, 255, 0.03);
+    stroke: none;
+    mix-blend-mode: difference;
+  }
+  .aro-d1 { animation: aroDiff 32s ease-in-out 0s infinite; }
+  .aro-d2 { animation: aroDiff 32s ease-in-out 10s infinite; }
+  .aro-d3 { animation: aroDiff 32s ease-in-out 20s infinite; }
+
+  @keyframes aroDiff {
+    0%   { opacity: 0; transform: scale(0.95); }
+    20%  { opacity: 0.5; transform: scale(1); }
+    50%  { opacity: 0.3; transform: scale(1.04); }
+    80%  { opacity: 0.6; transform: scale(1.02); }
+    100% { opacity: 0; transform: scale(0.95); }
+  }
+
+  /* ─── Large outlines — slow drift ─── */
+  .aro-outline {
+    fill: none;
+    stroke: rgba(107, 0, 204, 0.08);
+    stroke-width: 0.6;
+  }
+  .aro-ol1 { animation: aroOutline 40s ease-in-out 0s infinite; }
+  .aro-ol2 { animation: aroOutline 40s ease-in-out 8s infinite; }
+  .aro-ol3 { animation: aroOutline 40s ease-in-out 16s infinite; }
+  .aro-ol4 { animation: aroOutline 40s ease-in-out 24s infinite; }
+  .aro-ol5 { animation: aroOutline 40s ease-in-out 32s infinite; }
+
+  @keyframes aroOutline {
+    0%   { opacity: 0; transform: scale(1) rotate(0deg); }
+    15%  { opacity: 0.4; transform: scale(1.02) rotate(0.5deg); }
+    40%  { opacity: 0.2; transform: scale(1.05) rotate(1deg); }
+    65%  { opacity: 0.5; transform: scale(1.03) rotate(0.5deg); }
+    85%  { opacity: 0.15; transform: scale(1.01) rotate(0deg); }
+    100% { opacity: 0; transform: scale(1) rotate(0deg); }
+  }
+
+  /* ─── Medium outlines — staggered fade in/out ─── */
+  .aro-outline-med {
+    fill: none;
+    stroke: rgba(255, 102, 17, 0.06);
+    stroke-width: 0.5;
+  }
+  .aro-om1 { animation: aroMedOutline 28s ease-in-out 0s infinite; }
+  .aro-om2 { animation: aroMedOutline 28s ease-in-out 4.6s infinite; }
+  .aro-om3 { animation: aroMedOutline 28s ease-in-out 9.2s infinite; }
+  .aro-om4 { animation: aroMedOutline 28s ease-in-out 14s infinite; }
+  .aro-om5 { animation: aroMedOutline 28s ease-in-out 18.6s infinite; }
+  .aro-om6 { animation: aroMedOutline 28s ease-in-out 23.2s infinite; }
+
+  @keyframes aroMedOutline {
+    0%   { opacity: 0; transform: scale(0.98); }
+    25%  { opacity: 0.45; transform: scale(1.01); }
+    50%  { opacity: 0.15; transform: scale(1.03); }
+    75%  { opacity: 0.35; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.98); }
+  }
+
+  /* ─── Small outlines — gentle pulse ─── */
+  .aro-outline-sm {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 0.4;
+  }
+  .aro-os1 { animation: aroSmOutline 20s ease-in-out 0s infinite; }
+  .aro-os2 { animation: aroSmOutline 20s ease-in-out 2.5s infinite; }
+  .aro-os3 { animation: aroSmOutline 20s ease-in-out 5s infinite; }
+  .aro-os4 { animation: aroSmOutline 20s ease-in-out 7.5s infinite; }
+  .aro-os5 { animation: aroSmOutline 20s ease-in-out 10s infinite; }
+  .aro-os6 { animation: aroSmOutline 20s ease-in-out 12.5s infinite; }
+  .aro-os7 { animation: aroSmOutline 20s ease-in-out 15s infinite; }
+  .aro-os8 { animation: aroSmOutline 20s ease-in-out 17.5s infinite; }
+
+  @keyframes aroSmOutline {
+    0%   { opacity: 0; }
+    30%  { opacity: 0.4; }
+    60%  { opacity: 0.1; }
+    80%  { opacity: 0.3; }
+    100% { opacity: 0; }
+  }
+
+  /* ─── Nested concentric outlines — breathe together ─── */
+  .aro-outline-nest {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.04);
+    stroke-width: 0.3;
+  }
+  .aro-on1 { animation: aroNest 36s ease-in-out 0s infinite; stroke: rgba(107, 0, 204, 0.07); }
+  .aro-on2 { animation: aroNest 36s ease-in-out 1.5s infinite; stroke: rgba(107, 0, 204, 0.05); }
+  .aro-on3 { animation: aroNest 36s ease-in-out 12s infinite; stroke: rgba(255, 102, 17, 0.06); }
+  .aro-on4 { animation: aroNest 36s ease-in-out 13.5s infinite; stroke: rgba(255, 102, 17, 0.04); }
+  .aro-on5 { animation: aroNest 36s ease-in-out 24s infinite; }
+  .aro-on6 { animation: aroNest 36s ease-in-out 25.5s infinite; }
+
+  @keyframes aroNest {
+    0%   { opacity: 0; transform: scale(0.96); }
+    20%  { opacity: 0.5; transform: scale(1); }
+    45%  { opacity: 0.2; transform: scale(1.06); }
+    70%  { opacity: 0.45; transform: scale(1.03); }
+    100% { opacity: 0; transform: scale(0.96); }
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .aro-diff, .aro-outline, .aro-outline-med, .aro-outline-sm, .aro-outline-nest {
+      animation: none !important;
+      opacity: 0.1;
+    }
+  }
+</style>

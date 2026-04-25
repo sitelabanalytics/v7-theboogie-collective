@@ -8,6 +8,7 @@ import Hero from "@components/hero.astro";
 
 import HeroShop from "@components/hero-shop.astro";
 import ShopSlider from "@components/shop-slider.astro";
+import ShopVariants from "@components/shop-variants-slider.astro";
 
 import ContactHero from "@components/hero-end.astro";
 
@@ -36,12 +37,16 @@ import Layout from "@layouts/Layout.astro";
 ---
 
 <Layout title="Home">
-  <ContainerFW>
+  <ContainerFW class="!pb-0">
     <Hero />
   </ContainerFW>
 
-  <ContainerFW>
+  <ContainerFW class="!pb-0">
     <ShopSlider />
+  </ContainerFW>
+
+  <ContainerFW>
+    <ShopVariants />
   </ContainerFW>
 
   <ContainerFW href="#installations">

@@ -56,7 +56,7 @@ export const products = [
         swatch: "#6B00CC",
         image: "/shop/crop-black-front.webp",
         images: ["/shop/crop-black-front.webp"],
-        stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+        stripe: "https://buy.stripe.com/PLACEHOLDER_UPDATE_IN_STRIPE",
       },
       {
         fitKey: "womens",
@@ -69,7 +69,7 @@ export const products = [
         swatch: "#FF6611",
         image: "/shop/crop-black-front.webp",
         images: ["/shop/crop-black-front.webp"],
-        stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+        stripe: "https://buy.stripe.com/PLACEHOLDER_UPDATE_IN_STRIPE",
       },
       {
         fitKey: "womens",
@@ -82,7 +82,7 @@ export const products = [
         swatch: "#DA70D6",
         image: "/shop/crop-orchid-front.png",
         images: ["/shop/crop-orchid-front.png", "/shop/crop-orchid-back.png"],
-        stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+        stripe: "https://buy.stripe.com/PLACEHOLDER_UPDATE_IN_STRIPE",
       },
       {
         fitKey: "mens",
@@ -117,7 +117,7 @@ export const products = [
         swatch: "#6B00CC",
         image: "/shop/hood-purple-front.png",
         images: ["/shop/hood-purple-front.png", "/shop/hood-black-front.webp", "/shop/hood-black-back.webp"],
-        stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+        stripe: "https://buy.stripe.com/PLACEHOLDER_UPDATE_IN_STRIPE",
       },
       {
         fitKey: "unisex",
@@ -130,7 +130,7 @@ export const products = [
         swatch: "#FF6611",
         image: "/shop/hood-orange-back.png",
         images: ["/shop/hood-orange-back.png", "/shop/hood-black-front.webp"],
-        stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+        stripe: "https://buy.stripe.com/PLACEHOLDER_UPDATE_IN_STRIPE",
       },
       {
         fitKey: "unisex",
@@ -144,7 +144,7 @@ export const products = [
         badge: "Limited",
         image: "/shop/hood-stitch-back.png",
         images: ["/shop/hood-stitch-back.png", "/shop/hood-black-front.webp"],
-        stripe: "https://buy.stripe.com/fZe02camE7hxgXmdQR",
+        stripe: "https://buy.stripe.com/PLACEHOLDER_UPDATE_IN_STRIPE",
       },
     ],
   },

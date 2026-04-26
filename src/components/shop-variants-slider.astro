@@ -9,7 +9,7 @@ const hood = products.find(p => p.slug === 'box-hood');
 function pick(product, fitKey, colorKey) {
   const v = product.variants.find(v => v.fitKey === fitKey && v.colorKey === colorKey);
   if (!v) return null;
-  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes };
+  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes, fitKey, colorKey };
 }
 
 const cards = [
@@ -147,7 +147,7 @@ const cards = [
 
   <div class="shop-var-carousel pl-5 md:pl-10 lg:pl-16">
     {cards.map((item) => (
-      <a href={`/shop/${item.slug}`} class="shop-var-cell">
+      <a href={`/shop/${item.slug}?fit=${item.fitKey}&color=${item.colorKey}`} class="shop-var-cell">
         <div class="shop-var-cell-img">
           <img src={item.image} alt={`${item.name} — ${item.colorway}`} loading="lazy" />
           {item.badge && <span class="shop-var-cell-badge">{item.badge}</span>}

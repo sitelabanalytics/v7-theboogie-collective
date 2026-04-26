@@ -648,6 +648,20 @@ const hasFitSelector = fits.length > 1;
       });
     }
 
+    // Read URL params to pre-select variant
+    var params = new URLSearchParams(window.location.search);
+    var paramFit = params.get('fit');
+    var paramColor = params.get('color');
+    if (paramFit) {
+      var hasFit = variants.some(function(v) { return v.fitKey === paramFit; });
+      if (hasFit) state.fit = paramFit;
+    }
+    if (paramColor) {
+      var hasCombo = variants.some(function(v) { return v.fitKey === state.fit && v.colorKey === paramColor; });
+      if (hasCombo) state.color = paramColor;
+    }
+    state.size = getVariant().sizes[0];
+
     // Initial render
     render();
   });

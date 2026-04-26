@@ -30,6 +30,8 @@ const silentLinks = [
     object-fit: cover;
     object-position: center;
   }
+  .video-bg-wrap video::-webkit-media-controls { display: none !important; }
+  .video-bg-wrap video::-webkit-media-controls-enclosure { display: none !important; }
   .video-bg-desktop { display: block; }
   .video-bg-mobile { display: none; }
   @media (max-width: 768px) {
@@ -213,4 +215,11 @@ const silentLinks = [
     <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="subnav-link">My Orders</a>
   </div>
 </section>
+
+<script is:inline>
+  document.querySelectorAll('.video-bg-wrap video').forEach(function(v) {
+    v.removeAttribute('controls');
+    v.play().catch(function() {});
+  });
+</script>
 

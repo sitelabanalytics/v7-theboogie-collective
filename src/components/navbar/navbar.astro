@@ -1,7 +1,10 @@
 ---
 import Link from "@components/ui/link.astro";
 import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
-import aidxnLogo from 'assets/tbc/tbc-immersive-logo-white.svg';
+const headerLogo = '/tbc-header-logo-white.svg';
+const headerLogoDark = '/tbc-header-logo.svg';
+const suspenseLogo = '/tbc-suspense-logo-white.svg';
+const suspenseLogoDark = '/tbc-suspense-logo.svg';
 
 const navLinks = [
   { ref: '01', title: 'Shop', path: '/shop' },
@@ -13,22 +16,20 @@ const navLinks = [
     { title: 'Bohemian Beatfreaks', path: '/blog/bohemian-beatfreaks' },
     { title: 'Dragon Dreaming', path: '/blog/dragon-dreaming' },
   ]},
-  { ref: '04', title: 'Services', path: '/boog-vj', children: [
+  { ref: '04', title: 'Services', path: '/immersive-structures', children: [
+    { title: 'Boog.VJ — Projection Mapping', path: '/boog-vj' },
+    { title: 'Immersive Structures — Build & Design', path: '/immersive-structures' },
     { title: 'Event Curation', path: '/events' },
-    { title: 'Projection Mapping', path: '/boog-vj' },
-    { title: 'Stage Design', path: '/immersive-structures' },
-    { title: 'UV Art Installations', path: '/boog-vj' },
     { title: 'Artist Bookings', path: '/artists' },
     { title: 'Merch & Apparel', path: '/shop' },
   ]},
-  { ref: '05', title: 'Boog.VJ', path: '/boog-vj' },
-  { ref: '06', title: 'Blog', path: '/blog', children: [
+  { ref: '05', title: 'Blog', path: '/blog', children: [
     { title: 'Happiness Hill Festival', path: '/blog/happiness-hill-festival' },
     { title: 'Rabbits Eat Lettuce 2026', path: '/blog/rabbits-eat-lettuce' },
     { title: 'Esoteric Festival', path: '/blog/esoteric-festival' },
     { title: 'Subsonic Music Festival', path: '/blog/subsonic-music-festival' },
   ]},
-  { ref: '07', title: 'Contact', path: 'https://theboogiecollective.com/contact' },
+  { ref: '06', title: 'Contact', path: 'https://theboogiecollective.com/contact' },
 ];
 ---
 
@@ -47,7 +48,7 @@ const navLinks = [
       border: 0.5px solid rgba(0, 0, 0, 0.08);
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
     }
-    #navLogo { filter: invert(1); }
+    #navLogo { content: url('/tbc-header-logo.svg'); }
     .nav-motto { color: rgba(0, 0, 0, 0.4) !important; }
     .nav-icon-btn { color: rgba(0, 0, 0, 0.5); }
     .nav-icon-btn:hover { background: rgba(0, 0, 0, 0.06); color: #000; }
@@ -63,14 +64,14 @@ const navLinks = [
   #navBar.nav-scrolled { padding-top: 4px; padding-bottom: 4px; }
 
   #navLogo {
-    height: 65px;
-    margin: 10px 0;
+    height: 49px;
+    margin: 8px 0;
     transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), margin 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  #navBar.nav-scrolled #navLogo { height: 32px; margin: 6px 0; }
+  #navBar.nav-scrolled #navLogo { height: 24px; margin: 5px 0; }
   @media (max-width: 768px) {
-    #navLogo { height: 50px; }
-    #navBar.nav-scrolled #navLogo { height: 26px; }
+    #navLogo { height: 38px; }
+    #navBar.nav-scrolled #navLogo { height: 20px; }
   }
 
   .nav-motto {
@@ -388,7 +389,7 @@ const navLinks = [
   <img class="suspense-bg" id="suspenseBg" src="" alt="" />
   <div class="suspense-gradient"></div>
   <AudioReactiveOverlay />
-  <img src={aidxnLogo} alt="The Boogie Collective x Immersive Structures" style="position: relative; z-index: 3;" />
+  <img src={suspenseLogo} alt="The Boogie Collective" style="position: relative; z-index: 3;" />
 </div>
 
 <!-- Top bar -->
@@ -397,7 +398,7 @@ const navLinks = [
     <!-- Left: logo + motto -->
     <div class="flex items-center gap-3 md:gap-4">
       <a href="/">
-        <img id="navLogo" src={aidxnLogo} alt="The Boogie Collective Logo"/>
+        <img id="navLogo" src={headerLogo} alt="The Boogie Collective Logo"/>
       </a>
       <p class="nav-motto hidden sm:block">Helping you stop<br>dancing inside.</p>
     </div>
@@ -422,12 +423,11 @@ const navLinks = [
     <a href="/about" class="nav-sec-link">About</a>
     <a href="/artists" class="nav-sec-link">Artists</a>
     <a href="/events" class="nav-sec-link">Events</a>
-    <a href="/boog-vj" class="nav-sec-link">Boog.VJ</a>
     <a href="/immersive-structures" class="nav-sec-link">Installations</a>
+    <a href="/boog-vj" class="nav-sec-link">Projection</a>
     <a href="/blog" class="nav-sec-link">Blog</a>
-    <a href="https://theboogiecollective.com/contact" class="nav-sec-link">Contact</a>
     <a href="/shop" class="nav-sec-link">Shop</a>
-    <a href="https://billing.stripe.com/p/login/5kA4jQdGtb9m8N2fYY" target="_blank" rel="noopener" class="nav-sec-link">My Orders</a>
+    <a href="https://theboogiecollective.com/contact" class="nav-sec-link">Contact</a>
   </div>
 </div>
 
@@ -436,7 +436,7 @@ const navLinks = [
   <!-- Top bar (mirror) -->
   <div class="nav-overlay-top">
     <a href="/">
-      <img src={aidxnLogo} alt="The Boogie Collective" style="height: 50px;"/>
+      <img src={headerLogo} alt="The Boogie Collective" style="height: 50px;"/>
     </a>
     <button class="nav-toggle" id="navCloseBtn" aria-label="Close menu">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"/></svg>
@@ -495,22 +495,24 @@ const navLinks = [
     var closeBtn = document.getElementById('navCloseBtn');
 
     // Open/close menu
-    openBtn.addEventListener('click', function() {
+    function openMenu() {
       overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
-    });
-    closeBtn.addEventListener('click', function() {
+    }
+    function closeMenu() {
       overlay.classList.remove('open');
       document.body.style.overflow = '';
-    });
+    }
+    openBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
     // Close on link click
     var links = overlay.querySelectorAll('.nav-link, .nav-dropdown-link, .nav-bottom-link');
     for (var i = 0; i < links.length; i++) {
-      links[i].addEventListener('click', function() {
-        overlay.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+      links[i].addEventListener('click', closeMenu);
     }
+    // Safety: ensure scroll is never permanently locked
+    document.body.style.overflow = '';
+    window.addEventListener('pageshow', function() { document.body.style.overflow = ''; });
 
     // Scroll-shrink header + secondary row — expands on 50px scroll-up
     var secondary = document.getElementById('navSecondary');

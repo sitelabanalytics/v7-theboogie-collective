@@ -59,7 +59,7 @@ const slides = products.map(product => {
     width: 100%;
   }
   @media (max-width: 768px) {
-    .shop-fs-images { flex-direction: column; height: 100%; }
+    .shop-fs-images { height: 100%; }
   }
 
   .shop-fs-img {
@@ -74,8 +74,10 @@ const slides = products.map(product => {
     object-fit: cover;
     object-position: center top;
   }
+  .shop-fs-img:nth-child(2) { display: block; }
   @media (max-width: 768px) {
-    .shop-fs-img { flex: 1; height: auto; }
+    .shop-fs-img:nth-child(2) { display: none; }
+    .shop-fs-img { height: 100%; }
   }
 
   /* Gradient overlay */

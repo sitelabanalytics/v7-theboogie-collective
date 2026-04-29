@@ -1,94 +1,179 @@
 ---
 import Link from "@components/ui/link.astro";
+import { Picture } from "@astrojs/image/components";
+
+import imgMoodBlend from '../assets/tbc/gal-hh2-1.jpg';
+import imgScrubRat from '../assets/tbc/scrubrat.jpg';
+import imgLucidGecko from '../assets/tbc/lucid-gecko.jpg';
+import imgGreenEuro from '../assets/tbc/gal-boho-1.jpg';
+import imgJiver from '../assets/tbc/gal-hh2-3.jpg';
+import imgSassafras from '../assets/tbc/gal-dd-1.webp';
+import imgNemophilist from '../assets/tbc/gal-rabbits-1.jpg';
+import imgDLysergic from '../assets/tbc/gal-boho-2.webp';
+import imgSimrana from '../assets/tbc/simrana.jpg';
 
 const artists = [
+  {
+    title: "Simrana",
+    description: "Progressive electronic producer from the Eastern Australian Coast.",
+    soundcloud: "https://soundcloud.com/simranasounds",
+    image: imgSimrana,
+    bookingEmail: "simranasounds1@gmail.com",
+    labels: [
+      { name: "Weaver Agency", url: "https://www.weaveragency.com.au/" },
+      { name: "Techgnosis Records", url: "https://techgnosis-records.com/" },
+    ],
+  },
   {
     title: "Mood:Blend",
     description: "Cairns born, disco and soul inspired bush techno and progressive tech.",
     soundcloud: "https://soundcloud.com/moodblend",
+    image: imgMoodBlend,
   },
   {
     title: "Scrub Rat",
     description: "Tasmania based breaks and dub artist with some of the best mixing you'll find.",
     soundcloud: "https://soundcloud.com/scrubrataus",
+    image: imgScrubRat,
+    bookingEmail: "edwardgibson93@gmail.com",
   },
   {
     title: "Lucid Gecko",
     description: "Sunshine Coast hinterland inspired morning psytrance, breaks and DnB sounds.",
     soundcloud: "https://soundcloud.com/lucid-gecko",
+    image: imgLucidGecko,
+    bookingEmail: "lucidgecko@hotmail.com",
   },
   {
-    title: "Green Euro",
+    title: "Akudama",
     description: "Warehouse inspired progressive full-on out of the Mid Australian Coast.",
     soundcloud: "https://soundcloud.com/greeneuro",
+    image: imgGreenEuro,
+    bookingEmail: "akudamamusicc@gmail.com",
+    labels: [
+      { name: "Padang Records", url: "https://padangrecords.net/" },
+    ],
   },
   {
     title: "Jiver",
     description: "Brisbane based warehouse techno and tech. One of Brisbane's upcoming artists.",
     soundcloud: "https://soundcloud.com/jiver-2",
+    image: imgJiver,
   },
   {
     title: "Sassafras",
     description: "Brisbane dark techno and deep progressive tech, spinning ruckus always.",
     soundcloud: "https://soundcloud.com/sassafrasaus",
+    image: imgSassafras,
   },
   {
     title: "Nemophilist",
     description: "One of the best upcoming deep psytrance artists out of the central coast.",
     soundcloud: "https://soundcloud.com/joshua-hyde",
+    image: imgNemophilist,
   },
   {
     title: "D-Lysergic",
     description: "Central coast psytrance artist creating great events and sets for over 15 years.",
     soundcloud: "https://soundcloud.com/d-lysergic",
+    image: imgDLysergic,
   },
 ];
 ---
 
 <style>
   .artist-cell {
-    margin-right: 12px;
-    width: 72vw;
-    max-width: 340px;
+    margin-right: 10px;
+    width: 66vw;
+    max-width: 260px;
     border-radius: 12px;
     overflow: hidden;
     background: linear-gradient(165deg, rgba(2, 0, 36, 0.5) 0%, rgba(9, 9, 121, 0.15) 65%, rgba(0, 213, 255, 0.08) 100%);
     border: 0.5px solid rgba(255, 255, 255, 0.08);
-    padding: 28px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
   }
   .artist-cell:hover {
     transform: translateY(-4px);
     border-color: rgba(255, 255, 255, 0.15);
   }
-  @media (min-width: 520px) { .artist-cell { width: 48vw; max-width: 360px; margin-right: 14px; } }
-  @media (min-width: 768px) { .artist-cell { width: 36vw; max-width: 380px; } }
-  @media (min-width: 1024px) { .artist-cell { width: 28vw; max-width: 400px; margin-right: 16px; } }
+  @media (min-width: 400px) { .artist-cell { width: 58vw; max-width: 260px; } }
+  @media (min-width: 520px) { .artist-cell { width: 44vw; max-width: 280px; margin-right: 12px; } }
+  @media (min-width: 768px) { .artist-cell { width: 36vw; max-width: 300px; } }
+  @media (min-width: 1024px) { .artist-cell { width: 26vw; max-width: 320px; margin-right: 16px; } }
+  @media (min-width: 1280px) { .artist-cell { width: 22vw; max-width: 340px; } }
 
-  .artist-name {
-    font-size: 1.4rem;
-    margin-bottom: 8px;
+  .artist-cell-img {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #111;
   }
-  @media (min-width: 768px) { .artist-name { font-size: 1.6rem; } }
+  .artist-cell-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .artist-cell:hover .artist-cell-img img { transform: scale(1.05); }
 
-  .artist-desc {
-    font-size: 0.82rem;
-    line-height: 1.6;
+  .artist-cell-body { padding: 12px; }
+  @media (min-width: 768px) { .artist-cell-body { padding: 16px; } }
+
+  .artist-cell-label {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
     color: rgba(255, 255, 255, 0.45) !important;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
+  }
+  @media (min-width: 768px) { .artist-cell-label { font-size: 0.65rem; } }
+
+  .artist-cell-name { font-size: 0.95rem; margin-bottom: 3px; }
+  @media (min-width: 768px) { .artist-cell-name { font-size: 1.1rem; margin-bottom: 4px; } }
+
+  .artist-cell-labels {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .artist-label-pill {
+    font-family: 'inconsolata' !important;
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(107, 0, 204, 0.15);
+    border: 0.5px solid rgba(107, 0, 204, 0.3);
+    color: rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  @media (min-width: 768px) { .artist-label-pill { font-size: 0.55rem; padding: 2px 8px; } }
+  .artist-label-pill:hover {
+    border-color: rgba(107, 0, 204, 0.6);
+    color: #fff !important;
   }
 
-  .artist-links {
+  .artist-cell-desc {
+    font-size: 0.68rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.35) !important;
+    margin-bottom: 10px;
+  }
+  @media (min-width: 768px) { .artist-cell-desc { font-size: 0.75rem; margin-bottom: 12px; } }
+
+  .artist-cell-links {
     display: flex;
     gap: 8px;
   }
   .artist-btn {
     display: inline-flex;
     align-items: center;
-    padding: 7px 18px;
+    justify-content: center;
+    flex: 1;
+    padding: 7px 12px;
     border-radius: 6px;
     font-family: 'inconsolata' !important;
     font-size: 0.65rem;
@@ -97,23 +182,122 @@ const artists = [
     transition: all 0.2s;
     text-decoration: none;
     white-space: nowrap;
-  }
-  .artist-btn-primary {
-    background: linear-gradient(135deg, #6B00CC, #FF6611);
-    color: #fff !important;
-  }
-  .artist-btn-primary:hover { opacity: 0.9; }
-  .artist-btn-outline {
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.5) !important;
   }
-  .artist-btn-outline:hover {
+  @media (min-width: 768px) { .artist-btn { padding: 8px 16px; font-size: 0.7rem; } }
+  .artist-btn:hover {
     border-color: rgba(255, 255, 255, 0.4);
     color: #fff !important;
   }
 
   .artist-carousel { max-width: 100vw !important; overflow: hidden; }
   .artist-carousel .flickity-viewport { min-height: 1px; overflow: visible; }
+
+  /* Booking modal */
+  .book-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .book-overlay.book-open { display: flex; }
+  .book-modal {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 28px;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+  }
+  .book-modal-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 4px 8px;
+  }
+  .book-modal-close:hover { color: #fff; }
+  .book-modal-title {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  .book-modal-sub {
+    font-family: 'inconsolata' !important;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-bottom: 20px;
+  }
+  .book-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .book-field label {
+    font-family: 'inconsolata' !important;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+  .book-field input,
+  .book-field textarea {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  .book-field input:focus,
+  .book-field textarea:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .book-field textarea { resize: vertical; min-height: 80px; }
+  .book-submit {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: none;
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .book-submit:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+  .book-success {
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+  }
+  .book-success p {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.85rem;
+  }
 </style>
 
 <main class="mx-auto mt-8 md:mt-12 pb-4">
@@ -132,18 +316,73 @@ const artists = [
   <div class="artist-carousel pl-5 md:pl-10 lg:pl-16">
     {artists.map((artist) => (
       <div class="artist-cell">
-        <div>
-          <h3 class="artist-name">{artist.title}</h3>
-          <p class="artist-desc">{artist.description}</p>
+        <div class="artist-cell-img">
+          <Picture
+            src={artist.image}
+            sizes="(max-width: 340px) 340px, 300px"
+            widths={[300, 340]}
+            aspectRatio="1:1"
+            format="webp"
+            fit="cover"
+            position="center"
+            alt={artist.title}
+            loading="lazy"
+          />
         </div>
-        <div class="artist-links">
-          <a href={artist.soundcloud} target="_blank" rel="noopener" class="artist-btn artist-btn-primary">Music</a>
-          <a href="https://theboogiecollective.com/contact" class="artist-btn artist-btn-outline">Book</a>
+        <div class="artist-cell-body">
+          <p class="artist-cell-label">Artists</p>
+          <h3 class="artist-cell-name">{artist.title}</h3>
+          {artist.labels && (
+            <div class="artist-cell-labels">
+              {artist.labels.map((label) => (
+                <a href={label.url} target="_blank" rel="noopener" class="artist-label-pill">{label.name}</a>
+              ))}
+            </div>
+          )}
+          <p class="artist-cell-desc">{artist.description}</p>
+          <div class="artist-cell-links">
+            <a href={artist.soundcloud} target="_blank" rel="noopener" class="artist-btn">Music</a>
+            {artist.bookingEmail ? (
+              <button class="artist-btn artist-book-btn" data-artist={artist.title} data-email={artist.bookingEmail}>Book</button>
+            ) : (
+              <a href="https://theboogiecollective.com/contact" class="artist-btn">Book</a>
+            )}
+          </div>
         </div>
       </div>
     ))}
   </div>
 </main>
+
+<!-- Booking modal -->
+<div class="book-overlay" id="bookOverlay">
+  <div class="book-modal">
+    <button class="book-modal-close" id="bookClose">&times;</button>
+    <h3 class="book-modal-title" id="bookTitle">Book Artist</h3>
+    <p class="book-modal-sub" id="bookSub">Booking enquiry</p>
+    <form id="bookForm" name="artist-booking" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="artist-booking" />
+      <input type="hidden" name="artist" id="bookArtist" />
+      <input type="hidden" name="artist-email" id="bookEmail" />
+      <div class="book-field">
+        <label for="bookName">Your Name</label>
+        <input type="text" id="bookName" name="name" required />
+      </div>
+      <div class="book-field">
+        <label for="bookContact">Your Email</label>
+        <input type="email" id="bookContact" name="email" required />
+      </div>
+      <div class="book-field">
+        <label for="bookMessage">Message</label>
+        <textarea id="bookMessage" name="message" placeholder="Event details, date, location..." required></textarea>
+      </div>
+      <button type="submit" class="book-submit">Send Enquiry</button>
+    </form>
+    <div class="book-success" id="bookSuccess">
+      <p>Enquiry sent. They'll be in touch.</p>
+    </div>
+  </div>
+</div>
 
 <script is:inline>
   var artistFlkty = new Flickity('.artist-carousel', {
@@ -154,4 +393,50 @@ const artists = [
     freeScroll: true,
     imagesLoaded: true
   });
+
+  // Booking modal
+  (function() {
+    var overlay = document.getElementById('bookOverlay');
+    var closeBtn = document.getElementById('bookClose');
+    var form = document.getElementById('bookForm');
+    var success = document.getElementById('bookSuccess');
+    var titleEl = document.getElementById('bookTitle');
+    var subEl = document.getElementById('bookSub');
+    var artistInput = document.getElementById('bookArtist');
+    var emailInput = document.getElementById('bookEmail');
+
+    document.querySelectorAll('.artist-book-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var artist = btn.getAttribute('data-artist');
+        var email = btn.getAttribute('data-email');
+        titleEl.textContent = 'Book ' + artist;
+        subEl.textContent = 'Booking enquiry → ' + artist;
+        artistInput.value = artist;
+        emailInput.value = email;
+        form.style.display = '';
+        success.style.display = 'none';
+        overlay.classList.add('book-open');
+      });
+    });
+
+    closeBtn.addEventListener('click', function() {
+      overlay.classList.remove('book-open');
+    });
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) overlay.classList.remove('book-open');
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      fetch('/', { method: 'POST', body: data }).then(function() {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      }).catch(function() {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      });
+    });
+  })();
 </script>

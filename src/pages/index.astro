@@ -19,11 +19,8 @@ import GridSec from "@components/hero-grid-artists-sec.astro";
 import ImmersiveSec from "@components/hero-grid-stage-sec.astro";
 import Immersive from "@components/hero-grid-stage.astro";
 
-import WorksSliderHH1 from "@components/slider-med-hh1.astro";
-import WorksSliderHH2 from "@components/slider-med-hh2.astro";
-import WorksSliderBoho from "@components/slider-med-boho.astro";
-import WorksSliderDD from "@components/slider-med-dd.astro";
-import WorksSliderRabbits from "@components/slider-med-rabbits.astro";
+import PreviousWorks from "@components/previous-works-slider.astro";
+import MixesSlider from "@components/mixes-slider.astro";
 
 import SectionHeadImg from "@components/sectionhead-img.astro";
 import ServicesSlider from "@components/services-slider.astro";
@@ -64,11 +61,7 @@ import Layout from "@layouts/Layout.astro";
   </ContainerFW>
 
   <ContainerFW href="#installations">
-    <WorksSliderHH2 />
-    <WorksSliderHH1 />
-    <WorksSliderBoho />
-    <WorksSliderRabbits />
-    <WorksSliderDD />
+    <PreviousWorks />
   </ContainerFW>
   
   <Container href="#artists">
@@ -103,7 +96,9 @@ import Layout from "@layouts/Layout.astro";
     <GridSec />
   </ContainerXL>
 
-
+  <ContainerFW>
+    <MixesSlider />
+  </ContainerFW>
 
   <Container href="#events">
     <SectionHeadImg>
@@ -138,12 +133,6 @@ import Layout from "@layouts/Layout.astro";
 
   <ContainerFW>
     <ContactHero />
-  </ContainerFW>
-
-  
-
-  <ContainerFW>
-    <Grid />
   </ContainerFW>
 
   

@@ -1,0 +1,272 @@
+---
+function timeAgo(dateStr) {
+  const now = new Date();
+  const date = new Date(dateStr);
+  const diffMs = now - date;
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  const years = Math.floor(months / 12);
+  const remMonths = months % 12;
+  return remMonths > 0 ? `${years}y ${remMonths}mo ago` : `${years}y ago`;
+}
+
+const mixes = [
+  {
+    title: "Twisted Frequency 2026",
+    artist: "Akudama",
+    type: "Mix",
+    description: "Live set from Twisted Frequency 2026.",
+    image: "/event-2.webp",
+    link: "https://soundcloud.com/akudamaa/akudama-twisted-frequency-2026",
+    date: "2026-03-30",
+  },
+  {
+    title: "Tanto Slipstream 7",
+    artist: "Simrana",
+    type: "Track",
+    description: "Original mix via Techgnosis Records.",
+    image: "/event-4.jpg",
+    link: "https://soundcloud.com/techgnosis-records/simrana-tanto-slipstream-7-original-mix",
+    date: "2025-04-30",
+  },
+  {
+    title: "Multiverse 2025",
+    artist: "Scrub Rat",
+    type: "Mix",
+    description: "Live set from Multiverse Festival 2025, Tasmania. Breaks and dub.",
+    image: "/event-3.jpg",
+    link: "https://soundcloud.com/scrubrataus/multiverse-2025",
+    date: "2025-04-30",
+  },
+  {
+    title: "Flip Phone",
+    artist: "Simrana",
+    type: "Track",
+    description: "Original track via Weaver Agency. Progressive electronic.",
+    image: "/event-6.jpg",
+    link: "https://soundcloud.com/weaveragency/simrana-flip-phone",
+    date: "2025-04-01",
+  },
+  {
+    title: "Happiness Hill 2 Set",
+    artist: "Mood:Blend",
+    type: "Mix",
+    description: "Sunrise set from Happiness Hill 2. Bush techno and progressive.",
+    image: "/event-1.jpg",
+    link: "https://soundcloud.com/moodblend",
+    date: "2025-03-15",
+  },
+  {
+    title: "Forest Floor Mix",
+    artist: "Lucid Gecko",
+    type: "Mix",
+    description: "Morning psytrance mix recorded in the Sunshine Coast hinterland.",
+    image: "/event-5.jpg",
+    link: "https://soundcloud.com/lucid-gecko",
+    date: "2025-01-20",
+  },
+  {
+    title: "Warehouse Sessions",
+    artist: "Jiver",
+    type: "Mix",
+    description: "Dark warehouse techno recorded live in Brisbane.",
+    image: "/event-4.jpg",
+    link: "https://soundcloud.com/jiver-2",
+    date: "2024-11-10",
+  },
+  {
+    title: "Bohemian Nights",
+    artist: "Sassafras",
+    type: "Mix",
+    description: "Deep progressive set from Bohemian Beatfreaks afterparty.",
+    image: "/event-6.jpg",
+    link: "https://soundcloud.com/sassafrasaus",
+    date: "2024-09-05",
+  },
+  {
+    title: "Gumnut Dreamfunk (Remix)",
+    artist: "Lucid Gecko",
+    type: "Track",
+    description: "Lucid Gecko remix of Gumnut Dreamfunk.",
+    image: "/event-5.jpg",
+    link: "https://soundcloud.com/lucid-gecko/gumnut-dreamfunk-lucid-gecko-remix",
+    date: "2024-04-30",
+  },
+  {
+    title: "Live at Happiness Hill 2",
+    artist: "Boog",
+    type: "Mix",
+    description: "Live set from the original Happiness Hill festival.",
+    image: "/event-1.jpg",
+    link: "https://soundcloud.com/theboogiecollective/live-at-happiness-hill-2",
+    date: "2019-04-30",
+  },
+  {
+    title: "Vol. 20 — Live at Happiness Hill",
+    artist: "Boog",
+    type: "Mix",
+    description: "Live set from the first Happiness Hill festival.",
+    image: "/event-3.jpg",
+    link: "https://soundcloud.com/theboogiecollective/vol-20-live-at-happiness-hill",
+    date: "2018-04-30",
+  },
+];
+---
+
+<style is:global>
+  .mix-cell {
+    margin-right: 10px;
+    width: 66vw;
+    max-width: 260px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  }
+  .mix-cell:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  @media (min-width: 400px) { .mix-cell { width: 58vw; max-width: 260px; } }
+  @media (min-width: 520px) { .mix-cell { width: 44vw; max-width: 280px; margin-right: 12px; } }
+  @media (min-width: 768px) { .mix-cell { width: 36vw; max-width: 300px; } }
+  @media (min-width: 1024px) { .mix-cell { width: 26vw; max-width: 320px; margin-right: 16px; } }
+  @media (min-width: 1280px) { .mix-cell { width: 22vw; max-width: 340px; } }
+
+  .mix-cell-img {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #111;
+    position: relative;
+  }
+  .mix-cell-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mix-cell:hover .mix-cell-img img { transform: scale(1.05); }
+
+  .mix-cell-img-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.4) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .mix-cell-type {
+    position: absolute;
+    top: 8px; right: 8px;
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    z-index: 1;
+  }
+  @media (min-width: 768px) {
+    .mix-cell-type { top: 10px; right: 10px; font-size: 0.6rem; }
+  }
+  .mix-cell-type-track {
+    background: rgba(107, 0, 204, 0.2);
+    border-color: rgba(107, 0, 204, 0.4);
+  }
+
+  .mix-cell-body { padding: 12px; }
+  @media (min-width: 768px) { .mix-cell-body { padding: 16px; } }
+
+  .mix-cell-label {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.45) !important;
+    margin-bottom: 2px;
+  }
+  @media (min-width: 768px) { .mix-cell-label { font-size: 0.65rem; } }
+
+  .mix-cell-title { font-size: 0.95rem; margin-bottom: 3px; }
+  @media (min-width: 768px) { .mix-cell-title { font-size: 1.1rem; margin-bottom: 4px; } }
+
+  .mix-cell-desc {
+    font-size: 0.68rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.35) !important;
+    margin-bottom: 10px;
+  }
+  @media (min-width: 768px) { .mix-cell-desc { font-size: 0.75rem; margin-bottom: 12px; } }
+
+  .mix-cell-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.2s;
+  }
+  @media (min-width: 768px) { .mix-cell-btn { padding: 8px 16px; font-size: 0.7rem; } }
+  .mix-cell-btn:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff !important;
+  }
+
+  .mix-carousel { max-width: 100vw !important; overflow: hidden; }
+  .mix-carousel .flickity-viewport { min-height: 1px; overflow: visible; }
+</style>
+
+<section class="py-12" style="background: #000;">
+  <div class="px-5 md:px-10 lg:px-16 mb-8 flex flex-row items-end justify-between">
+    <div>
+      <h5 class="text-xs md:text-sm">Recent Mixes</h5>
+      <h4 class="text-2xl md:text-3xl lg:text-4xl my-2 font-bold lg:tracking-tight">
+        From the Collective.
+      </h4>
+    </div>
+    <a href="https://soundcloud.com/theboogiecollective" target="_blank" rel="noopener" class="rounded text-center transition px-5 py-2 text-sm border border-white/20 hover:border-white/50 text-white mb-2">
+      SoundCloud
+    </a>
+  </div>
+
+  <div class="mix-carousel pl-5 md:pl-10 lg:pl-16">
+    {mixes.map((mix) => (
+      <a href={mix.link} target="_blank" rel="noopener" class="mix-cell">
+        <div class="mix-cell-img">
+          <img src={mix.image} alt={`${mix.artist} — ${mix.title}`} loading="lazy" />
+          <div class="mix-cell-img-gradient"></div>
+          <span class={`mix-cell-type ${mix.type === 'Track' ? 'mix-cell-type-track' : ''}`}>{mix.type}</span>
+        </div>
+        <div class="mix-cell-body">
+          <p class="mix-cell-label">{mix.artist} · {timeAgo(mix.date)}</p>
+          <h4 class="mix-cell-title">{mix.title}</h4>
+          <p class="mix-cell-desc">{mix.description}</p>
+          <span class="mix-cell-btn">Listen</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<script is:inline>
+  var mixFlkty = new Flickity('.mix-carousel', {
+    cellAlign: 'left',
+    contain: true,
+    prevNextButtons: false,
+    pageDots: true,
+    freeScroll: true,
+    imagesLoaded: true
+  });
+</script>

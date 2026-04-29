@@ -44,7 +44,9 @@ import { products } from "../../data/products.js";
             <a href={`/shop/${product.slug}`} class="product-card-lg shop-reveal" style={`--delay: ${i * 0.1}s`}>
               <div class="product-card-lg-img">
                 <img src={defaultVariant.image} alt={product.name} loading="lazy" />
-                {defaultVariant.badge && <span class="product-card-lg-badge">{defaultVariant.badge}</span>}
+                {product.nextDrop
+                  ? <span class="product-card-lg-badge product-card-lg-badge-next">Next Drop</span>
+                  : defaultVariant.badge && <span class="product-card-lg-badge">{defaultVariant.badge}</span>}
                 <div class="product-card-lg-swatches">
                   {uniqueColors.map(v => (
                     <span class="product-card-lg-swatch" style={`background: ${v.swatch}`}></span>
@@ -162,6 +164,10 @@ import { products } from "../../data/products.js";
     border: 0.5px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     color: #fff;
+  }
+  .product-card-lg-badge-next {
+    background: rgba(107, 0, 204, 0.2);
+    border-color: rgba(107, 0, 204, 0.4);
   }
   .product-card-lg-swatches {
     position: absolute;

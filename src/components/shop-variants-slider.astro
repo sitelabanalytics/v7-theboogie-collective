@@ -2,24 +2,26 @@
 import { products } from "../data/products.js";
 
 // All unique variants as cards — manually ordered for the slider
-// Order: purple tee, orange tee, purple hood, orchid crop, orange hood, white-stitch hood, white-stitch tee
 const tee = products.find(p => p.slug === 'classic-tee');
 const hood = products.find(p => p.slug === 'box-hood');
 
 function pick(product, fitKey, colorKey) {
   const v = product.variants.find(v => v.fitKey === fitKey && v.colorKey === colorKey);
   if (!v) return null;
-  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes, fitKey, colorKey };
+  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes, outOfStock: v.outOfStock || false, nextDrop: v.nextDrop || false, fitKey, colorKey };
 }
 
 const cards = [
+  // ── Available ──
+  pick(hood, 'unisex', 'white-stitch'),
+  // ── Out of stock ──
+  pick(hood, 'unisex', 'purple'),
+  pick(hood, 'unisex', 'orange'),
+  // ── Next Drop (tees) ──
   pick(tee, 'mens', 'purple'),
   pick(tee, 'mens', 'orange'),
-  pick(hood, 'unisex', 'purple'),
   pick(tee, 'womens', 'orchid'),
-  pick(hood, 'unisex', 'orange'),
-  pick(hood, 'unisex', 'white-stitch'),
-  pick(tee, 'mens', 'white-stitch'),
+  // pick(tee, 'mens', 'white-stitch'),  // hidden — different embroidery design planned
 ].filter(Boolean);
 ---
 
@@ -127,6 +129,17 @@ const cards = [
   }
   @media (min-width: 768px) { .shop-var-cell-btn { padding: 8px 16px; font-size: 0.7rem; } }
   .shop-var-cell-btn:hover { opacity: 0.9; }
+  .shop-var-cell-btn-oos {
+    background: rgba(255,255,255,0.06) !important;
+    color: rgba(255,255,255,0.3) !important;
+    cursor: default;
+  }
+  .shop-var-cell-btn-next {
+    background: rgba(107,0,204,0.15) !important;
+    border: 1px solid rgba(107,0,204,0.3);
+    color: rgba(255,255,255,0.5) !important;
+    cursor: default;
+  }
 
   .shop-var-carousel { max-width: 100vw !important; overflow: hidden; }
   .shop-var-carousel .flickity-viewport { min-height: 1px; overflow: visible; }
@@ -157,7 +170,9 @@ const cards = [
           <p class="shop-var-cell-colorway">{item.colorway}</p>
           <h4 class="shop-var-cell-name">{item.name}</h4>
           <p class="shop-var-cell-meta">{item.fit} · {item.code}</p>
-          <span class="shop-var-cell-btn">Pre-Order Now</span>
+          <span class={`shop-var-cell-btn ${item.nextDrop ? 'shop-var-cell-btn-next' : item.outOfStock ? 'shop-var-cell-btn-oos' : ''}`}>
+            {item.nextDrop ? 'Next Drop' : item.outOfStock ? 'Out of Stock' : 'Pre-Order Now'}
+          </span>
         </div>
       </a>
     ))}

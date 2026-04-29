@@ -369,6 +369,19 @@ const hasFitSelector = fits.length > 1;
     .pdp-hero-buy { display: inline-block; }
   }
   .pdp-hero-buy:hover { opacity: 0.9; transform: translateY(-2px); }
+  .pdp-hero-buy-oos {
+    background: rgba(255,255,255,0.08) !important;
+    color: rgba(255,255,255,0.35) !important;
+    cursor: default;
+  }
+  .pdp-hero-buy-oos:hover { opacity: 1; transform: none; }
+  .pdp-hero-buy-next {
+    background: rgba(107,0,204,0.15) !important;
+    border: 1px solid rgba(107,0,204,0.3);
+    color: rgba(255,255,255,0.5) !important;
+    cursor: default;
+  }
+  .pdp-hero-buy-next:hover { opacity: 1; transform: none; }
 
   /* ─── Pre-order notice ─── */
   .pdp-preorder-notice {
@@ -560,7 +573,24 @@ const hasFitSelector = fits.length > 1;
       heroFit.textContent = v.fit;
       heroCode.textContent = v.code;
       heroWeight.textContent = v.weight;
-      buyLink.href = v.stripe;
+
+      // Stock / availability handling
+      buyLink.classList.remove('pdp-hero-buy-oos', 'pdp-hero-buy-next');
+      if (v.nextDrop) {
+        buyLink.href = '#';
+        buyLink.textContent = 'Next Drop';
+        buyLink.classList.add('pdp-hero-buy-next');
+        buyLink.style.pointerEvents = 'none';
+      } else if (v.outOfStock) {
+        buyLink.href = '#';
+        buyLink.textContent = 'Out of Stock';
+        buyLink.classList.add('pdp-hero-buy-oos');
+        buyLink.style.pointerEvents = 'none';
+      } else {
+        buyLink.href = v.stripe;
+        buyLink.textContent = 'Pre-Order Now';
+        buyLink.style.pointerEvents = '';
+      }
 
       // Spec values
       if (specCode) specCode.textContent = v.code;

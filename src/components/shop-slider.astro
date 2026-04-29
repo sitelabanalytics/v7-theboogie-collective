@@ -17,8 +17,9 @@ const slides = products.map(product => {
   return {
     slug: product.slug,
     name: product.name,
+    nextDrop: product.nextDrop || false,
     img1: defaultV.image,
-    img2: secondV.image !== defaultV.image ? secondV.image : (defaultV.images[1] || defaultV.image),
+    img2: defaultV.images[1] || defaultV.image,
     colorway: defaultV.colorway,
     fit: fits.join(' · '),
     code: defaultV.code,
@@ -192,6 +193,11 @@ const slides = products.map(product => {
     .shop-fs-btn { padding: 8px 18px; font-size: 0.65rem; }
   }
   .shop-fs-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+  .shop-fs-btn-next {
+    background: rgba(107,0,204,0.2) !important;
+    border: 1px solid rgba(107,0,204,0.4);
+  }
+  .shop-fs-btn-next:hover { opacity: 1; transform: none; }
 
   .shop-fs-btn-outline {
     display: inline-block;
@@ -246,7 +252,11 @@ const slides = products.map(product => {
             </div>
           </div>
           <div class="shop-fs-cta">
-            <a href={`/shop/${slide.slug}`} class="shop-fs-btn">Pre-Order Now</a>
+            {slide.nextDrop ? (
+              <a href={`/shop/${slide.slug}`} class="shop-fs-btn shop-fs-btn-next">Next Drop</a>
+            ) : (
+              <a href={`/shop/${slide.slug}`} class="shop-fs-btn">Pre-Order Now</a>
+            )}
             <a href="/shop" class="shop-fs-btn-outline">View All</a>
           </div>
         </div>

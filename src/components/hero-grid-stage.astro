@@ -1,42 +1,30 @@
 ---
-// @ts-ignore
-import { Icon } from "astro-icon";
-import Link from "@components/ui/link.astro";
-
+import { Picture } from "@astrojs/image/components";
+import StageCover from '../assets/tbc/gal-hh2-2.webp';
 ---
-<style>
-  #heroSection {
-    background-image: url('../assets/tbc/gal-hh2-2.webp');
-    background-repeat: no-repeat; 
-    background-size: cover;
-    background-position: center;
-  }
-</style>
 
-<main id="heroSection" class="mx-auto my-8 md:my-16 pt-64 lg:pt-96 pb-0 lg:pb-8 rounded-3xl">
-  <div class="mb-4 md:mb-8 m-4">
-    <div id="glass-card" class="max-w-2xl">
-      <h5 class="text-sm lg:text-md mb-2">
-        Event Installations
-      </h5>
-      <h3 class="text-2xl md:text-3xl lg:text-5xl mb-4 font-bold lg:tracking-tight">
-        Immersive Structures.
-      </h3>
-      <div class="">
-      <p class="text-md lg:text-lg"> 
-        3D stage design and construction across the Eastern Coast of Australia for over 50 events. Specilist in lighting design and bamboo construction. 
-      </p>
-      <div class="mt-6 flex flex-col sm:flex-row justify-start gap-3">
-        <a href="https://theboogiecollective.com/contact" rel="noopener" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black hover:bg-gray-200 border-2 border-transparent flex gap-1 items-center justify-center">
-          <svg viewBox="0 0 24 24" class="w-4 h-4">
-            <Icon class="text-black" name="ph:codepen-logo-light" />
-          </svg>
-
-          Book
-
-        </a>
-      </div>
-    </div>
-    </div>
+<div class="mx-auto max-w-7xl my-6 md:my-10 px-5 md:px-10 lg:px-16 flex flex-col-reverse md:flex-row justify-start items-center">
+  <div class="w-full md:w-3/5">
+    <h5 class="text-xs md:text-sm lg:text-md my-4">
+      Event Installations
+    </h5>
+    <h3 class="max-w-3xl text-2xl md:text-3xl lg:text-4xl font-bold lg:tracking-tight">
+      Immersive Structures.
+    </h3>
+    <p class="text-sm lg:text-lg max-w-3xl mt-4">
+      3D stage design and construction across the Eastern Coast of Australia for over 50 events. Specialist in lighting design and bamboo construction.
+    </p>
   </div>
-</main>
+  <div class="w-full md:w-2/5 p-4">
+    <Picture
+      src={StageCover}
+      sizes="(max-width: 2000px) 2000px, 1000px"
+      widths={[1000, 1500, 2000]}
+      aspectRatio="1:1"
+      background="#f2f2f2"
+      fit="cover"
+      position="center"
+      class="w-full rounded duration-200 hover:shadow-sm"
+    />
+  </div>
+</div>

@@ -33,10 +33,10 @@ import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
     color: #fff;
     word-break: keep-all;
   }
-  @media (min-width: 480px) { .hero-text h1 { font-size: 2rem; } }
-  @media (min-width: 768px) { .hero-text h1 { font-size: 2.8rem; } }
-  @media (min-width: 1024px) { .hero-text h1 { font-size: 3.2rem; } }
-  @media (min-width: 1280px) { .hero-text h1 { font-size: 3.8rem; } }
+  @media (min-width: 480px) { .hero-text h1 { font-size: 1.8rem; } }
+  @media (min-width: 768px) { .hero-text h1 { font-size: 2.4rem; } }
+  @media (min-width: 1024px) { .hero-text h1 { font-size: 3rem; } }
+  @media (min-width: 1440px) { .hero-text h1 { font-size: 3.5rem; } }
 
   .hero-sub {
     mix-blend-mode: normal;
@@ -49,8 +49,7 @@ import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
 
 <main class="">
   <div id="heroSection" class="mx-auto flex flex-col justify-start items-start relative">
-    <AudioReactiveOverlay />
-    <div class="hero-text px-5 md:px-10 lg:px-16 mt-24 md:mt-32" style="z-index: 2;">
+    <div class="hero-text px-5 md:px-10 lg:px-16 mt-24 md:mt-32" style="z-index: 1;">
       <h1 class="font-bold">
         Welcome to the&nbsp;&nbsp;<span style="font-family: 'idlewild';">Collective.</span>
       </h1>
@@ -59,5 +58,6 @@ import AudioReactiveOverlay from "@components/audio-reactive-overlay.astro";
         Helping you stop dancing inside since 2016.
       </p>
     </div>
+    <AudioReactiveOverlay />
   </div>
 </main>

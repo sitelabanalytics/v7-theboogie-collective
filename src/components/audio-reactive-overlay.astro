@@ -13,10 +13,8 @@
     <polygon class="aro-center aro-c3" points="960,340 1160,740 760,740" />
     <polygon class="aro-center aro-c4" points="960,340 1160,740 760,740" />
 
-    <!-- Difference fills — inverted triangles, scale outward -->
+    <!-- Difference fill — single inverted triangle, scale outward -->
     <polygon class="aro-diff aro-d1" points="960,500 1200,100 720,100" />
-    <polygon class="aro-diff aro-d2" points="300,850 500,400 100,400" />
-    <polygon class="aro-diff aro-d3" points="1650,780 1900,350 1400,350" />
 
     <!-- Large outlines — inverted, expand outward -->
     <polygon class="aro-outline aro-ol1" points="960,570 1260,50 660,50" />
@@ -24,6 +22,11 @@
     <polygon class="aro-outline aro-ol3" points="1700,800 2000,250 1400,250" />
     <polygon class="aro-outline aro-ol4" points="600,500 800,150 400,150" />
     <polygon class="aro-outline aro-ol5" points="1400,450 1600,100 1200,100" />
+    <polygon class="aro-outline aro-ol6" points="100,600 350,150 -150,150" />
+    <polygon class="aro-outline aro-ol7" points="1800,500 2050,50 1550,50" />
+    <polygon class="aro-outline aro-ol8" points="960,850 1200,400 720,400" />
+    <polygon class="aro-outline aro-ol9" points="500,750 700,350 300,350" />
+    <polygon class="aro-outline aro-ol10" points="1500,700 1700,300 1300,300" />
 
     <!-- Medium outlines — inverted -->
     <polygon class="aro-outline-med aro-om1" points="480,440 620,200 340,200" />
@@ -32,6 +35,12 @@
     <polygon class="aro-outline-med aro-om4" points="300,840 440,600 160,600" />
     <polygon class="aro-outline-med aro-om5" points="1600,790 1740,550 1460,550" />
     <polygon class="aro-outline-med aro-om6" points="750,890 890,650 610,650" />
+    <polygon class="aro-outline-med aro-om7" points="150,350 290,110 10,110" />
+    <polygon class="aro-outline-med aro-om8" points="1200,300 1340,60 1060,60" />
+    <polygon class="aro-outline-med aro-om9" points="700,200 840,-40 560,-40" />
+    <polygon class="aro-outline-med aro-om10" points="1750,500 1890,260 1610,260" />
+    <polygon class="aro-outline-med aro-om11" points="400,600 540,360 260,360" />
+    <polygon class="aro-outline-med aro-om12" points="1100,750 1240,510 960,510" />
 
     <!-- Small outlines — inverted -->
     <polygon class="aro-outline-sm aro-os1" points="200,240 270,120 130,120" />
@@ -42,6 +51,14 @@
     <polygon class="aro-outline-sm aro-os6" points="1500,800 1570,680 1430,680" />
     <polygon class="aro-outline-sm aro-os7" points="850,900 920,780 780,780" />
     <polygon class="aro-outline-sm aro-os8" points="1200,870 1270,750 1130,750" />
+    <polygon class="aro-outline-sm aro-os9" points="50,500 120,380 -20,380" />
+    <polygon class="aro-outline-sm aro-os10" points="1850,600 1920,480 1780,480" />
+    <polygon class="aro-outline-sm aro-os11" points="350,150 420,30 280,30" />
+    <polygon class="aro-outline-sm aro-os12" points="1350,200 1420,80 1280,80" />
+    <polygon class="aro-outline-sm aro-os13" points="700,700 770,580 630,580" />
+    <polygon class="aro-outline-sm aro-os14" points="1600,450 1670,330 1530,330" />
+    <polygon class="aro-outline-sm aro-os15" points="250,700 320,580 180,580" />
+    <polygon class="aro-outline-sm aro-os16" points="1050,150 1120,30 980,30" />
 
   </svg>
 </div>
@@ -50,7 +67,7 @@
   .aro-wrap {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
     overflow: hidden;
   }
@@ -85,9 +102,6 @@
     transform-origin: center;
   }
   .aro-d1 { animation: aroDiff 18s ease-in-out 0s infinite; }
-  .aro-d2 { animation: aroDiff 22s ease-in-out 6s infinite; }
-  .aro-d3 { animation: aroDiff 20s ease-in-out 12s infinite; }
-  .aro-d4 { animation: aroDiff 24s ease-in-out 3s infinite; }
 
   @keyframes aroDiff {
     0%   { opacity: 0; transform: scale(0.85); }
@@ -109,6 +123,11 @@
   .aro-ol3 { animation: aroOut 26s ease-in-out 10s infinite; }
   .aro-ol4 { animation: aroOut 22s ease-in-out 14s infinite; }
   .aro-ol5 { animation: aroOut 30s ease-in-out 18s infinite; }
+  .aro-ol6 { animation: aroOut 25s ease-in-out 3s infinite; }
+  .aro-ol7 { animation: aroOut 27s ease-in-out 8s infinite; }
+  .aro-ol8 { animation: aroOut 23s ease-in-out 12s infinite; }
+  .aro-ol9 { animation: aroOut 29s ease-in-out 16s infinite; }
+  .aro-ol10 { animation: aroOut 21s ease-in-out 20s infinite; }
 
   @keyframes aroOut {
     0%   { opacity: 0; transform: scale(0.9); }
@@ -131,6 +150,12 @@
   .aro-om4 { animation: aroOut 24s ease-in-out 9s infinite; }
   .aro-om5 { animation: aroOut 20s ease-in-out 12s infinite; }
   .aro-om6 { animation: aroOut 22s ease-in-out 15s infinite; }
+  .aro-om7 { animation: aroOut 19s ease-in-out 1s infinite; }
+  .aro-om8 { animation: aroOut 21s ease-in-out 4s infinite; }
+  .aro-om9 { animation: aroOut 17s ease-in-out 7s infinite; }
+  .aro-om10 { animation: aroOut 23s ease-in-out 10s infinite; }
+  .aro-om11 { animation: aroOut 19s ease-in-out 13s infinite; }
+  .aro-om12 { animation: aroOut 21s ease-in-out 16s infinite; }
 
   /* ─── Small outlines — white ─── */
   .aro-outline-sm {
@@ -147,6 +172,14 @@
   .aro-os6 { animation: aroOut 16s ease-in-out 9s infinite; }
   .aro-os7 { animation: aroOut 12s ease-in-out 10s infinite; }
   .aro-os8 { animation: aroOut 18s ease-in-out 12s infinite; }
+  .aro-os9 { animation: aroOut 13s ease-in-out 1s infinite; }
+  .aro-os10 { animation: aroOut 15s ease-in-out 3s infinite; }
+  .aro-os11 { animation: aroOut 11s ease-in-out 5s infinite; }
+  .aro-os12 { animation: aroOut 17s ease-in-out 6s infinite; }
+  .aro-os13 { animation: aroOut 13s ease-in-out 8s infinite; }
+  .aro-os14 { animation: aroOut 15s ease-in-out 10s infinite; }
+  .aro-os15 { animation: aroOut 11s ease-in-out 11s infinite; }
+  .aro-os16 { animation: aroOut 17s ease-in-out 13s infinite; }
 
   /* Reduce motion */
   @media (prefers-reduced-motion: reduce) {

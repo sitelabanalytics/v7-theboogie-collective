@@ -5,23 +5,19 @@ import Container from "@components/container.astro";
 import { Picture } from "@astrojs/image/components";
 
 import Hero from "@components/hero.astro";
-
-import HeroShop from "@components/hero-shop.astro";
 import ShopSlider from "@components/shop-slider.astro";
 import ShopVariants from "@components/shop-variants-slider.astro";
 import VideoSection from "@components/hero-video-section.astro";
 
 import ContactHero from "@components/hero-end.astro";
 
-import Grid from "@components/hero-grid-artists.astro";
 import GridSec from "@components/hero-grid-artists-sec.astro";
 
 import ImmersiveSec from "@components/hero-grid-stage-sec.astro";
-import Immersive from "@components/hero-grid-stage.astro";
+import StageCover from '../assets/tbc/gal-hh2-2.webp';
 
 import PreviousWorks from "@components/previous-works-slider.astro";
 import MixesSlider from "@components/mixes-slider.astro";
-
 import SectionHeadImg from "@components/sectionhead-img.astro";
 import ServicesSlider from "@components/services-slider.astro";
 
@@ -41,6 +37,10 @@ import Layout from "@layouts/Layout.astro";
   </ContainerFW>
 
   <ContainerFW class="!pb-0">
+    <VideoSection />
+  </ContainerFW>
+
+  <ContainerFW class="!pb-0">
     <ShopSlider />
   </ContainerFW>
 
@@ -48,17 +48,35 @@ import Layout from "@layouts/Layout.astro";
     <ShopVariants />
   </ContainerFW>
 
-  <ContainerFW class="!pb-0">
-    <VideoSection />
-  </ContainerFW>
-
   <ContainerFW>
     <ServicesSlider />
   </ContainerFW>
 
-  <ContainerFW class="!pb-0">
-    <Immersive />
-  </ContainerFW>
+  <Container href="#installations">
+    <SectionHeadImg>
+      <Fragment slot="smltitle">
+        Event Installations
+      </Fragment>
+      <Fragment slot="title">
+        Immersive Structures.
+      </Fragment>
+      <Fragment slot="desc">
+        3D stage design and construction across the Eastern Coast of Australia for over 50 events. Specialist in lighting design and bamboo construction.
+      </Fragment>
+      <Fragment slot="cover">
+        <Picture id="glass-card-dark"
+                  src={StageCover}
+                  sizes="(max-width: 2000px) 2000px, 1000px"
+                  widths={[1000, 1500, 2000]}
+                  aspectRatio="1:1"
+                  background="#f2f2f2"
+                  fit="cover"
+                  position="center"
+                  class="w-full rounded duration-200 hover:shadow-sm"
+                />
+      </Fragment>
+    </SectionHeadImg>
+  </Container>
 
   <ContainerFW href="#installations">
     <PreviousWorks />

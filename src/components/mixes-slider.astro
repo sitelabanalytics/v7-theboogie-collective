@@ -26,7 +26,7 @@ const mixes = [
     title: "Tanto Slipstream 7",
     artist: "Simrana",
     type: "Track",
-    description: "Original mix via Techgnosis Records.",
+    description: "Original track via Techgnosis Records.",
     image: "/artists/simrana.jpg",
     link: "https://soundcloud.com/techgnosis-records/simrana-tanto-slipstream-7-original-mix",
     date: "2025-04-30",
@@ -57,15 +57,6 @@ const mixes = [
     image: "/event-1.jpg",
     link: "https://soundcloud.com/moodblend",
     date: "2025-03-15",
-  },
-  {
-    title: "Forest Floor Mix",
-    artist: "Lucid Gecko",
-    type: "Mix",
-    description: "Morning psytrance mix recorded in the Sunshine Coast hinterland.",
-    image: "/artists/lucid-gecko.jpg",
-    link: "https://soundcloud.com/lucid-gecko",
-    date: "2025-01-20",
   },
   {
     title: "Warehouse Sessions",
@@ -99,7 +90,7 @@ const mixes = [
     artist: "Boog",
     type: "Mix",
     description: "Live set from the original Happiness Hill festival.",
-    image: "/event-1.jpg",
+    image: "/artists/boog.jpg",
     link: "https://soundcloud.com/theboogiecollective/live-at-happiness-hill-2",
     date: "2019-04-30",
   },
@@ -108,7 +99,7 @@ const mixes = [
     artist: "Boog",
     type: "Mix",
     description: "Live set from the first Happiness Hill festival.",
-    image: "/event-3.jpg",
+    image: "/artists/boog.jpg",
     link: "https://soundcloud.com/theboogiecollective/vol-20-live-at-happiness-hill",
     date: "2018-04-30",
   },
@@ -250,8 +241,9 @@ const mixes = [
           <span class={`mix-cell-type ${mix.type === 'Track' ? 'mix-cell-type-track' : ''}`}>{mix.type}</span>
         </div>
         <div class="mix-cell-body">
-          <p class="mix-cell-label">{mix.artist} · {timeAgo(mix.date)}</p>
+          <p class="mix-cell-label">{mix.artist}</p>
           <h4 class="mix-cell-title">{mix.title}</h4>
+          <p class="mix-cell-label">{timeAgo(mix.date)}</p>
           <p class="mix-cell-desc">{mix.description}</p>
           <span class="mix-cell-btn">Listen</span>
         </div>

@@ -2,26 +2,17 @@
 import { products } from "../data/products.js";
 
 // All unique variants as cards — manually ordered for the slider
-const tee = products.find(p => p.slug === 'classic-tee');
 const hood = products.find(p => p.slug === 'box-hood');
 
 function pick(product, fitKey, colorKey) {
+  if (!product) return null;
   const v = product.variants.find(v => v.fitKey === fitKey && v.colorKey === colorKey);
   if (!v) return null;
-  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes, outOfStock: v.outOfStock || false, nextDrop: v.nextDrop || false, fitKey, colorKey };
+  return { slug: product.slug, name: product.name, colorway: v.colorway, fit: v.fit, code: v.code, swatch: v.swatch, image: v.image, badge: v.badge, sizes: v.sizes, price: v.price ?? product.price, outOfStock: v.outOfStock || false, nextDrop: v.nextDrop || false, fitKey, colorKey };
 }
 
 const cards = [
-  // ── Available ──
   pick(hood, 'unisex', 'white-stitch'),
-  // ── Out of stock ──
-  pick(hood, 'unisex', 'purple'),
-  pick(hood, 'unisex', 'orange'),
-  // ── Next Drop (tees) ──
-  pick(tee, 'mens', 'purple'),
-  pick(tee, 'mens', 'orange'),
-  pick(tee, 'womens', 'orchid'),
-  // pick(tee, 'mens', 'white-stitch'),  // hidden — different embroidery design planned
 ].filter(Boolean);
 ---
 

@@ -69,6 +69,13 @@ const hasFitSelector = fits.length > 1;
       <div class="pdp-selector-row" id="colorSelector"></div>
       <div class="pdp-selector-row" id="sizeSelector"></div>
 
+      {(defaultVariant.price ?? product.price) && (
+        <div class="pdp-hero-price" id="heroPrice" data-base={defaultVariant.price ?? product.price}>
+          <span class="pdp-hero-price-amount">${defaultVariant.price ?? product.price}</span>
+          <span class="pdp-hero-price-ship">+ shipping</span>
+        </div>
+      )}
+
       <a id="buyLink" href={defaultVariant.stripe} rel="noopener" target="_blank" class="pdp-hero-buy">
         Pre-Order Now
       </a>
@@ -348,6 +355,27 @@ const hasFitSelector = fits.length > 1;
   }
   .pdp-hs-pill:hover { border-color: rgba(255,255,255,0.5); color: #fff !important; }
   .pdp-hs-pill.pdp-hs-active { background: #fff; color: #000 !important; border-color: #fff; }
+
+  /* Price */
+  .pdp-hero-price {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .pdp-hero-price-amount {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #fff !important;
+    letter-spacing: -0.01em;
+  }
+  .pdp-hero-price-ship {
+    font-family: 'inconsolata' !important;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
 
   /* Buy button */
   .pdp-hero-buy {

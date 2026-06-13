@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 ---
 
-<Layout title="Pre-Order Confirmed">
+<Layout title="Order Confirmed">
   <Container class="py-24 md:py-36">
     <div class="flex flex-col items-center text-center max-w-xl mx-auto">
 
@@ -15,7 +15,7 @@ import Container from "@components/container.astro";
       </div>
 
       <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight success-anim" style="--d:0.1s">
-        Pre-Order Confirmed
+        Order Confirmed
       </h1>
 
       <p class="mt-4 text-lg md:text-xl text-neutral-300 success-anim" style="--d:0.2s">
@@ -23,8 +23,8 @@ import Container from "@components/container.astro";
       </p>
 
       <p class="mt-6 text-sm md:text-base text-neutral-400 leading-relaxed success-anim" style="--d:0.3s">
-        Your pre-order is locked in. You'll receive a confirmation email from Stripe shortly.
-        We'll send you another email when your order ships in a few weeks.
+        Your order is locked in. You'll receive a confirmation email from Stripe shortly,
+        then a tracking notification once it's on its way — usually within 1–2 days.
       </p>
 
       <!-- Order info cards -->
@@ -35,9 +35,14 @@ import Container from "@components/container.astro";
         </div>
         <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-left">
           <h5 class="text-xs tracking-widest mb-2" style="color: rgba(255,255,255,0.4);">TIMELINE</h5>
-          <p class="text-sm" style="color: rgba(255,255,255,0.7);">Orders ship in a few weeks.<br>We'll message you when it's on the way.</p>
+          <p class="text-sm" style="color: rgba(255,255,255,0.7);">Ships in 1–2 days.<br>You'll get a tracking notification.</p>
         </div>
       </div>
+
+      <!-- Out-of-stock note -->
+      <p class="mt-6 text-xs text-neutral-500 leading-relaxed success-anim" style="--d:0.45s">
+        If your size happens to be out of stock, we'll email you directly — the next print run starts July 1, so there may be about a 1 month delay.
+      </p>
 
       <!-- Actions -->
       <div class="flex flex-col sm:flex-row gap-4 mt-10 success-anim" style="--d:0.5s">
